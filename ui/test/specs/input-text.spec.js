@@ -14,6 +14,10 @@ test.describe("Base", () => {
     await expect(component.locator(primevue.floatLabel.base)).toHaveText("Label");
   });
 
+  test.skip("label mode", () => {
+    console.log("label mode test skipped.");
+  });
+
   test("model", async({ page }) => {
     const component = page.getByTestId(id);
     const input = component.locator(primevue.inputText.base);
