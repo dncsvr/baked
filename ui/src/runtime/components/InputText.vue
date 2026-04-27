@@ -8,6 +8,8 @@
     <Labeler
       :label="l(label)"
       :path="path"
+      :mode="labelMode"
+      variant="on"
     >
       <InputText
         v-model="input"
@@ -32,7 +34,7 @@ const { schema } = defineProps({
 });
 const model = defineModel({ type: null, required: true });
 
-const { label, targetProp } = schema;
+const { label, targetProp, labelMode } = schema;
 
 const path = context.injectPath();
 

@@ -205,7 +205,8 @@
                                 "component": {
                                   "type": "InputText",
                                   "schema": {
-                                    "label": "Name"
+                                    "label": "Name",
+                                    "labelMode": "ifta"
                                   }
                                 }
                               },
@@ -214,7 +215,8 @@
                                 "component": {
                                   "type": "InputText",
                                   "schema": {
-                                    "label": "Surname"
+                                    "label": "Surname",
+                                    "labelMode": "ifta"
                                   }
                                 }
                               },
@@ -223,7 +225,8 @@
                                 "component": {
                                   "type": "InputText",
                                   "schema": {
-                                    "label": "Description"
+                                    "label": "Description",
+                                    "labelMode": "ifta"
                                   }
                                 }
                               }

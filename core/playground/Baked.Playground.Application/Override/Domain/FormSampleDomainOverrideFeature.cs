@@ -86,6 +86,26 @@ public class FormSampleDomainOverrideFeature : IFeature
                     );
                 })
             );
+            // Labeler Options. added just test purpose
+            // TODO: move to correct feature.
+            builder.Conventions.AddParameterComponentConfiguration<InputText>(
+                component: (it, c, cc) =>
+                {
+                    if (it.Schema is ILabeler labeler)
+                    {
+                        it.Schema.LabelMode = "ifta";
+                    }
+                }
+            );
+            builder.Conventions.AddParameterComponentConfiguration<InputNumber>(
+                component: (it, c, cc) =>
+                {
+                    if (it.Schema is ILabeler labeler)
+                    {
+                        it.Schema.LabelMode = "ifta";
+                    }
+                }
+            );
         });
     }
 }

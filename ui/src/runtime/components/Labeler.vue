@@ -2,6 +2,7 @@
   <component
     :is="labelComponent"
     :pt="pt"
+    :variant="variant"
   >
     <template #default>
       <slot />
@@ -14,21 +15,23 @@
 import { computed } from "vue";
 import { FloatLabel, IftaLabel } from "primevue";
 
-const { label, mode = "ifta" } = defineProps({
+const { label, mode } = defineProps({
   label: { type: String, required: true },
   path: { type: String, required: true },
-  mode: { type: String, required: false },
+  mode: { type: String, default: "float" },
+  variant: { type: String, default: "over" },
   pt: { type: Object, default: () => {} }
 });
 
 const labelComponent = computed(() => {
   switch (mode) {
-  case "float":
-    return FloatLabel;
+  case "ifta":
+    return IftaLabel;
   case "none":
     return "div";
+  case "float":
   default:
-    return IftaLabel;
+    return FloatLabel;
   }
 });
 </script>
