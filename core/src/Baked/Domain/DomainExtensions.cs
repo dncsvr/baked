@@ -3,6 +3,7 @@ using Baked.Domain;
 using Baked.Domain.Configuration;
 using Baked.Domain.Conventions;
 using Baked.Domain.Export;
+using Baked.Domain.Inspection;
 using Baked.Domain.Model;
 using Baked.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,9 @@ public static class DomainExtensions
 {
     public class Configurator(LayerConfigurator _configurator)
     {
+        public void ConfigureInspect(Action<Inspect> configuration) =>
+            _configurator.Configure(configuration);
+
         public void ConfigureDomainTypeCollection(Action<IDomainTypeCollection> configuration) =>
             _configurator.Configure(configuration);
 

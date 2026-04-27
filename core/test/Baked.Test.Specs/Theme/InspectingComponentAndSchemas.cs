@@ -12,13 +12,15 @@ namespace Baked.Test.Theme;
 public class InspectingComponentAndSchemas : TestSpec
 {
     readonly List<DiagnosticMessage> _messages = [];
-    readonly InspectTrace _trace = Inspect.TraceHere();
+    readonly Trace _trace = Trace.Here();
+    Inspect _inspect = default!;
     IDisposable? _diagnostics;
 
     public override void SetUp()
     {
         base.SetUp();
 
+        _inspect = new();
         _diagnostics = Diagnostics.Start(GiveMe.AString(), result => _messages.AddRange(result.Messages));
     }
 
@@ -33,7 +35,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Allows_inspecting_a_schema_property()
     {
-        Inspect.Schema<DataTable.Column>(dtc => dtc.Title);
+        _inspect.Schema<DataTable.Column>(
+            schema: dtc => dtc.Title
+        );
         var cc = GiveMe.AComponentContext(paths: ["test", "path"]);
 
         using (_diagnostics)
@@ -51,7 +55,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Allows_inspecting_a_component_property()
     {
-        Inspect.Component<Text>(t => t.Prop);
+        _inspect.Component<Text>(
+            component: t => t.Prop
+        );
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -65,7 +71,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Allows_inspection_on_interfaces()
     {
-        Inspect.Component<ISelect>(s => s.OptionLabel);
+        _inspect.Component<ISelect>(
+            component: s => s.OptionLabel
+        );
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -84,7 +92,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Allows_inspection_on_component_overrides()
     {
-        Inspect.Component<MyText>(mt => mt.SomethingExtra);
+        _inspect.Component<MyText>(
+            component: mt => mt.SomethingExtra
+        );
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -99,7 +109,7 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Allows_inspecting_a_schema_without_any_property()
     {
-        Inspect.Schema<DataTable.Column>();
+        _inspect.Schema<DataTable.Column>();
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -121,7 +131,7 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Allows_inspecting_a_component_without_any_property()
     {
-        Inspect.Schema<Text>();
+        _inspect.Schema<Text>();
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -135,7 +145,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Capture_returns_the_expected_schema__so_that_usages_can_return_with_a_single_line()
     {
-        Inspect.Schema<DataTable.Column>(dtc => dtc.Title);
+        _inspect.Schema<DataTable.Column>(
+            schema: dtc => dtc.Title
+        );
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -149,7 +161,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void It_prints_component_path_once_for_consequent_updates()
     {
-        Inspect.Schema<DataTable.Column>(dtc => dtc.Title);
+        _inspect.Schema<DataTable.Column>(
+            schema: dtc => dtc.Title
+        );
         var cc = GiveMe.AComponentContext(paths: ["test", "path"]);
 
         using (_diagnostics)
@@ -163,17 +177,14 @@ public class InspectingComponentAndSchemas : TestSpec
     }
 
     [Test]
-    [Ignore("not tested")]
-    public void Filters_by_model_context() =>
-        this.ShouldFail();
-
-    [Test]
-    public void Filters_by_component_context()
+    [Ignore("not implemented")]
+    public void When_and_where_filter()
     {
-        Inspect
-            .Where(cc => cc.Path.StartsWith("page-1"))
-            .Component<Text>(t => t.Prop)
-        ;
+        this.ShouldFail("when not tested");
+        _inspect.Component<Text>(
+            where: cc => cc.Path.StartsWith("page-1"),
+            component: t => t.Prop
+        );
         var page1 = GiveMe.AComponentContext(paths: ["page-1"]);
         var page2 = GiveMe.AComponentContext(paths: ["page-2"]);
 
@@ -190,7 +201,7 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Reports_path_in_gray_for_readability()
     {
-        Inspect.Component<Text>();
+        _inspect.Component<Text>();
         var cc = GiveMe.AComponentContext(paths: ["test", "path"]);
 
         using (_diagnostics)
@@ -204,7 +215,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Reports_schema_type_and_property_name_for_components()
     {
-        Inspect.Schema<DataTable.Column>(dtc => dtc.Title);
+        _inspect.Schema<DataTable.Column>(
+            schema: dtc => dtc.Title
+        );
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)
@@ -219,7 +232,9 @@ public class InspectingComponentAndSchemas : TestSpec
     [Test]
     public void Reports_component_type_and_property_name_for_components()
     {
-        Inspect.Component<DataTable>(dt => dt.Paginator);
+        _inspect.Component<DataTable>(
+            component: dt => dt.Paginator
+        );
         var cc = GiveMe.AComponentContext();
 
         using (_diagnostics)

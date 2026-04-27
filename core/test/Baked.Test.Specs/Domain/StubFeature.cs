@@ -5,7 +5,7 @@ namespace Baked.Test.Domain;
 
 public class StubFeature(DomainModelContext c)
 {
-    readonly InspectTrace _trace = Inspect.TraceHere();
+    readonly Trace _trace = Trace.Here();
 
     public TSchema Configure<TSchema>(Func<TSchema> create) =>
         _trace.Capture(c, create);

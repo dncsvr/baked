@@ -1,6 +1,5 @@
 ﻿using Baked.Architecture;
 using Baked.Business;
-using Baked.Domain.Inspection;
 using Baked.Playground.Caching;
 using Baked.Playground.Orm;
 using Baked.Playground.Ui;
@@ -33,6 +32,11 @@ public class CustomThemeFeature(IEnumerable<Func<Router, Route>> routes)
     public override void Configure(LayerConfigurator configurator)
     {
         base.Configure(configurator);
+
+        configurator.Domain.ConfigureInspect(inspect =>
+        {
+            inspect.Attribute<LabelAttribute>();
+        });
 
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
         {
@@ -80,10 +84,6 @@ public class CustomThemeFeature(IEnumerable<Func<Router, Route>> routes)
             // Custom routes
             builder.Conventions.SetTypeRoute<Parent>("/parents/[id]");
             builder.Conventions.SetMethodRoute<FormSample>(nameof(FormSample.NewParent), "/form-sample/parents/new");
-
-            Inspect
-                .Attribute<LabelAttribute>()
-            ;
         });
 
         configurator.Ui.ConfigureComponentExports(c =>

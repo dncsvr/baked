@@ -10,7 +10,7 @@ public abstract class AttributeConfigurationConventionBase<TModelContext, TAttri
     where TAttribute : Attribute
     where TModelContext : DomainModelContext
 {
-    readonly InspectTrace _trace = Inspect.TraceHere();
+    readonly Trace _trace = Trace.Here();
 
     protected abstract ICustomAttributesModel GetMetadata(TModelContext context);
 

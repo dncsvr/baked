@@ -21,22 +21,22 @@ internal class Capture<T>
             ? $"{value}"
             : JsonConvert.SerializeObject(value, Formatting.Indented, SerializerSettings);
 
-    readonly Inspect _inspect;
+    readonly Inspection _inspection;
     readonly StackTrace _stackTrace;
     readonly Func<T> _apply;
     readonly ICaptureType _captureType;
     readonly T? _givenTarget;
     readonly bool _initial;
 
-    public Capture(Inspect inspect, StackTrace stackTrace, Func<T> create, ICaptureType captureType)
-        : this(inspect, stackTrace, create, captureType, default, initial: true) { }
+    public Capture(Inspection inspection, StackTrace stackTrace, Func<T> create, ICaptureType captureType)
+        : this(inspection, stackTrace, create, captureType, default, initial: true) { }
 
-    public Capture(Inspect inspect, StackTrace stackTrace, Action update, ICaptureType captureType, T target)
-        : this(inspect, stackTrace, () => { update(); return target; }, captureType, target, initial: false) { }
+    public Capture(Inspection inspection, StackTrace stackTrace, Action update, ICaptureType captureType, T target)
+        : this(inspection, stackTrace, () => { update(); return target; }, captureType, target, initial: false) { }
 
-    Capture(Inspect inspect, StackTrace stackTrace, Func<T> apply, ICaptureType captureType, T? givenTarget, bool initial)
+    Capture(Inspection inspection, StackTrace stackTrace, Func<T> apply, ICaptureType captureType, T? givenTarget, bool initial)
     {
-        _inspect = inspect;
+        _inspection = inspection;
         _stackTrace = stackTrace;
         _apply = apply;
         _captureType = captureType;
@@ -44,7 +44,7 @@ internal class Capture<T>
         _initial = initial;
     }
 
-    string Property => _inspect.Expression.StripLambdaFromASingleMemberAccessExpression();
+    string Property => _inspection.Expression.StripLambdaFromASingleMemberAccessExpression();
 
     public T Execute()
     {
@@ -75,9 +75,9 @@ internal class Capture<T>
         object? targetObject = target is IComponentDescriptor descriptor
             ? descriptor.Schema
             : target;
-        if (targetObject is null || !targetObject.GetType().IsAssignableTo(_inspect.TargetType)) { return false; }
+        if (targetObject is null || !targetObject.GetType().IsAssignableTo(_inspection.TargetType)) { return false; }
 
-        value = _inspect.Evaluate(targetObject);
+        value = _inspection.Evaluate(targetObject);
         concreteTypeOfTarget = targetObject.GetType();
 
         return true;

@@ -12,6 +12,7 @@ using Baked.Ui;
 using Baked.Ui.Configuration;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 
 using static Baked.Ui.Datas;
 
@@ -1065,7 +1066,7 @@ public static class ThemeExtensions
         void WrapBuilder(
             Func<ComponentContext, bool> where,
             Action<TSchema, ComponentContext> apply,
-            InspectTrace trace
+            Trace trace
         )
         {
             var prev = attribute.Builder;
@@ -1178,36 +1179,72 @@ public static class ThemeExtensions
         }
     }
 
-    extension(InspectTrace trace)
+    extension(Inspect _)
+    {
+        public void Component<T>(
+            Func<ComponentContext, bool>? where = default,
+            Expression<Func<T, object?>>? component = default
+        ) where T : IComponentSchema
+        {
+            component ??= x => x;
+
+            Inspection.Current = new(typeof(T), c => component.Compile().Invoke((T)c), component.ToString());
+            if (where is not null)
+            {
+                Inspection.Current.AddFilter(nameof(where), where);
+            }
+        }
+
+        public void Schema<T>(
+            Func<ComponentContext, bool>? where = default,
+            Expression<Func<T, object?>>? schema = default
+        )
+        {
+            schema ??= x => x;
+
+            Inspection.Current = new(typeof(T), c => schema.Compile().Invoke((T)c), schema.ToString());
+            if (where is not null)
+            {
+                Inspection.Current.AddFilter(nameof(where), where);
+            }
+        }
+    }
+
+    extension(Trace trace)
     {
         // WARNING
         //
         // Do NOT remove this warning disable section unintentionally.
         // Without this, GitHub Actions fails on dotnet format
 #pragma warning disable IDE0051
-        static bool ShouldCapture(ComponentContext context, [NotNullWhen(true)] out Inspect? inspect)
+        static bool ShouldCapture(ComponentContext context, [NotNullWhen(true)] out Inspection? inspection)
         {
-            inspect = Inspect.Current;
+            inspection = Inspection.Current;
 
-            return inspect is not null && inspect.ComponentFilter(context);
+            return
+                inspection is not null &&
+                (
+                    !inspection.TryGetFilter<Func<ComponentContext, bool>>("where", out var where) ||
+                    where(context)
+                );
         }
 #pragma warning restore IDE0051
 
         public T Capture<T>(ComponentContext context, Func<T> create)
         {
-            if (!ShouldCapture(context, out var inspect))
+            if (!ShouldCapture(context, out var inspection))
             {
                 return create();
             }
 
             return
-                new Capture<T>(inspect, trace.StackTrace, create, new DescriptorCaptureType(context))
+                new Capture<T>(inspection, trace.StackTrace, create, new DescriptorCaptureType(context))
                 .Execute();
         }
 
         public T Capture<T>(ComponentContext context, T target, Action update)
         {
-            if (!ShouldCapture(context, out var inspect))
+            if (!ShouldCapture(context, out var inspection))
             {
                 update();
 
@@ -1215,7 +1252,7 @@ public static class ThemeExtensions
             }
 
             return
-                new Capture<T>(inspect, trace.StackTrace, update, new DescriptorCaptureType(context), target)
+                new Capture<T>(inspection, trace.StackTrace, update, new DescriptorCaptureType(context), target)
                 .Execute();
         }
     }

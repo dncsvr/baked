@@ -10,5 +10,5 @@ public abstract class DomainModelContext
 
     // NOTE this is intentionally left as null to make sure build fails if
     // there is a bug in setting this value
-    public InspectTrace Trace { get; internal set; } = null!;
+    public Trace Trace { get; internal set; } = null!;
 }

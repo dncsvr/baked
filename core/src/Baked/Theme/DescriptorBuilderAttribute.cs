@@ -7,7 +7,7 @@ public class DescriptorBuilderAttribute<T> : Attribute, IComponentContextBasedBu
 {
     public Func<ComponentContext, T> Builder { get; set; } = _ => throw DiagnosticCode.InvalidState.Exception($"`Builder` is required to be set for a descriptor, but not set to this instance.");
     public Func<ComponentContext, bool> Filter { get; set; } = cc => true;
-    public required InspectTrace Trace { get; init; }
+    public required Trace Trace { get; init; }
 
     protected T Build(ComponentContext context)
     {

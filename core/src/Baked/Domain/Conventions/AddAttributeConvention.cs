@@ -11,7 +11,7 @@ public class AddAttributeConvention<TModelContext>(
 ) : IDomainModelConvention<TModelContext>, IAddRemoveAttributeConvention
     where TModelContext : DomainModelContext
 {
-    readonly InspectTrace _trace = Inspect.TraceHere();
+    readonly Trace _trace = Trace.Here();
 
     bool IAddRemoveAttributeConvention.AttributeRequiresIndex => attributeRequiresIndex;
 

@@ -11,12 +11,52 @@ app.Layers.AddDomain();
 ## Configuration Targets
 
 This layer provides `IDomainTypeCollection` and `DomainModelBuilderOptions`
-configuration targets for building `DomainModel`, `AttributeDatas` and 
-`ExportConfigurations` for exporting attribute metadata in `Generate` mode.It 
-also provides `DomainServiceCollection` configuration target for features to add 
-`DomainServiceDescriptor` for domain types which then be used to generate an 
-`IServiceAdder` implementation. The generated `IServiceAdder` is then used in 
-`Start` mode for auto registering domain types to service collection.
+configuration targets for building `DomainModel`, `AttributeDatas` and
+`ExportConfigurations` for exporting attribute metadata in `Generate` mode. It
+also provides `DomainServiceCollection` configuration target for features to add
+`DomainServiceDescriptor` for domain types which then be used to generate an
+`IServiceAdder` implementation. The generated `IServiceAdder` is then used in
+`Start` mode for auto registering domain types to service collection. Domain
+layer also provides an `Inspect` object to inspect on metadata while
+`DomainModelBuilder` builds the domain model through conventions.
+
+### `Inspect`
+
+This target is provided in `AddDomainTypes` phase. To configure it in a feature;
+
+```csharp
+configurator.Domain.ConfigureInspect(inspect =>
+{
+    // To inspect any member
+    inspect.Attribute<MyAttribute>(
+        attribute: ma => ma.Value // optional to inspect just this value
+    );
+
+    // To inspect types
+    inspect.TypeAttribute<MyAttribute>(
+        when: c => c.Type..., // optional to inspect just this type model
+        attribute: ma => ma.Value // optional to inspect just this value
+    );
+
+    // To inspect properties
+    inspect.PropertyAttribute<MyAttribute>(
+        when: c => c.Property..., // optional to inspect a specific property model
+        attribute: ma => ma.Value // optional to inspect just this value
+    );
+
+    // To inspect methods
+    inspect.MethodAttribute<MyAttribute>(
+        when: c => c.Method..., // optional to inspect a specific method model
+        attribute: ma => ma.Value // optional to inspect just this value
+    );
+
+    // To inspect parameters
+    inspect.ParameterAttribute<MyAttribute>(
+        when: c => c.Parameter..., // optional to inspect a specific parameter model
+        attribute: ma => ma.Value // optional to inspect just this value
+    );
+});
+```
 
 ### `IDomainTypeCollection`
 
@@ -70,8 +110,8 @@ configurator.Domain.ConfigureAttributeProperties(properties =>
 
 ### `ExportConfigurations`
 
-This target is provided in `GenerateCode` phase and it is used to export 
-attribute data of matching types and their members. To configure it in a 
+This target is provided in `GenerateCode` phase and it is used to export
+attribute data of matching types and their members. To configure it in a
 feature;
 
 ```csharp

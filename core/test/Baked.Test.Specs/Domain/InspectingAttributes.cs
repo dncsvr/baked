@@ -10,13 +10,15 @@ namespace Baked.Test.Domain;
 public class InspectingAttributes : TestSpec
 {
     readonly List<DiagnosticMessage> _messages = [];
-    readonly InspectTrace _trace = Inspect.TraceHere();
+    readonly Trace _trace = Trace.Here();
+    Inspect _inspect = default!;
     IDisposable? _diagnostics;
 
     public override void SetUp()
     {
         base.SetUp();
 
+        _inspect = new();
         _diagnostics = Diagnostics.Start(GiveMe.AString(), result => _messages.AddRange(result.Messages));
     }
 
@@ -36,9 +38,6 @@ public class InspectingAttributes : TestSpec
         var addChild = parent.Methods[nameof(Parent.AddChild)];
         var pName = addChild.DefaultOverload.Parameters["name"];
 
-        yield return (new TypeModelContext { Domain = domain, Type = parent }, "Baked.Playground.Orm.Parent");
-        yield return (new TypeModelGenericsContext { Domain = domain, Type = parent }, "Baked.Playground.Orm.Parent");
-        yield return (new TypeModelInheritanceContext { Domain = domain, Type = parent }, "Baked.Playground.Orm.Parent");
         yield return (new TypeModelMetadataContext { Domain = domain, Type = parent }, "Baked.Playground.Orm.Parent");
         yield return (new TypeModelMembersContext { Domain = domain, Type = parent }, "Baked.Playground.Orm.Parent");
         yield return
@@ -78,7 +77,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void When_an_attribute_is_added_with_a_non_null_on_the_inspected_property__it_reports_applied_member_and_the_initial_value()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
 
         var cases = CreateContextCases().OrderBy(c => c.Context.Identifier);
         using (_diagnostics)
@@ -105,7 +106,7 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Allows_inspecting_an_attribute_without_any_property()
     {
-        Inspect.Attribute<LabelAttribute>();
+        _inspect.Attribute<LabelAttribute>();
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -117,14 +118,31 @@ public class InspectingAttributes : TestSpec
     }
 
     [Test]
-    [Ignore("not tested")]
-    public void Filters_by_model_context() =>
+    [Ignore("not implemented")]
+    public void Filters_by_model_context()
+    {
         this.ShouldFail();
+        // Inspect
+        //     .Where(cc => cc.Path.StartsWith("page-1"))
+        //     .Component<Text>(t => t.Prop)
+        // ;
+        // var page1 = GiveMe.AComponentContext(paths: ["page-1"]);
+        // var page2 = GiveMe.AComponentContext(paths: ["page-2"]);
+        //
+        // using (_diagnostics)
+        // {
+        //     _trace.Capture(page1, () => B.Text(options: t => t.Prop = "prop1"));
+        //     _trace.Capture(page2, () => B.Text(options: t => t.Prop = "prop2"));
+        // }
+        //
+        // _messages.ShouldContain(m => m.Message.Contains("prop1"));
+        // _messages.ShouldNotContain(m => m.Message.Contains("prop2"));
+    }
 
     [Test]
     public void Reports_member_in_gray_for_readability()
     {
-        Inspect.Attribute<LabelAttribute>();
+        _inspect.Attribute<LabelAttribute>();
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -138,7 +156,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Reports_attribute_type_and_property_name()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
         var c = new TypeModelContext { Domain = GiveMe.TheDomainModel(), Type = GiveMe.TheTypeModel<Parent>() };
 
         using (_diagnostics)
@@ -153,7 +173,7 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Reports_new_value_as_json_when_value_is_not_value_type_or_string()
     {
-        Inspect.Attribute<DataAttribute>();
+        _inspect.Attribute<DataAttribute>();
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -174,7 +194,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void When_the_inspected_property_of_an_attribute_is_updated__it_reports_only_if_new_value_is_different()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -191,7 +213,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Capture_returns_the_expected_attribute__so_that_usages_can_return_with_a_single_line()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -205,7 +229,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void It_prints_member_name_once_for_consequent_updates()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -220,7 +246,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void It_groups_and_sort_messages_by_the_member_id_to_be_reported_together()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
         var cParent = GiveMe.ATypeModelContext<Parent>();
         var cChild = GiveMe.ATypeModelContext<Child>();
 
@@ -245,7 +273,9 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Capture_does_not_report_when_a_non_inspected_property_is_set_or_updated()
     {
-        Inspect.Attribute<DataAttribute>(d => d.Label);
+        _inspect.Attribute<DataAttribute>(
+            attribute: d => d.Label
+        );
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -261,7 +291,7 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Captures_and_reports_feature_name_from_stack_trace()
     {
-        Inspect.Attribute<LabelAttribute>();
+        _inspect.Attribute<LabelAttribute>();
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
@@ -275,7 +305,7 @@ public class InspectingAttributes : TestSpec
     [Test]
     public void Reports_the_whole_stack_trace_when_feature_is_not_captured()
     {
-        Inspect.Attribute<LabelAttribute>();
+        _inspect.Attribute<LabelAttribute>();
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
