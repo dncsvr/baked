@@ -195,7 +195,8 @@ debugComponentPaths: new()
 > [!WARNING]
 >
 > This feature is still in experimentation and might print false-negative
-> output, meaning it might not capture every change of the inspected attribute.
+> output, meaning it might not capture every change of the inspected component
+> or schema.
 
 Configure an inspect to watch a property value of a component or a schema so
 that you can see which UX or Theme feature sets what value and in which order.
@@ -207,35 +208,35 @@ configurator.Domain.ConfigureInspect(inspect =>
     inspect.TypeCompnent<MyComponent>( // or inspect.TypeSchema
         when: c => c.Type..., // optional to inspect specific type models
         where: cc => cc.Path..., // optional to inspect specific component paths
-        attribute: mc => mc.Value // optional to inspect just this value
+        component: mc => mc.Value // optional to inspect just this value
     );
 
     // To inspect a component or a schema on properties
     inspect.PropertyComponent<MyComponent>( // or inspect.PropertySchema
         when: c => c.Property..., // optional to inspect specific property models
         where: cc => cc.Path..., // optional to inspect specific component paths
-        attribute: mc => mc.Value // optional to inspect just this value
+        component: mc => mc.Value // optional to inspect just this value
     );
 
     // To inspect a component or a schema on methods
     inspect.MethodComponent<MyComponent>( // or inspect.MethodSchema
         when: c => c.Method..., // optional to inspect specific method models
         where: cc => cc.Path..., // optional to inspect specific component paths
-        attribute: mc => mc.Value // optional to inspect just this value
+        component: mc => mc.Value // optional to inspect just this value
     );
 
     // To inspect a component or a schema on parameters
     inspect.ParameterComponent<MyComponent>( // or inspect.ParameterSchema
         when: c => c.Parameter..., // optional to inspect specific parameter models
         where: cc => cc.Path..., // optional to inspect specific component path
-        attribute: mc => mc.Value // optional to inspect just this value
+        component: mc => mc.Value // optional to inspect just this value
     );
 
     // To inspect a component or a schema on any member
     inspect.Component<MyComponent>( // or inspect.Schema
         when: c => c..., // optional to inspect specific members
         where: cc => cc.Path..., // optional to inspect specific component paths
-        attribute: mc => mc.Value // optional to inspect just this value
+        component: mc => mc.Value // optional to inspect just this value
     );
 });
 ```
