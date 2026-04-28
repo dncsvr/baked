@@ -23,8 +23,11 @@
   - It's recommended to implement a custom component per use case, when there is
     a need to switch between components based on its data
   - One of the `DataTableColumn()` overloads was using `Conditional`, removed
+- `Sort` and `Paginator` are removed from `DataTable` component
 
 ## Improvements
 
 - `DefaultThemeFeature(debugComponentPaths:)` now prints a pretty formatted tree
   instead of a list of component paths
+- `ListPanel` component is added to render enumerable datas with 
+  `Sort` and `Paginator`
