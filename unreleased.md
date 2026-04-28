@@ -32,18 +32,6 @@
 
 - `DefaultThemeFeature(debugComponentPaths:)` now prints a pretty formatted tree
   instead of a list of component paths
-  - To enable
-    ```csharp
-    debugComponentPaths: true
-    ```
-  - To filter paths
-    ```csharp
-    debugComponentPaths: new() { Filter = path => path.EndsWith(...) }
-    ```
-  - To include full paths
-    ```csharp
-    debugComponentPaths: new() { IncludeFullPaths = true }
-    ```
 
 ## Library Upgrades
 

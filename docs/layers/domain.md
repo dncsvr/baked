@@ -22,6 +22,11 @@ layer also provides an `Inspect` object to inspect on metadata while
 
 ### `Inspect`
 
+> [!WARNING]
+>
+> This feature is still in experimentation and might print false-negative
+> output, meaning it might not capture every change of the inspected attribute.
+
 This target is provided in `AddDomainTypes` phase. To configure it in a feature;
 
 ```csharp
@@ -29,35 +34,40 @@ configurator.Domain.ConfigureInspect(inspect =>
 {
     // To inspect an attribute on types
     inspect.TypeAttribute<MyAttribute>(
-        when: c => c.Type..., // optional to inspect just this type model
+        when: c => c.Type..., // optional to inspect specific type models
         attribute: ma => ma.Value // optional to inspect just this value
     );
 
     // To inspect an attribute properties
     inspect.PropertyAttribute<MyAttribute>(
-        when: c => c.Property..., // optional to inspect a specific property model
+        when: c => c.Property..., // optional to inspect specific property models
         attribute: ma => ma.Value // optional to inspect just this value
     );
 
     // To inspect an attribute methods
     inspect.MethodAttribute<MyAttribute>(
-        when: c => c.Method..., // optional to inspect a specific method model
+        when: c => c.Method..., // optional to inspect specific method models
         attribute: ma => ma.Value // optional to inspect just this value
     );
 
     // To inspect an attribute parameters
     inspect.ParameterAttribute<MyAttribute>(
-        when: c => c.Parameter..., // optional to inspect a specific parameter model
+        when: c => c.Parameter..., // optional to inspect specific parameter models
         attribute: ma => ma.Value // optional to inspect just this value
     );
 
     // To inspect an attribute any member
     inspect.Attribute<MyAttribute>(
-        when: c => c..., // optional to inspect a specific member
+        when: c => c..., // optional to inspect specific members
         attribute: ma => ma.Value // optional to inspect just this value
     );
 });
 ```
+
+> [!WARNING]
+>
+> Only one inspect is taken into consideration. If you configure more than one,
+> only the last one will be set as current.
 
 ### `IDomainTypeCollection`
 
