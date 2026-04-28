@@ -197,6 +197,10 @@ debugComponentPaths: new()
 > This feature is still in experimentation and might print false-negative
 > output, meaning it might not capture every change of the inspected component
 > or schema.
+>
+> E.g., A described page or component will not be inspected. If you describe a
+> child component or schema from the convention of parent component or schema it
+> won't be inspected.
 
 Configure an inspect to watch a property value of a component or a schema so
 that you can see which UX or Theme feature sets what value and in which order.
