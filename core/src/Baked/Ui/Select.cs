@@ -1,7 +1,7 @@
 ﻿namespace Baked.Ui;
 
 public record Select(string Label)
-    : ISelect, IComponentSchema
+    : ISelect, ILabeler, IComponentSchema
 {
     public string Label { get; set; } = Label;
     public string? OptionLabel { get; set; }
@@ -11,5 +11,6 @@ public record Select(string Label)
     public bool? Stateful { get; set; }
     public bool? Filter { get; set; }
     public string? TargetProp { get; set; }
-    public bool? NoFloatLabel { get; set; }
+    public string? LabelMode { get; set; }
+    public string? LabelVariant { get; set; }
 }

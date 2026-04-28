@@ -7,7 +7,12 @@
   >
     <template #default>
       <slot />
-      <label :for="path">{{ label }}</label>
+      <label
+        v-if="mode !== 'none'"
+        :for="path"
+      >
+        {{ label }}
+      </label>
     </template>
   </component>
 </template>
@@ -19,7 +24,7 @@ import { FloatLabel, IftaLabel } from "primevue";
 const { label, mode } = defineProps({
   label: { type: String, required: true },
   path: { type: String, required: true },
-  mode: { type: String, default: "ifta" },
+  mode: { type: String, default: "none" },
   variant: { type: String, default: "on" },
   pt: { type: Object, default: () => { } },
   dt: { type: Object, default: () => { } }
@@ -31,11 +36,11 @@ const labelComponent = computed(() => {
   switch (mode) {
   case "float":
     return FloatLabel;
-  case "none":
-    return "div";
   case "ifta":
-  default:
     return IftaLabel;
+  case "none":
+  default:
+    return "div";
   }
 });
 </script>

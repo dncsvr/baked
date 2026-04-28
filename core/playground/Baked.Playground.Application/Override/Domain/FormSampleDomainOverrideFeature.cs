@@ -76,12 +76,12 @@ public class FormSampleDomainOverrideFeature : IFeature
                 schema: (c, cc) => B.DataTableServerPaginator(options: dtsp =>
                 {
                     var (_, l) = cc;
-
+                    // TODO: update label mode with enum
                     dtsp.Take = B.Select(l("Take"), Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false),
                         options: s =>
                         {
                             s.Stateful = true;
-                            s.NoFloatLabel = true;
+                            s.LabelMode = "none";
                         }
                     );
                 })
@@ -89,6 +89,7 @@ public class FormSampleDomainOverrideFeature : IFeature
             // Labeler Options. added just test purpose
             // TODO: move to correct feature.
             builder.Conventions.AddParameterComponentConfiguration<InputText>(
+                when: c => c.Type.Is<FormSample>(),
                 component: (it, c, cc) =>
                 {
                     if (it.Schema is ILabeler labeler)
@@ -98,6 +99,27 @@ public class FormSampleDomainOverrideFeature : IFeature
                 }
             );
             builder.Conventions.AddParameterComponentConfiguration<InputNumber>(
+                when: c => c.Type.Is<FormSample>(),
+                component: (it, c, cc) =>
+                {
+                    if (it.Schema is ILabeler labeler)
+                    {
+                        it.Schema.LabelMode = "ifta";
+                    }
+                }
+            );
+            builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
+                when: c => c.Type.Is<FormSample>(),
+                component: (it, c, cc) =>
+                {
+                    if (it.Schema is ILabeler labeler)
+                    {
+                        it.Schema.LabelMode = "ifta";
+                    }
+                }
+            );
+            builder.Conventions.AddParameterComponentConfiguration<Select>(
+                when: c => c.Type.Is<FormSample>(),
                 component: (it, c, cc) =>
                 {
                     if (it.Schema is ILabeler labeler)

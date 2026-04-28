@@ -22,8 +22,7 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Name",
-                      "labelMode": "ifta"
+                      "label": "Name"
                     }
                   }
                 }
@@ -77,8 +76,7 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Name",
-                      "labelMode": "ifta"
+                      "label": "Name"
                     }
                   }
                 },
@@ -87,8 +85,7 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Surname",
-                      "labelMode": "ifta"
+                      "label": "Surname"
                     }
                   }
                 },
@@ -97,8 +94,7 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Description",
-                      "labelMode": "ifta"
+                      "label": "Description"
                     }
                   }
                 }

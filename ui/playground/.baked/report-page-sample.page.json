@@ -21,7 +21,9 @@
             "label": "Required With Default",
             "optionLabel": "label",
             "optionValue": "value",
-            "localizeLabel": true
+            "localizeLabel": true,
+            "labelMode": "float",
+            "labelVariant": "on"
           },
           "data": {
             "type": "Inline",
@@ -48,7 +50,9 @@
             "label": "Required",
             "optionLabel": "label",
             "optionValue": "value",
-            "localizeLabel": true
+            "localizeLabel": true,
+            "labelMode": "float",
+            "labelVariant": "on"
           },
           "data": {
             "type": "Inline",
@@ -260,7 +264,9 @@
                         "optionLabel": "label",
                         "optionValue": "value",
                         "localizeLabel": true,
-                        "stateful": true
+                        "stateful": true,
+                        "labelMode": "float",
+                        "labelVariant": "on"
                       },
                       "data": {
                         "type": "Inline",
