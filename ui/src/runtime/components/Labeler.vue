@@ -1,8 +1,9 @@
 <template>
   <component
     :is="labelComponent"
-    :pt="pt"
-    :variant="variant"
+    :dt
+    :pt
+    :variant
   >
     <template #default>
       <slot />
@@ -18,20 +19,23 @@ import { FloatLabel, IftaLabel } from "primevue";
 const { label, mode } = defineProps({
   label: { type: String, required: true },
   path: { type: String, required: true },
-  mode: { type: String, default: "float" },
-  variant: { type: String, default: "over" },
-  pt: { type: Object, default: () => {} }
+  mode: { type: String, default: "ifta" },
+  variant: { type: String, default: "on" },
+  pt: { type: Object, default: () => { } },
+  dt: { type: Object, default: () => { } }
 });
 
 const labelComponent = computed(() => {
+  if(!label) { return "div"; }
+
   switch (mode) {
-  case "ifta":
-    return IftaLabel;
+  case "float":
+    return FloatLabel;
   case "none":
     return "div";
-  case "float":
+  case "ifta":
   default:
-    return FloatLabel;
+    return IftaLabel;
   }
 });
 </script>

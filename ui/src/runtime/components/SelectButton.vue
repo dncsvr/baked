@@ -5,16 +5,22 @@
         <Skeleton class="min-h-10" />
       </div>
     </template>
-    <div :class="label ? 'flex flex-col' : 'inline-block'">
-      <label
-        v-if="label"
-        class="
-          text-xs text-slate-500 font-normal
-          dark:text-zinc-400 mb-1 ml-2
-        "
-      >
-        {{ l(label) }}
-      </label>
+    <Labeler
+      :label="l(label)"
+      :path="path"
+      :mode="labelMode"
+      :variant="labelVariant"
+      :dt="{
+        colorScheme: {
+          light: {
+            top: '-1rem',
+          },
+          dark: {
+            top: '-1rem'
+          }
+        }
+      }"
+    >
       <SelectButton
         v-if="data"
         v-model="selected"
@@ -28,14 +34,14 @@
           <span>{{ getOptionLabel(slotProps) }}</span>
         </template>
       </SelectButton>
-    </div>
+    </Labeler>
   </AwaitLoading>
 </template>
 <script setup>
 import { ref, watch } from "vue";
 import { SelectButton, Skeleton } from "primevue";
 import { useContext, useLocalization, useUiStates } from "#imports";
-import { AwaitLoading } from "#components";
+import { AwaitLoading, Labeler } from "#components";
 
 const context = useContext();
 const { localize: l } = useLocalization();
@@ -47,7 +53,17 @@ const { schema, data } = defineProps({
 });
 const model = defineModel({ type: null, required: true });
 
-const { allowEmpty = false, label, localizeLabel, optionLabel, optionValue, stateful, targetProp } = schema;
+const {
+  allowEmpty = false,
+  label,
+  labelMode,
+  labelVariant,
+  localizeLabel,
+  optionLabel,
+  optionValue,
+  stateful,
+  targetProp
+} = schema;
 
 const path = context.injectPath();
 const selected = ref();
@@ -120,6 +136,13 @@ function setSelected(value) {
         @apply max-sm:rounded-b-lg max-sm:rounded-se-none;
       }
     }
+  }
+}
+</style>
+<style scoped>
+&:has(.p-iftalabel) {
+  .p-iftalabel {
+    @apply mt-2;
   }
 }
 </style>
