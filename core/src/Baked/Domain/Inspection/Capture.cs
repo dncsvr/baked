@@ -1,6 +1,5 @@
 using Baked.Core;
 using Baked.Runtime;
-using Baked.Ui;
 using Newtonsoft.Json;
 using Spectre.Console;
 using System.Diagnostics;
@@ -73,9 +72,7 @@ internal class Capture<T>
         value = null;
         concreteTypeOfTarget = null;
 
-        object? targetObject = target is IComponentDescriptor descriptor
-            ? descriptor.Schema
-            : target;
+        var targetObject = _captureType.ConvertTarget(target);
         if (targetObject is null || !targetObject.GetType().IsAssignableTo(_inspection.TargetType)) { return false; }
 
         value = _inspection.Evaluate(targetObject);

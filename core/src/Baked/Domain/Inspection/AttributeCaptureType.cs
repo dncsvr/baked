@@ -9,4 +9,7 @@ public class AttributeCaptureType(DomainModelContext _context)
 
     public string BuildTitle(Type type) =>
         $"[[{type.Name.Replace("Attribute", string.Empty)}]]";
+
+    public object? ConvertTarget<T>(T? target) =>
+        target;
 }
