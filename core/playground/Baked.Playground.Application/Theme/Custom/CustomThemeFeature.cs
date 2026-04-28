@@ -32,14 +32,6 @@ public class CustomThemeFeature(IEnumerable<Func<Router, Route>> routes)
     {
         base.Configure(configurator);
 
-        configurator.Domain.ConfigureInspect(inspect =>
-        {
-            inspect.MethodComponent<DataTable>(
-                when: c => c.Type.Is<ReportPageSample>(),
-                component: dt => dt.Paginator
-            );
-        });
-
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
         {
             // Custom theme CSV formatter settings
