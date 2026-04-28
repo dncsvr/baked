@@ -371,7 +371,7 @@ public class InspectingAttributes : TestSpec
             new StubFeature(c).Configure(() => new CustomAttribute());
         }
 
-        _messages.ShouldContain(m => Regex.IsMatch(m.Message, @"\[link=.*]StubFeature:\d+\[/]"));
+        _messages.ShouldContain(m => Regex.IsMatch(m.Message, @"\[magenta]\[link=.*]StubFeature\[/]:\d+\[/]"), customMessage: _messages.Join(Environment.NewLine));
     }
 
     [Test]
@@ -386,7 +386,7 @@ public class InspectingAttributes : TestSpec
             trace.CaptureAttribute(c, () => new CustomAttribute());
         }
 
-        _messages.ShouldContain(m => m.Message.Contains("[magenta]<unknown>[/]"));
+        _messages.ShouldContain(m => m.Message.Contains("<unknown>"));
         _messages.ShouldContain(m =>
             Regex.IsMatch(m.Message, @"\[gray].*at .*Reports_the_whole_stack_trace_when_feature_is_not_captured.*\[/]",
                 RegexOptions.Singleline

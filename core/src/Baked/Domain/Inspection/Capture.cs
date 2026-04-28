@@ -101,13 +101,13 @@ internal class Capture<T>
 
         var title = source;
         var url = new Uri(fileName).AbsoluteUri;
+        source = $"[link={url}]{title}[/]";
+
         var lineNumber = featureFrame.GetFileLineNumber();
         if (lineNumber > 0)
         {
-            title += $":{lineNumber}";
+            source += $":{lineNumber}";
         }
-
-        source = $"[link={url}]{title}[/]";
 
         return true;
     }
