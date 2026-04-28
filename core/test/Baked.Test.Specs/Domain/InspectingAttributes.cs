@@ -357,8 +357,7 @@ public class InspectingAttributes : TestSpec
             _trace.CaptureAttribute(c, ca, () => ca.SecondValue = "update");
         }
 
-        _messages.Count(m => m.Message.Contains($"init")).ShouldBe(0);
-        _messages.Count(m => m.Message.Contains($"create")).ShouldBe(0);
+        _messages.Count(m => m.Message.Contains($"SecondValue")).ShouldBe(0);
     }
 
     [Test]
@@ -379,18 +378,19 @@ public class InspectingAttributes : TestSpec
     public void Reports_the_whole_stack_trace_when_feature_is_not_captured()
     {
         _inspect.Attribute<CustomAttribute>();
+        var trace = Trace.Here();
         var c = GiveMe.ATypeModelContext<Parent>();
 
         using (_diagnostics)
         {
-            _trace.CaptureAttribute(c, () => new CustomAttribute());
+            trace.CaptureAttribute(c, () => new CustomAttribute());
         }
 
         _messages.ShouldContain(m => m.Message.Contains("[magenta]<unknown>[/]"));
         _messages.ShouldContain(m =>
-            Regex.IsMatch(m.Message, @"\[gray].*at Baked[.]Test[.]Domain[.]InspectingAttributes[.][.]ctor\(\).*\[/]",
+            Regex.IsMatch(m.Message, @"\[gray].*at .*Reports_the_whole_stack_trace_when_feature_is_not_captured.*\[/]",
                 RegexOptions.Singleline
-            )
+            ), customMessage: _messages.Join(Environment.NewLine)
         );
     }
 }
