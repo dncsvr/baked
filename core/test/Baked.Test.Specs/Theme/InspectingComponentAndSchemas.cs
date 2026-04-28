@@ -33,6 +33,7 @@ public class InspectingComponentAndSchemas : TestSpec
 
         _diagnostics?.Dispose();
         _messages.Clear();
+        Inspection.Clear();
     }
 
     [Test]

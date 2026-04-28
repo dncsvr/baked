@@ -28,6 +28,7 @@ public class InspectingAttributes : TestSpec
 
         _diagnostics?.Dispose();
         _messages.Clear();
+        Inspection.Clear();
     }
 
     IEnumerable<(DomainModelContext Context, string MemberName)> CreateContextCases()
@@ -115,6 +116,16 @@ public class InspectingAttributes : TestSpec
         }
 
         _messages.ShouldContain(m => m.Message.Contains("<this>"));
+    }
+
+    [Test]
+    public void Multiple_inspections_are_not_supported()
+    {
+        _inspect.Attribute<CustomAttribute>();
+
+        var action = () => _inspect.Attribute<CustomAttribute>();
+
+        action.ShouldThrow<InvalidOperationException>();
     }
 
     [Test]

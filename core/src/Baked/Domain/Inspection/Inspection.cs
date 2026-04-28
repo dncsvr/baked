@@ -4,7 +4,26 @@ namespace Baked.Domain.Inspection;
 
 public class Inspection
 {
-    internal static Inspection? Current { get; set; }
+    internal static Inspection? Current
+    {
+        get;
+        set
+        {
+            if (value is not null && field is not null)
+            {
+                throw new InvalidOperationException(
+                    "There is already an inspection configured:" +
+                    $" (TargetType: {field.TargetType.Name}, Expression: {field.Expression})." +
+                    " Only one inspection is allowed at a time."
+                );
+            }
+
+            field = value;
+        }
+    }
+
+    public static void Clear() =>
+        Current = null;
 
     readonly Dictionary<string, Delegate> _filters = [];
 

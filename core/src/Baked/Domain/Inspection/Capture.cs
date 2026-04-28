@@ -44,7 +44,7 @@ internal class Capture<T>
         _initial = initial;
     }
 
-    string Property => _inspection.Expression.StripLambdaFromASingleMemberAccessExpression();
+    string Property => Markup.Escape(_inspection.Expression.StripLambdaFromASingleMemberAccessExpression());
 
     public T Execute()
     {
