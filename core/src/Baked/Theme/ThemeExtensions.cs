@@ -1343,9 +1343,7 @@ public static class ThemeExtensions
                 return create();
             }
 
-            return
-                new Capture<T>(inspection, trace.StackTrace, create, new DescriptorCaptureType(cc))
-                .Execute();
+            return new Capture<T>(inspection, trace.StackTrace, create, new DescriptorCaptureType(cc)).Execute();
         }
 
         public T CaptureDescriptor<T>(DomainModelContext c, ComponentContext cc, T target, Action update)
@@ -1357,9 +1355,7 @@ public static class ThemeExtensions
                 return target;
             }
 
-            return
-                new Capture<T>(inspection, trace.StackTrace, update, new DescriptorCaptureType(cc), target)
-                .Execute();
+            return new Capture<T>(inspection, trace.StackTrace, update, new DescriptorCaptureType(cc), target).Execute();
         }
     }
 

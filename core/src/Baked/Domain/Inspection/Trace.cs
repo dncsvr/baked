@@ -34,9 +34,7 @@ public class Trace(StackTrace? stackTrace)
             return create();
         }
 
-        return
-            new Capture<TTarget>(inspection, StackTrace, create, new AttributeCaptureType(context))
-            .Execute();
+        return new Capture<TTarget>(inspection, StackTrace, create, new AttributeCaptureType(context)).Execute();
     }
 
     public TTarget CaptureAttribute<TModelContext, TTarget>(TModelContext context, TTarget target, Action update)
@@ -49,8 +47,6 @@ public class Trace(StackTrace? stackTrace)
             return target;
         }
 
-        return
-            new Capture<TTarget>(inspection, StackTrace, update, new AttributeCaptureType(context), target)
-            .Execute();
+        return new Capture<TTarget>(inspection, StackTrace, update, new AttributeCaptureType(context), target).Execute();
     }
 }
