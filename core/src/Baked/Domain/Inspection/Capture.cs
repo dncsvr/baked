@@ -62,7 +62,7 @@ internal class Capture<T>
         var source = TryFindFeatureSource(out var featureSource)
             ? $"[magenta]{featureSource}[/]"
             : $"[magenta]<unknown>[/]{Environment.NewLine}[gray]{Markup.Escape($"{_stackTrace}")}[/]";
-        Diagnostics.Current.ReportInfo($"  [gray]{Property}:[/] {Markup.Escape(FormatValue(value))} ← {source}", group: _captureType.Id);
+        Diagnostics.Current.ReportInfo($"  [wheat1]{Property}:[/] {Markup.Escape(FormatValue(value))} [gray]«[/] {source}", group: _captureType.Id);
 
         return target;
     }

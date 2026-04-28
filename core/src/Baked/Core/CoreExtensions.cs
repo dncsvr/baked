@@ -17,7 +17,11 @@ public static class CoreExtensions
     // Do NOT remove this warning disable section unintentionally.
     // Without this, GitHub Actions fails on dotnet format
 #pragma warning disable IDE0052
-    static readonly IAnsiConsole _buildConsole = AnsiConsole.Create(new() { Out = new AnsiConsoleOutput(new EscapeFixTextWriter(Console.Out)) });
+    static readonly IAnsiConsole _buildConsole = AnsiConsole.Create(new()
+    {
+        Out = new AnsiConsoleOutput(new EscapeFixTextWriter(Console.Out)),
+        Ansi = AnsiSupport.Yes
+    });
 #pragma warning restore IDE0052
 
     static CoreExtensions()
