@@ -1,9 +1,13 @@
+using Baked.Runtime.Diagnostics;
+
 namespace Baked.Test.Domain;
 
 public class GettingMetadata : TestSpec
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class MultipleAttribute : Attribute;
+
+    [AttributeUsage(AttributeTargets.All)]
     public class SingleAttribute : Attribute;
 
     [Test]

@@ -5,6 +5,7 @@ using Baked.Domain.Inspection;
 using Baked.Domain.Model;
 using Baked.RestApi;
 using Baked.RestApi.Model;
+using Baked.Runtime.Diagnostics;
 using Baked.Testing;
 using Baked.Theme;
 using Baked.Theme.Default;
@@ -1042,7 +1043,7 @@ public static class ThemeExtensions
 
                 if (debugComponentPaths is not null)
                 {
-                    Diagnostics.ReportInfo(ComponentPath.GetPathsAsTree(debugComponentPaths));
+                    Diagnostics.Current.ReportInfo(ComponentPath.GetPathsAsTree(debugComponentPaths));
                 }
             }
         }
@@ -1145,8 +1146,8 @@ public static class ThemeExtensions
                     $"{(componentType is null ? string.Empty : $" of type {componentType.Name}")}" +
                     $" at path `{context.Path}`";
 
-                if (WarnForMissingComponent) { Diagnostics.ReportWarning(DiagnosticCode.MissingRequiredComponent, message); }
-                else { Diagnostics.ReportError(DiagnosticCode.MissingRequiredComponent, message); }
+                if (WarnForMissingComponent) { Diagnostics.Current.ReportWarning(DiagnosticCode.MissingRequiredComponent, message); }
+                else { Diagnostics.Current.ReportError(DiagnosticCode.MissingRequiredComponent, message); }
             }
 
             return DomainComponents.CustomAttributesMissingComponent(metadata, context, options: mc => mc.Component = componentType?.Name);

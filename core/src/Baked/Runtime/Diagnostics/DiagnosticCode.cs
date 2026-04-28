@@ -1,3 +1,7 @@
+using Baked.Runtime.Diagnostics;
+
+// NOTE namespace is at root for a better experience in Coding Style & UX
+// development
 namespace Baked;
 
 public readonly record struct DiagnosticCode(int Number)

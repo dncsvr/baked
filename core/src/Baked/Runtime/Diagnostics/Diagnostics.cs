@@ -1,5 +1,8 @@
+using Baked.Runtime.Diagnostics;
 using Spectre.Console;
 
+// NOTE namespace is at root for a better experience in Coding Style & UX
+// development
 namespace Baked;
 
 public class Diagnostics : IDisposable
@@ -28,71 +31,25 @@ public class Diagnostics : IDisposable
             throw new InvalidOperationException($"An active diagnostics ({_current.Name}) is available. Dispose it before starting a new one.");
         }
 
-        onDispose ??=
-            result =>
-            {
-                foreach (var message in result.Messages)
-                {
-                    try
-                    {
-                        Console.Build.MarkupLine(message.ToString());
-                    }
-                    catch { Console.WriteLine(message); }
-                }
-
-                if (result.Errors.Any())
-                {
-                    Environment.Exit(1);
-                }
-            };
-
-        return _current = new Diagnostics(name, onDispose);
+        return _current = new Diagnostics(name, onDispose ?? DefaultOnDispose);
     }
 
-    public static void Diagnose(Action action) =>
-        Diagnose(() => { action(); return 0; });
-
-    public static T? Diagnose<T>(Func<T> action)
+    static void DefaultOnDispose(DiagnosticsResult result)
     {
-        try
+        foreach (var message in result.Messages)
         {
-            return action();
-        }
-        catch (DiagnosticException ex)
-        {
-            Current._errors.Add(ex);
-            ReportError(ex.Code, ex.Message);
-
-            return default;
-        }
-        catch (Exception ex)
-        {
-            Current._errors.Add(ex);
-            ReportError(DiagnosticCode.Unknown, ex.Message);
-            if (ex.StackTrace is not null)
+            try
             {
-                ReportInfo(Markup.Escape(ex.StackTrace));
+                Console.Build.MarkupLine(message.ToString());
             }
+            catch { Console.WriteLine(message); }
+        }
 
-            return default;
+        if (result.Errors.Any())
+        {
+            Environment.Exit(1);
         }
     }
-
-    public static void ReportError(DiagnosticCode code, string message) =>
-        Report(message, level: "error", code: code);
-
-    public static void ReportWarning(DiagnosticCode code, string message) =>
-        Report(message, level: "warning", code: code);
-
-    public static void ReportInfo(string message,
-        string? group = default
-    ) => Report(message, group: group);
-
-    static void Report(string message,
-        string level = "info",
-        DiagnosticCode? code = default,
-        string? group = default
-    ) => Current._messages.Add(new(message, level, code, group));
 
     Action<DiagnosticsResult> _dispose;
     bool _disposed;
@@ -106,6 +63,51 @@ public class Diagnostics : IDisposable
         Name = name;
         _dispose = onDispose;
     }
+
+    public void Diagnose(Action action) =>
+        Diagnose(() => { action(); return 0; });
+
+    public T? Diagnose<T>(Func<T> action)
+    {
+        try
+        {
+            return action();
+        }
+        catch (DiagnosticException ex)
+        {
+            _errors.Add(ex);
+            ReportError(ex.Code, ex.Message);
+
+            return default;
+        }
+        catch (Exception ex)
+        {
+            _errors.Add(ex);
+            ReportError(DiagnosticCode.Unknown, ex.Message);
+            if (ex.StackTrace is not null)
+            {
+                ReportInfo(Markup.Escape(ex.StackTrace));
+            }
+
+            return default;
+        }
+    }
+
+    public void ReportError(DiagnosticCode code, string message) =>
+        Report(message, level: "error", code: code);
+
+    public void ReportWarning(DiagnosticCode code, string message) =>
+        Report(message, level: "warning", code: code);
+
+    public void ReportInfo(string message,
+        string? group = default
+    ) => Report(message, group: group);
+
+    void Report(string message,
+        string level = "info",
+        DiagnosticCode? code = default,
+        string? group = default
+    ) => _messages.Add(new(message, level, code, group));
 
     public void OnDispose(Action<DiagnosticsResult> handler) =>
         _dispose = handler;

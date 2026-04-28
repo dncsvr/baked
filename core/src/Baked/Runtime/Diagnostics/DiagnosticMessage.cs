@@ -1,4 +1,4 @@
-namespace Baked;
+namespace Baked.Runtime.Diagnostics;
 
 public class DiagnosticMessage(string message, string level,
     DiagnosticCode? code = default,

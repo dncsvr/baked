@@ -3,6 +3,7 @@ using Baked.Domain.Conventions;
 using Baked.Domain.Model;
 using Baked.Playground.Business;
 using Baked.Playground.Orm;
+using Baked.Runtime.Diagnostics;
 
 namespace Baked.Test.Domain;
 
