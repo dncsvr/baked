@@ -398,14 +398,14 @@
             }
           },
           {
-            "title": "List Panel",
+            "title": "Data Container",
             "component": {
               "type": "CardLink",
               "schema": {
-                "route": "/specs/list-panel",
+                "route": "/specs/data-container",
                 "icon": "pi pi-microchip",
-                "title": "List Panel",
-                "description": "Lazy loads and views a list data within a panel"
+                "title": "Data Container",
+                "description": "Lazy loads and views a data within a simple container"
               }
             }
           },

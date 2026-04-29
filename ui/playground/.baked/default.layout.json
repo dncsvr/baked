@@ -257,10 +257,10 @@
             "title": "Data Panel",
             "parentRoute": "/specs"
           },
-          "/specs/list-panel": {
-            "route": "/specs/list-panel",
+          "/specs/data-container": {
+            "route": "/specs/data-container",
             "icon": "pi pi-microchip",
-            "title": "List Panel",
+            "title": "Data Container",
             "parentRoute": "/specs"
           },
           "/specs/header": {
