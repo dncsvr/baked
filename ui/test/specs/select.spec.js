@@ -337,7 +337,7 @@ test.describe("Filtering on Select without Option Label", () => {
 });
 
 test.describe("None Label Mode", () => {
-  const id = "None Label Mode"
+  const id = "None Label Mode";
 
   test("visual", { tag: "@visual" }, async({ page }) => {
     const component = page.getByTestId(id);
@@ -353,9 +353,9 @@ test.describe("None Label Mode", () => {
 
 test.describe("Label Mode Testing", () => {
   [
-    {id: "Ifta Label Mode", expected: "Ifta Mode"},
-    {id: "Float Label:in Mode", expected: "In Mode"},
-    {id: "Float Label:over Mode", expected: "Over Mode"},
+    { id: "Ifta Label Mode", expected: "Ifta Mode" },
+    { id: "Float Label:in Mode", expected: "In Mode" },
+    { id: "Float Label:over Mode", expected: "Over Mode" }
   ].forEach(({ id, expected }) => {
     test(`testing correct label text ${expected}`, async({ page }) => {
       const component = page.getByTestId(id);
@@ -366,7 +366,7 @@ test.describe("Label Mode Testing", () => {
       await page.waitForTimeout(100); // waits for animation to finish
 
       await expect(component.getByText(expected)).toBeVisible();
-    })
+    });
 
     test(`visual ${expected}`, { tag: "@visual" }, async({ page }) => {
       const component = page.getByTestId(id);
@@ -375,7 +375,7 @@ test.describe("Label Mode Testing", () => {
       await component.click();
       await options.nth(1).click();
       await page.waitForTimeout(100); // waits for animation to finish
-  
+
       await expect(component.locator(primevue.select.label)).toHaveScreenshot();
     });
   });

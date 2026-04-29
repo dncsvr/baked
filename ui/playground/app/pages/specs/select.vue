@@ -178,7 +178,7 @@ const variants = [
     name: "Ifta Label Mode",
     descriptor: giveMe.aSelect({
       label: "Ifta Mode",
-      labelMode: "ifta",
+      labelMode: "ifta"
     }),
     model: ref()
   },
@@ -198,6 +198,6 @@ const variants = [
       labelVariant: "over "
     }),
     model: ref()
-  },
+  }
 ];
 </script>

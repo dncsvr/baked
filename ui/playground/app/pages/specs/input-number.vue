@@ -31,6 +31,6 @@ const variants = [
       labelMode: "ifta"
     }),
     model: ref()
-  },
+  }
 ];
 </script>
