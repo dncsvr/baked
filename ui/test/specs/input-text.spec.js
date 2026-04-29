@@ -14,10 +14,6 @@ test.describe("Base", () => {
     await expect(component.locator(primevue.floatLabel.base)).toHaveText("Label");
   });
 
-  test.skip("label mode", () => {
-    console.log("label mode test skipped.");
-  });
-
   test("model", async({ page }) => {
     const component = page.getByTestId(id);
     const input = component.locator(primevue.inputText.base);
@@ -46,6 +42,22 @@ test.describe("Base", () => {
 
 test.describe("Long Label", () => {
   const id = "Long Label";
+
+  test("visual", { tag: "@visual" }, async({ page }) => {
+    const component = page.getByTestId(id);
+
+    await expect(component).toHaveScreenshot();
+  });
+});
+
+test.describe("Ifta Label", () => {
+  const id = "Ifta Label";
+
+  test("ifta label", async({ page }) => {
+    const component = page.getByTestId(id);
+
+    await expect(component.locator(primevue.iftaLabel.base)).toHaveText("Spec: IftaLabel");
+  });
 
   test("visual", { tag: "@visual" }, async({ page }) => {
     const component = page.getByTestId(id);

@@ -469,23 +469,31 @@ export default {
     return { name, required, default: default_, defaultSelfManaged, queryBound, component };
   },
 
-  anInputText({ label, targetProp } = {}) {
+  anInputText({ label, labelMode, labelVariant, targetProp } = {}) {
     targetProp = $(targetProp, undefined);
-
+    labelMode = $(labelMode, "float");
+    labelVariant = $(labelVariant, "on");
     return {
       type: "InputText",
       schema: {
         label,
+        labelMode,
+        labelVariant,
         targetProp
       }
     };
   },
 
-  anInputNumber({ label } = {}) {
+  anInputNumber({ label, labelMode, labelVariant } = {}) {
+    labelMode = $(labelMode, "float");
+    labelVariant = $(labelVariant, "on");
+
     return {
       type: "InputNumber",
       schema: {
-        label
+        label,
+        labelMode,
+        labelVariant
       }
     };
   },

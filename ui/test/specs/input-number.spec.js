@@ -52,3 +52,19 @@ test.describe("Long Label", () => {
     await expect(component).toHaveScreenshot();
   });
 });
+
+test.describe("Ifta Label", () => {
+  const id = "Ifta Label";
+
+  test("ifta label", async({ page }) => {
+    const component = page.getByTestId(id);
+
+    await expect(component.locator(primevue.iftaLabel.base)).toHaveText("Spec: IftaLabel");
+  });
+
+  test("visual", { tag: "@visual" }, async({ page }) => {
+    const component = page.getByTestId(id);
+
+    await expect(component).toHaveScreenshot();
+  });
+});

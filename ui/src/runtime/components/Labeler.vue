@@ -34,13 +34,13 @@ const labelComponent = computed(() => {
   if(!label) { return "div"; }
 
   switch (mode) {
-  case "float":
-    return FloatLabel;
+  case "none":
+    return "div";
   case "ifta":
     return IftaLabel;
-  case "none":
+  case "float":
   default:
-    return "div";
+    return FloatLabel;
   }
 });
 </script>
