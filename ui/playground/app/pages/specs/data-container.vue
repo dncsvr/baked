@@ -1,6 +1,6 @@
 <template>
   <UiSpec
-    title="List Panel"
+    title="Data Container"
     :variants
     no-loading-variant
   />
@@ -19,16 +19,16 @@ const variants = [
           defaultValue:"10",
           required: true,
           component: giveMe.aSelect({
-            data: ["10", "20"],
+            data: ["10", "20"]
           })
         }),
         giveMe.anInput({
           name: "skip",
           queryBound: true,
-          required: false,
-          defaultValue:"0",
+          required: true,
+          defaultValue: "10",
           component: giveMe.aSelect({
-            data: ["0", "10", "20"],
+            data: ["0", "10", "20"]
           })
         })
       ],

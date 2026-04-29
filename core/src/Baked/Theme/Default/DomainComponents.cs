@@ -144,17 +144,15 @@ public static class DomainComponents
         );
     }
 
-    public static ComponentDescriptor<ListPanel> MethodListPanel(MethodModel method, ComponentContext context,
-        Action<ListPanel>? options = default
+    public static ComponentDescriptor<DataContainer> MethodDataContainer(MethodModel method, ComponentContext context,
+        Action<DataContainer>? options = default
     )
     {
-        Console.WriteLine(context.Path);
-        context = context.Drill(nameof(ListPanel));
+        context = context.Drill(nameof(DataContainer));
         var (_, l) = context;
 
-        return B.ListPanel(
-            method.GetRequiredSchema<InlineData>(context.Drill(nameof(ListPanel.Title))),
-            method.GetRequiredComponent(context.Drill(nameof(ListPanel.Content))),
+        return B.DataContainer(
+            method.GetRequiredComponent(context.Drill(nameof(DataContainer.Content))),
             options: options
         );
     }

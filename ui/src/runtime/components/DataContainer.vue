@@ -1,9 +1,8 @@
 <template>
   <Panel
     ref="panel"
-    :header="localizeTitle ? l(title) : title"
     :collapsed="collapsedState"
-    :toggleable="toggleable ?? true"
+    :toggleable="false"
     :pt="
       {
         headerActions: 'flex gap-2 items-center',
@@ -80,16 +79,14 @@
   </Panel>
 </template>
 <script setup>
-import { computed, ref, useTemplateRef } from "vue";
+import { ref, useTemplateRef } from "vue";
 import { Message, Panel, Button } from "primevue";
-import { useBreakpoints, useContext, useDataMounter, useUiStates, useLocalization } from "#imports";
+import { useBreakpoints, useContext, useUiStates, useLocalization } from "#imports";
 import { Bake, Inputs, PersistentPopover } from "#components";
 
 const { value: { panelStates } } = useUiStates();
 const { isMd } = useBreakpoints();
 const context = useContext();
-const { mount: mountData } = useDataMounter();
-const { localize: l } = useLocalization();
 const { localize: lc } = useLocalization({ group: "DataPanel" });
 const panel = useTemplateRef("panel");
 
@@ -97,12 +94,12 @@ const { schema } = defineProps({
   schema: { type: null, required: true }
 });
 
-const { collapsed, content, inputs, localizeTitle, title: titleData, toggleable } = schema;
+const { content, inputs } = schema;
 
 const contextData = context.injectContextData();
 const path = context.injectPath();
-const collapsedState = computed(() => panelStates[path] ?? collapsed);
-const loaded = ref(!collapsedState.value);
+
+const loaded = ref(true);
 const ready = ref(inputs.length === 0); // it is ready when there is no parameter
 const uniqueKey = ref("");
 const popover = ref();
@@ -111,8 +108,6 @@ const values = ref({});
 if(inputs.length > 0) {
   contextData.parent["parameters"] = values;
 }
-
-const title = mountData(titleData);
 
 function togglePopover(event) {
   popover.value.toggle(event);
@@ -133,12 +128,10 @@ function onCollapsed(collapsed) {
 }
 
 function onReady(value) {
-  console.log("ready:" + value);
   ready.value = value;
 }
 
 function onChanged(event) {
-  console.log("onChanged:" + event);
   uniqueKey.value = event.uniqueKey;
   values.value = event.values;
 }

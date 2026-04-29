@@ -61,13 +61,8 @@
     "contents": [
       {
         "component": {
-          "type": "ListPanel",
+          "type": "DataContainer",
           "schema": {
-            "title": {
-              "type": "Inline",
-              "value": "GetParents"
-            },
-            "localizeTitle": true,
             "inputs": [
               {
                 "name": "take",
@@ -77,29 +72,9 @@
                 },
                 "queryBound": true,
                 "component": {
-                  "type": "Select",
+                  "type": "InputNumber",
                   "schema": {
-                    "label": "Take",
-                    "localizeLabel": false,
-                    "stateful": true,
-                    "noFloatLabel": true
-                  },
-                  "data": {
-                    "type": "Inline",
-                    "value": [
-                      "10",
-                      "20",
-                      "50",
-                      "100"
-                    ]
-                  },
-                  "action": {
-                    "type": "Publish",
-                    "pageContextKey": "list-panel-take",
-                    "data": {
-                      "type": "Context",
-                      "key": "model"
-                    }
+                    "label": "Take"
                   }
                 }
               },
@@ -111,39 +86,9 @@
                 },
                 "queryBound": true,
                 "component": {
-                  "type": "ServerPaginator",
-                  "schema": {},
-                  "data": {
-                    "type": "Composite",
-                    "parts": [
-                      {
-                        "type": "Context",
-                        "key": "page",
-                        "prop": "data-length-context-key",
-                        "targetProp": "length"
-                      },
-                      {
-                        "type": "Context",
-                        "key": "page",
-                        "prop": "list-panel-take",
-                        "targetProp": "take"
-                      }
-                    ]
-                  },
-                  "reactions": {
-                    "reload": {
-                      "type": "Composite",
-                      "parts": [
-                        {
-                          "type": "When",
-                          "when": "data-length-context-key"
-                        },
-                        {
-                          "type": "When",
-                          "when": "list-panel-take"
-                        }
-                      ]
-                    }
+                  "type": "InputNumber",
+                  "schema": {
+                    "label": "Skip"
                   }
                 }
               },

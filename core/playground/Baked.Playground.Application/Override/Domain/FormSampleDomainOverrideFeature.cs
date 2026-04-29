@@ -20,7 +20,6 @@ public class FormSampleDomainOverrideFeature : IFeature
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent),
                 component: fp => fp.Schema.Inputs.Move("name", 0)
             );
-
             builder.Conventions.AddMethodAttributeConfiguration<ActionAttribute>(
                 when: c => c.Type.Is<Parent>() && c.Method.Name.Contains("Child"),
                 attribute: a => a.HideInLists = true
@@ -31,7 +30,7 @@ public class FormSampleDomainOverrideFeature : IFeature
             builder.Conventions.AddMethodComponent(
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents),
                 where: cc => cc.Path.EndsWith("Contents", "*", "*", nameof(Content.Component)),
-                component: (c, cc) => DomainComponents.MethodListPanel(c.Method, cc)
+                component: (c, cc) => DomainComponents.MethodDataContainer(c.Method, cc)
             );
         });
     }

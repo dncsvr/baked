@@ -62,7 +62,7 @@ public static class CustomThemeExtensions
 
                 // Layout
                 r => r.Child("/specs/data-panel", "Data Panel", "/specs") with { Icon = "pi pi-microchip", Description = "Lazy loads and views a data within a panel", Section = "Layout" },
-                r => r.Child("/specs/list-panel", "List Panel", "/specs") with { Icon = "pi pi-microchip", Description = "Lazy loads and views a list data within a panel", Section = "Layout" },
+                r => r.Child("/specs/data-container", "Data Container", "/specs") with { Icon = "pi pi-microchip", Description = "Lazy loads and views a data within a simple container", Section = "Layout" },
                 r => r.Child("/specs/header", "Header", "/specs") with { Icon = "pi pi-microchip", Description = "Renders a breadcrumb", Section = "Layout" },
                 r => r.Child("/specs/dialog", "Dialog", "/specs") with { Icon = "pi pi-microchip", Description = "Renders a dialog with given contents and a button if given an action", Section = "Layout" },
                 r => r.Child("/specs/page-title", "Page Title", "/specs") with { Icon = "pi pi-microchip", Description = "Renders page title, desc and actions", Section = "Layout" },

@@ -90,6 +90,7 @@ public abstract class MonolithRecipe
                 c => c.NamespaceAsRoute(),
                 c => c.ObjectAsJson(),
                 c => c.Query(),
+                c => c.QueryMethod(),
                 c => c.RecordsAreDtos(),
                 c => c.RemainingServicesAreSingleton(),
                 c => c.RichEntity(),

@@ -27,9 +27,9 @@ public static class Components
         Action<DataPanel>? options = default
     ) => new(options.Apply(new(title, content)));
 
-    public static ComponentDescriptor<ListPanel> ListPanel(IData title, IComponentDescriptor content,
-        Action<ListPanel>? options = default
-    ) => new(options.Apply(new(title, content)));
+    public static ComponentDescriptor<DataContainer> DataContainer(IComponentDescriptor content,
+        Action<DataContainer>? options = default
+    ) => new(options.Apply(new(content)));
 
     public static ComponentDescriptor<DataTable> DataTable(
         Action<DataTable>? options = default,

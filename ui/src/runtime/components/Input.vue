@@ -27,8 +27,6 @@ onAfterMountData(async() => {
   // parent component might set model to null during setup, because of that on
   // mounted is used to set model value if it doesn't check
   if(!checkValue(model.value)) {
-    console.log("initial query:"+route.fullPath);
-    console.log("check initial value:"+schema.name+" value:"+model.value);
     if(schema.queryBound && checkValue(query.value)) {
       model.value = query.value;
     } else {
@@ -42,9 +40,8 @@ onAfterMountData(async() => {
     // when there are more than one inputs only last route push takes effect,
     // because of that it needs to watch for any query change
     watch(() => route.query, async newQuery => {
-      console.log("wacth query:"+route.fullPath);
       const newValue = newQuery[schema.name];
-      if(!checkValue(newValue) && schema.required && defaultValue.value) {
+      if(!checkValue(newValue) && schema.required && checkValue(defaultValue.value)) {
         await set(defaultValue.value);
 
         return;
@@ -55,11 +52,10 @@ onAfterMountData(async() => {
   }
 
   watch(model, async newValue => {
-    console.log("watch "+ schema.name+":"+newValue);
     if(!checkValue(newValue)) {
       newValue = schema.required ? defaultValue.value : undefined;
     }
-    console.log("set "+ schema.name+":"+newValue);
+
     await set(newValue);
   });
 });
