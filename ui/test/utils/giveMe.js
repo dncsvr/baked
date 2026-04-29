@@ -728,12 +728,11 @@ export default {
     return screens.find(screen => screen.name === name) || null;
   },
 
-  aSelect({ action, data, filter, inline, label, localizeLabel, noFloatLabel, optionLabel, optionValue, showClear, stateful, targetProp } = {}) {
+  aSelect({ action, data, filter, inline, label, labelMode, labelVariant, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp } = {}) {
     data = $(data, ["Test Option 1", "Test Option 2"]);
     inline = $(inline, true);
     label = $(label, "Spec: Test");
     localizeLabel = $(localizeLabel, false);
-    noFloatLabel = $(noFloatLabel, false);
     showClear = $(showClear, false);
     stateful = $(stateful, false);
 
@@ -744,10 +743,10 @@ export default {
         options: this.anInlineData({ ms: 1, data }),
         isAsync: true
       });
-
+    console.log(labelMode);
     return {
       type: "Select",
-      schema: { filter, label, localizeLabel, noFloatLabel, optionLabel, optionValue, showClear, stateful, targetProp },
+      schema: { filter, label, labelMode, labelVariant, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp },
       data,
       action
     };

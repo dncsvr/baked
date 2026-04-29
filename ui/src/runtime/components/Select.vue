@@ -40,7 +40,7 @@
 import { ref, watch } from "vue";
 import { Select, Skeleton } from "primevue";
 import { useContext, useUiStates, useLocalization } from "#imports";
-import { AwaitLoading } from "#components";
+import { AwaitLoading, Labeler } from "#components";
 
 const context = useContext();
 const { localize: l } = useLocalization();

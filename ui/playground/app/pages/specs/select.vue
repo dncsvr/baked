@@ -148,7 +148,7 @@ const variants = [
     name: "No Float Label",
     descriptor: giveMe.aSelect({
       label: "No Float Label",
-      noFloatLabel: true
+      labelMode: "none"
     }),
     model: ref()
   },
