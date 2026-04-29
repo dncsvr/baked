@@ -61,14 +61,89 @@
     "contents": [
       {
         "component": {
-          "type": "DataPanel",
+          "type": "ListPanel",
           "schema": {
             "title": {
               "type": "Inline",
               "value": "GetParents"
             },
             "localizeTitle": true,
-            "inputs": [],
+            "inputs": [
+              {
+                "name": "take",
+                "default": {
+                  "type": "Inline",
+                  "value": 10
+                },
+                "queryBound": true,
+                "component": {
+                  "type": "Select",
+                  "schema": {
+                    "label": "Take",
+                    "localizeLabel": false,
+                    "stateful": true,
+                    "noFloatLabel": true
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      "10",
+                      "20",
+                      "50",
+                      "100"
+                    ]
+                  },
+                  "action": {
+                    "type": "Publish",
+                    "pageContextKey": "list-panel-take",
+                    "data": {
+                      "type": "Context",
+                      "key": "model"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "skip",
+                "default": {
+                  "type": "Inline",
+                  "value": 0
+                },
+                "queryBound": true,
+                "component": {
+                  "type": "InputNumber",
+                  "schema": {
+                    "label": "Skip"
+                  }
+                }
+              },
+              {
+                "name": "sort",
+                "queryBound": true,
+                "component": {
+                  "type": "SelectButton",
+                  "schema": {
+                    "allowEmpty": true,
+                    "optionLabel": "label",
+                    "optionValue": "value",
+                    "localizeLabel": true
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      {
+                        "label": "Sort.Asc",
+                        "value": "Asc"
+                      },
+                      {
+                        "label": "Sort.Desc",
+                        "value": "Desc"
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
             "content": {
               "type": "DataTable",
               "schema": {
@@ -155,26 +230,6 @@
                 ],
                 "dataKey": "id",
                 "paginator": false,
-                "serverPaginatorOptions": {
-                  "take": {
-                    "type": "Select",
-                    "schema": {
-                      "label": "Take",
-                      "localizeLabel": false,
-                      "stateful": true,
-                      "noFloatLabel": true
-                    },
-                    "data": {
-                      "type": "Inline",
-                      "value": [
-                        10,
-                        20,
-                        50,
-                        100
-                      ]
-                    }
-                  }
-                },
                 "rows": 5,
                 "exportOptions": {
                   "csvSeparator": ";",
@@ -305,37 +360,7 @@
                   "exportable": false,
                   "frozen": true
                 },
-                "sort": {
-                  "type": "SelectButton",
-                  "schema": {
-                    "allowEmpty": true,
-                    "optionLabel": "label",
-                    "optionValue": "value",
-                    "localizeLabel": true,
-                    "stateful": true
-                  },
-                  "data": {
-                    "type": "Inline",
-                    "value": [
-                      {
-                        "label": "Sort.Asc",
-                        "value": "Asc"
-                      },
-                      {
-                        "label": "Sort.Desc",
-                        "value": "Desc"
-                      }
-                    ]
-                  },
-                  "action": {
-                    "type": "Publish",
-                    "pageContextKey": "sort",
-                    "data": {
-                      "type": "Context",
-                      "key": "model"
-                    }
-                  }
-                }
+                "dataLengthContextKey": "data-length-context-key"
               },
               "data": {
                 "type": "Remote",
@@ -357,12 +382,6 @@
                       "type": "Context",
                       "key": "parent",
                       "prop": "parameters"
-                    },
-                    {
-                      "type": "Context",
-                      "key": "page",
-                      "prop": "sort",
-                      "targetProp": "sort"
                     }
                   ]
                 }
@@ -378,18 +397,6 @@
                     {
                       "type": "On",
                       "on": "delete"
-                    },
-                    {
-                      "type": "On",
-                      "on": "clear-parents"
-                    },
-                    {
-                      "type": "On",
-                      "on": "page-changed"
-                    },
-                    {
-                      "type": "When",
-                      "when": "sort"
                     }
                   ]
                 }

@@ -27,6 +27,10 @@ public static class Components
         Action<DataPanel>? options = default
     ) => new(options.Apply(new(title, content)));
 
+    public static ComponentDescriptor<ListPanel> ListPanel(IData title, IComponentDescriptor content,
+        Action<ListPanel>? options = default
+    ) => new(options.Apply(new(title, content)));
+
     public static ComponentDescriptor<DataTable> DataTable(
         Action<DataTable>? options = default,
         IData? data = default
@@ -43,10 +47,6 @@ public static class Components
     public static DataTable.Footer DataTableFooter(string label,
         Action<DataTable.Footer>? options = default
     ) => options.Apply(new(label));
-
-    public static DataTable.ServerPaginator DataTableServerPaginator(
-        Action<DataTable.ServerPaginator>? options = default
-    ) => options.Apply(new());
 
     public static DataTable.VirtualScroller DataTableVirtualScroller(
         Action<DataTable.VirtualScroller>? options = default
@@ -198,6 +198,10 @@ public static class Components
     public static ComponentDescriptor<SelectButton> SelectButton(IData data,
         Action<SelectButton>? options = default
     ) => new(options.Apply(new() { LocalizeLabel = data.RequireLocalization })) { Data = data };
+
+    public static ComponentDescriptor<ServerPaginator> ServerPaginator(
+        Action<ServerPaginator>? options = default
+    ) => new(options.Apply(new()));
 
     public static ComponentDescriptor<SideMenu> SideMenu(
         Action<SideMenu>? options = default,
