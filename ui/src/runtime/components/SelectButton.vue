@@ -56,7 +56,7 @@ const model = defineModel({ type: null, required: true });
 const {
   allowEmpty = false,
   label,
-  labelMode,
+  labelMode = "ifta",
   labelVariant,
   localizeLabel,
   optionLabel,
