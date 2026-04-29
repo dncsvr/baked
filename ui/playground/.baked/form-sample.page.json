@@ -71,7 +71,10 @@
             "inputs": [
               {
                 "name": "take",
-                "required": false,
+                "default": {
+                  "type": "Inline",
+                  "value": 10
+                },
                 "queryBound": true,
                 "component": {
                   "type": "Select",
@@ -102,7 +105,10 @@
               },
               {
                 "name": "skip",
-                "required": false,
+                "default": {
+                  "type": "Inline",
+                  "value": 0
+                },
                 "queryBound": true,
                 "component": {
                   "type": "ServerPaginator",
@@ -130,7 +136,7 @@
                       "parts": [
                         {
                           "type": "When",
-                          "when": "data-table-length"
+                          "when": "data-length-context-key"
                         },
                         {
                           "type": "When",
@@ -143,7 +149,6 @@
               },
               {
                 "name": "sort",
-                "required": false,
                 "queryBound": true,
                 "component": {
                   "type": "SelectButton",
@@ -385,7 +390,7 @@
                   "exportable": false,
                   "frozen": true
                 },
-                "dataLengthContextKey": "data-table-length"
+                "dataLengthContextKey": "data-length-context-key"
               },
               "data": {
                 "type": "Remote",

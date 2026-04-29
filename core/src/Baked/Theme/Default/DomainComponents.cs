@@ -202,7 +202,7 @@ public static class DomainComponents
 
         if (!parameter.ParameterType.TryGetMetadata(out var metadata))
         {
-            throw DiagnosticsCode.RequiresBuildLevel.Exception(
+            throw DiagnosticCode.RequiresBuildLevel.Exception(
                 $"{parameter.ParameterType.CSharpFriendlyFullName} cannot be used, its metadata is not present in domain model"
             );
         }
@@ -225,7 +225,7 @@ public static class DomainComponents
 
         if (!parameter.ParameterType.TryGetMetadata(out var metadata))
         {
-            throw DiagnosticsCode.RequiresBuildLevel.Exception(
+            throw DiagnosticCode.RequiresBuildLevel.Exception(
                 $"{parameter.ParameterType.CSharpFriendlyFullName} cannot be used, its metadata is not present in domain model"
             );
         }
@@ -378,7 +378,7 @@ public static class DomainComponents
         var label = type.FirstProperty<LabelAttribute>();
         if (!label.TryGet<DataAttribute>(out var labelData))
         {
-            throw DiagnosticsCode.PropertyWithAttribute.Exception(
+            throw DiagnosticCode.PropertyWithAttribute.Exception(
                 $"`{label.Name}` should have a `{nameof(DataAttribute)}`"
             );
         }
@@ -431,7 +431,7 @@ public static class DomainComponents
 
         if (!type.TryGet<RouteAttribute>(out var pageAttribute))
         {
-            throw DiagnosticsCode.TypeWithAttribute.Exception(
+            throw DiagnosticCode.TypeWithAttribute.Exception(
                 $"`{nameof(RouteAttribute)}` is not found on type (`{type.Name}`) to render as `{nameof(NavLink)}`"
             );
         }
