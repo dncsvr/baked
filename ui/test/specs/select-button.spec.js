@@ -53,7 +53,7 @@ test.describe("Base w/ Label", () => {
   test("label must shown if has label prop", async({ page }) => {
     const component = page.getByTestId(id);
 
-    await expect(component.locator("label")).toHaveText("Label");
+    await expect(component.getByText("Ifta Label")).toBeVisible();
   });
 
   test("visual", { tag: "@visual" }, async({ page }) => {
