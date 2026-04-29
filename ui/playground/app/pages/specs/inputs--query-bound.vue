@@ -6,7 +6,7 @@
       </span>
     </Message>
     <div
-      class="border-4 border-gray-500 rounded p-4 space-x-4"
+      class="flex border-4 border-gray-500 rounded p-4 space-x-4"
       data-testid="component"
     >
       <Inputs
@@ -87,6 +87,17 @@ const inputs = [
     required: true,
     queryBound: true,
     component: giveMe.anExpectedInput({ testId: "required-number", number: true })
+  }),
+  giveMe.anInput({
+    name: "requiredSelectNumber",
+    defaultValue: 20,
+    queryBound: true,
+    required: true,
+    numeric: true,
+    component: giveMe.aSelect({
+      data: [10, 20],
+      action: giveMe.aPublishAction({ pageContextKey: "required-select-number" })
+    })
   }),
   giveMe.anInput({
     name: "optional",

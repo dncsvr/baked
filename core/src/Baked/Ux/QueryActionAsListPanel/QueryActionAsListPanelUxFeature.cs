@@ -84,8 +84,8 @@ public class QueryActionAsListPanelUxFeature : IFeature<UxConfigurator>
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip,
                 schema: input =>
                 {
-                    input.DefaultValue = "0";
                     input.Required = true;
+                    input.Numeric = true;
                 },
                 order: 10
             );
@@ -98,7 +98,7 @@ public class QueryActionAsListPanelUxFeature : IFeature<UxConfigurator>
                     cc = cc.Drill(nameof(Select));
                     var (_, l) = cc;
 
-                    return B.Select(l("Take"), Datas.Inline(new[] { "10", "20", "50", "100" }, options: i => i.RequireLocalization = false));
+                    return B.Select(l("Take"), Datas.Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false));
                 }
             );
             builder.Conventions.AddParameterComponentConfiguration<Select>(
@@ -114,8 +114,8 @@ public class QueryActionAsListPanelUxFeature : IFeature<UxConfigurator>
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
                 schema: input =>
                 {
-                    input.DefaultValue = "10";
                     input.Required = true;
+                    input.Numeric = true;
                 },
                 order: 10
             );

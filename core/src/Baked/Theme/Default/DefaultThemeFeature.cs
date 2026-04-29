@@ -140,6 +140,14 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 schema: (c, cc) => ParameterInput(c.Parameter, cc)
             );
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                when: c =>
+                    c.Parameter.ParameterType.SkipNullable().Is<int>() ||
+                    c.Parameter.ParameterType.SkipNullable().Is<decimal>() ||
+                    c.Parameter.ParameterType.SkipNullable().Is<float>() ||
+                    c.Parameter.ParameterType.SkipNullable().Is<long>(),
+                schema: input => input.Numeric = true
+            );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
                 when: c => c.Parameter.Has<ParameterModelAttribute>(),
                 schema: (p, c) =>
                 {

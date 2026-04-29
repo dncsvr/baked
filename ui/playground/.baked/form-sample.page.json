@@ -66,29 +66,89 @@
             "inputs": [
               {
                 "name": "take",
+                "required": true,
                 "default": {
                   "type": "Inline",
                   "value": 10
                 },
+                "numeric": true,
                 "queryBound": true,
                 "component": {
-                  "type": "InputNumber",
+                  "type": "Select",
                   "schema": {
-                    "label": "Take"
+                    "label": "Take",
+                    "localizeLabel": false,
+                    "stateful": true,
+                    "noFloatLabel": true
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      10,
+                      20,
+                      50,
+                      100
+                    ]
+                  },
+                  "action": {
+                    "type": "Publish",
+                    "pageContextKey": "list-panel-take",
+                    "data": {
+                      "type": "Context",
+                      "key": "model"
+                    }
                   }
                 }
               },
               {
                 "name": "skip",
+                "required": true,
                 "default": {
                   "type": "Inline",
                   "value": 0
                 },
+                "numeric": true,
                 "queryBound": true,
                 "component": {
-                  "type": "InputNumber",
-                  "schema": {
-                    "label": "Skip"
+                  "type": "ServerPaginator",
+                  "schema": {},
+                  "data": {
+                    "type": "Composite",
+                    "parts": [
+                      {
+                        "type": "Context",
+                        "key": "page",
+                        "prop": "data-length-context-key",
+                        "targetProp": "length"
+                      },
+                      {
+                        "type": "Inline",
+                        "value": {
+                          "take": "10"
+                        }
+                      },
+                      {
+                        "type": "Context",
+                        "key": "page",
+                        "prop": "list-panel-take",
+                        "targetProp": "take"
+                      }
+                    ]
+                  },
+                  "reactions": {
+                    "reload": {
+                      "type": "Composite",
+                      "parts": [
+                        {
+                          "type": "When",
+                          "when": "data-length-context-key"
+                        },
+                        {
+                          "type": "When",
+                          "when": "list-panel-take"
+                        }
+                      ]
+                    }
                   }
                 }
               },

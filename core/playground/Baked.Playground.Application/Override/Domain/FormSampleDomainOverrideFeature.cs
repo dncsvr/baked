@@ -1,4 +1,5 @@
 ﻿using Baked.Architecture;
+using Baked.Business;
 using Baked.Playground.Orm;
 using Baked.Playground.Theme;
 using Baked.Theme.Default;
@@ -23,6 +24,10 @@ public class FormSampleDomainOverrideFeature : IFeature
             builder.Conventions.AddMethodAttributeConfiguration<ActionAttribute>(
                 when: c => c.Type.Is<Parent>() && c.Method.Name.Contains("Child"),
                 attribute: a => a.HideInLists = true
+            );
+            builder.Conventions.SetMethodAttribute(
+                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents),
+                attribute: () => new QueryMethodAttribute()
             );
             builder.Conventions.RemoveMethodComponent<DataPanel>(
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents)

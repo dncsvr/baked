@@ -14,21 +14,17 @@ const variants = [
     descriptor: giveMe.aDataPanel({
       inputs: [
         giveMe.anInput({
-          name: "take",
-          queryBound: true,
-          defaultValue:"10",
+          name: "required",
           required: true,
-          component: giveMe.aSelect({
-            data: ["10", "20"]
+          component: giveMe.anExpectedInput({
+            testId: "required"
           })
         }),
         giveMe.anInput({
-          name: "skip",
-          queryBound: true,
-          required: true,
-          defaultValue: "10",
-          component: giveMe.aSelect({
-            data: ["0", "10", "20"]
+          name: "optional",
+          required: false,
+          component: giveMe.anExpectedInput({
+            testId: "optional"
           })
         })
       ],

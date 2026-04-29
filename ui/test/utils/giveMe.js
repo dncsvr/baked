@@ -435,7 +435,7 @@ export default {
     };
   },
 
-  anInput({ name, required, defaultValue, default_, defaultSelfManaged, queryBound, component } = {}) {
+  anInput({ name, required, defaultValue, default_, defaultSelfManaged, numeric, queryBound, component } = {}) {
     name = $(name, "test");
     required = $(required, false);
     component = $(component, this.anExpectedInput());
@@ -443,7 +443,7 @@ export default {
     defaultSelfManaged = $(defaultSelfManaged, false);
     queryBound = $(queryBound, undefined);
 
-    return { name, required, default: default_, defaultSelfManaged, queryBound, component };
+    return { name, required, default: default_, defaultSelfManaged, numeric, queryBound, component };
   },
 
   anInputText({ label, targetProp } = {}) {

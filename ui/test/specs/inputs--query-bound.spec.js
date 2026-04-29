@@ -20,6 +20,7 @@ test("parameters are rendered", async({ page }) => {
   await expect(component.getByTestId("required-with-default-self-managed")).toBeVisible();
   await expect(component.getByTestId("required")).toBeVisible();
   await expect(component.getByTestId("required-number")).toBeVisible();
+  await expect(component.getByTestId("required-select-number")).toBeVisible();
   await expect(component.getByTestId("optional")).toBeVisible();
 });
 
@@ -27,9 +28,11 @@ test("default value is set", async({ page }) => {
   const component = page.getByTestId(id.component);
 
   await expect(component.getByTestId("required-with-default")).toHaveValue("default value");
+  await expect(component.getByTestId("required-select-number")).toHaveValue("20");
 
   const params = new URLSearchParams(new URL(page.url()).search);
   expect(params.get("requiredWithDefault")).toBe("default value");
+  expect(params.get("requiredSelectNumber")).toBe("20");
 });
 
 test("reset to default value after route to self", async({ page }) => {
@@ -56,13 +59,16 @@ test("query string is set from input", async({ page }) => {
   await component.getByTestId("required-with-default").fill("value 1");
   await component.getByTestId("required-with-default-self-managed").click();
   await component.getByTestId("required-with-default-self-managed").fill("value 2");
+  await component.locator(".p-select").click();
+  await options.nth(0).click();
   await component.getByTestId("required").click();
   await component.getByTestId("required").fill("value 3");
   await component.getByTestId("optional").click();
   await component.getByTestId("optional").fill("value 4");
-  await page.waitForURL(/requiredWithDefault.*requiredWithDefaultSelfManaged.*required.*optional/); // wait for above fills to take effect
+  await page.waitForURL(/requiredSelectNumber.*requiredWithDefault.*requiredWithDefaultSelfManaged.*required.*optional/); // wait for above fills to take effect
 
   const params = new URLSearchParams(new URL(page.url()).search);
+  expect(params.get("requiredSelectNumber")).toBe("10");
   expect(params.get("requiredWithDefault")).toBe("value 1");
   expect(params.get("requiredWithDefaultSelfManaged")).toBe("value 2");
   expect(params.get("required")).toBe("value 3");
@@ -70,12 +76,13 @@ test("query string is set from input", async({ page }) => {
 });
 
 test("query string is set to input", async({ page }) => {
-  await page.goto("/specs/inputs--query-bound?requiredWithDefault=1&requiredWithDefaultSelfManaged=2&required=3&optional=4");
+  await page.goto("/specs/inputs--query-bound?requiredWithDefault=1&requiredWithDefaultSelfManaged=2&required=3&requiredSelectNumber=10&optional=4");
 
   const component = page.getByTestId(id.component);
   await expect(component.getByTestId("required-with-default")).toHaveValue("1");
   await expect(component.getByTestId("required-with-default-self-managed")).toHaveValue("2");
   await expect(component.getByTestId("required")).toHaveValue("3");
+  await expect(component.getByTestId("required-select-number")).toHaveValue("10");
   await expect(component.getByTestId("optional")).toHaveValue("4");
 });
 
@@ -133,7 +140,7 @@ test("unique key changes with parameter values", async({ page }) => {
   await component.getByTestId("optional").click();
   await component.getByTestId("optional").fill("value 5");
 
-  await expect(uniqueKey).toHaveText("value 1-value 2-value 3-4-value 5");
+  await expect(uniqueKey).toHaveText("value 1-value 2-20-value 3-4-value 5");
 });
 
 test("when reacting, bake should respect initial values", async({ page, goto }) => {

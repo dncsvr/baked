@@ -28,7 +28,7 @@ onAfterMountData(async() => {
   // mounted is used to set model value if it doesn't check
   if(!checkValue(model.value)) {
     if(schema.queryBound && checkValue(query.value)) {
-      model.value = query.value;
+      setModel(query.value);
     } else {
       await set(defaultValue.value);
     }
@@ -47,7 +47,7 @@ onAfterMountData(async() => {
         return;
       }
 
-      model.value = newValue;
+      setModel(newValue);
     }, { immediate: true });
   }
 
@@ -79,7 +79,7 @@ async function set(value) {
     // prevents setting model to undefined infinitely
     if(!value) { return; }
 
-    model.value = value;
+    setModel(value);
   }
 }
 
@@ -89,5 +89,10 @@ function checkValue(value) {
   }
 
   return value !== undefined && value !== null;
+}
+
+function setModel(value) {
+  console.log("setting " + schema.name + " model:" + value);
+  model.value = schema.numeric ? Number(value ?? "0") : value;
 }
 </script>
