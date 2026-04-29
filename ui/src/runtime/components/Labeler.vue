@@ -4,6 +4,7 @@
     :dt
     :pt
     :variant
+    class="w-full"
   >
     <template #default>
       <slot />
@@ -44,3 +45,9 @@ const labelComponent = computed(() => {
   }
 });
 </script>
+<style>
+/* I'm not sure with this */
+.p-iftalabel > .p-select:has(.p-select-clear-icon) {
+  @apply mr-2;
+}
+</style>

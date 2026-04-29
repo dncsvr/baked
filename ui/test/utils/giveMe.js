@@ -743,7 +743,7 @@ export default {
         options: this.anInlineData({ ms: 1, data }),
         isAsync: true
       });
-    console.log(labelMode);
+
     return {
       type: "Select",
       schema: { filter, label, labelMode, labelVariant, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp },
