@@ -398,6 +398,18 @@
             }
           },
           {
+            "title": "List Panel",
+            "component": {
+              "type": "CardLink",
+              "schema": {
+                "route": "/specs/list-panel",
+                "icon": "pi pi-microchip",
+                "title": "List Panel",
+                "description": "Lazy loads and views a list data within a panel"
+              }
+            }
+          },
+          {
             "title": "Header",
             "component": {
               "type": "CardLink",

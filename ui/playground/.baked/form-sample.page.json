@@ -71,10 +71,7 @@
             "inputs": [
               {
                 "name": "take",
-                "default": {
-                  "type": "Inline",
-                  "value": 10
-                },
+                "required": false,
                 "queryBound": true,
                 "component": {
                   "type": "Select",
@@ -105,20 +102,48 @@
               },
               {
                 "name": "skip",
-                "default": {
-                  "type": "Inline",
-                  "value": 0
-                },
+                "required": false,
                 "queryBound": true,
                 "component": {
-                  "type": "InputNumber",
-                  "schema": {
-                    "label": "Skip"
+                  "type": "ServerPaginator",
+                  "schema": {},
+                  "data": {
+                    "type": "Composite",
+                    "parts": [
+                      {
+                        "type": "Context",
+                        "key": "page",
+                        "prop": "data-length-context-key",
+                        "targetProp": "length"
+                      },
+                      {
+                        "type": "Context",
+                        "key": "page",
+                        "prop": "list-panel-take",
+                        "targetProp": "take"
+                      }
+                    ]
+                  },
+                  "reactions": {
+                    "reload": {
+                      "type": "Composite",
+                      "parts": [
+                        {
+                          "type": "When",
+                          "when": "data-table-length"
+                        },
+                        {
+                          "type": "When",
+                          "when": "list-panel-take"
+                        }
+                      ]
+                    }
                   }
                 }
               },
               {
                 "name": "sort",
+                "required": false,
                 "queryBound": true,
                 "component": {
                   "type": "SelectButton",
@@ -360,7 +385,7 @@
                   "exportable": false,
                   "frozen": true
                 },
-                "dataLengthContextKey": "data-length-context-key"
+                "dataLengthContextKey": "data-table-length"
               },
               "data": {
                 "type": "Remote",

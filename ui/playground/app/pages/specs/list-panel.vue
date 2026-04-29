@@ -10,54 +10,25 @@ import giveMe from "@utils/giveMe";
 
 const variants = [
   {
-    name: "Base",
-    descriptor: giveMe.aDataPanel({
-      title: giveMe.anInlineData("Spec: Title"),
-      collapsed: false,
-      content: giveMe.anExpected({ testId: "content", value: "TEST DATA" })
-    })
-  },
-  {
-    name: "Base with computed title",
-    descriptor: giveMe.aDataPanel({
-      title: giveMe.aComputedData({
-        composable: "useDelayedData",
-        options: giveMe.anInlineData({ ms: 1, data: "Title" }),
-        isAsync: true
-      }),
-      collapsed: false
-    })
-  },
-  {
-    name: "Collapsed",
-    descriptor: giveMe.aDataPanel({
-      collapsed: true,
-      content: giveMe.anExpected({ testId: "content", value: "DISPLAY ON EXPAND" })
-    })
-  },
-  {
-    name: "Toggle off",
-    descriptor: giveMe.aDataPanel({
-      toggleable: false,
-      content: giveMe.anExpected({ testId: "content", value: "ALWAYS DISPLAY" })
-    })
-  },
-  {
     name: "Inputs",
     descriptor: giveMe.aDataPanel({
       inputs: [
         giveMe.anInput({
-          name: "required",
+          name: "take",
+          queryBound: true,
+          defaultValue:"10",
           required: true,
-          component: giveMe.anExpectedInput({
-            testId: "required"
+          component: giveMe.aSelect({
+            data: ["10", "20"],
           })
         }),
         giveMe.anInput({
-          name: "optional",
+          name: "skip",
+          queryBound: true,
           required: false,
-          component: giveMe.anExpectedInput({
-            testId: "optional"
+          defaultValue:"0",
+          component: giveMe.aSelect({
+            data: ["0", "10", "20"],
           })
         })
       ],

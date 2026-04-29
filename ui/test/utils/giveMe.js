@@ -474,6 +474,20 @@ export default {
     };
   },
 
+  aListPanel({ title, collapsed, localizeTitle, inputs, content, toggleable } = {}) {
+    title = $(title, this.anInlineData("Spec: Test Title"));
+    collapsed = $(collapsed, false);
+    inputs = $(inputs, []);
+    content = $(content, this.anExpected());
+    toggleable = $(toggleable, true);
+    localizeTitle = $(localizeTitle, title.type === "Inline");
+
+    return {
+      type: "ListPanel",
+      schema: { title, collapsed, localizeTitle, inputs, content, toggleable }
+    };
+  },
+
   aLocalAction({ composable, options, showMessage, delay, redirect } = {}) {
     composable = $(composable,
       redirect ? "useRedirect" :
