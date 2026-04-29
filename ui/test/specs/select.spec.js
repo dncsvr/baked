@@ -294,7 +294,7 @@ test.describe("Target Prop", () => {
 });
 
 test.describe("Filtering on Select w/ Option label", () => {
-  const id = "Filtering w/ Option Label";
+  const id = "Filtering with Option Label";
 
   test("Select shows the searchbox and list", async({ page }) => {
     const component = page.getByTestId(id);
@@ -333,5 +333,50 @@ test.describe("Filtering on Select without Option Label", () => {
 
     await expect(list.getByRole("listbox")).toHaveCount(1);
     await expect(list.getByRole("listbox").first()).toHaveText("Test Option 2");
+  });
+});
+
+test.describe("None Label Mode", () => {
+  const id = "None Label Mode"
+
+  test("visual", { tag: "@visual" }, async({ page }) => {
+    const component = page.getByTestId(id);
+    const options = page.locator(primevue.select.option);
+    await expect(component.locator(primevue.select.base)).toBeAttached();
+    await component.click();
+    await options.nth(1).click();
+    await page.waitForTimeout(100); // waits for animation to finish
+
+    await expect(component.locator(primevue.select.label)).toHaveScreenshot();
+  });
+});
+
+test.describe("Label Mode Testing", () => {
+  [
+    {id: "Ifta Label Mode", expected: "Ifta Mode"},
+    {id: "Float Label:in Mode", expected: "In Mode"},
+    {id: "Float Label:over Mode", expected: "Over Mode"},
+  ].forEach(({ id, expected }) => {
+    test(`testing correct label text ${expected}`, async({ page }) => {
+      const component = page.getByTestId(id);
+      const options = page.locator(primevue.select.option);
+      await expect(component.locator(primevue.select.base)).toBeAttached();
+      await component.click();
+      await options.nth(1).click();
+      await page.waitForTimeout(100); // waits for animation to finish
+
+      await expect(component.getByText(expected)).toBeVisible();
+    })
+
+    test(`visual ${expected}`, { tag: "@visual" }, async({ page }) => {
+      const component = page.getByTestId(id);
+      const options = page.locator(primevue.select.option);
+      await expect(component.locator(primevue.select.base)).toBeAttached();
+      await component.click();
+      await options.nth(1).click();
+      await page.waitForTimeout(100); // waits for animation to finish
+  
+      await expect(component.locator(primevue.select.label)).toHaveScreenshot();
+    });
   });
 });

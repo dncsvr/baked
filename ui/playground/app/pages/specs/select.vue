@@ -3,6 +3,7 @@
     title="Select"
     :variants
     use-model
+    variant-class="mt-2"
   />
 </template>
 <script setup>
@@ -145,9 +146,9 @@ const variants = [
     model: ref()
   },
   {
-    name: "Filtering w/ Label",
+    name: "Filtering with Option Label",
     descriptor: giveMe.aSelect({
-      label: "Filtering w/ Option Label",
+      label: "Filtering Option Label",
       optionLabel: "label",
       optionValue: "value",
       filter: true,
@@ -161,10 +162,42 @@ const variants = [
   {
     name: "Filtering without Option Label",
     descriptor: giveMe.aSelect({
-      label: "Filtering no Label",
+      label: "Without Option Label",
       filter: true
     }),
     model: ref()
-  }
+  },
+  {
+    name: "None Label Mode",
+    descriptor: giveMe.aSelect({
+      labelMode: "none"
+    }),
+    model: ref()
+  },
+  {
+    name: "Ifta Label Mode",
+    descriptor: giveMe.aSelect({
+      label: "Ifta Mode",
+      labelMode: "ifta",
+    }),
+    model: ref()
+  },
+  {
+    name: "Float Label:in Mode",
+    descriptor: giveMe.aSelect({
+      label: "In Mode",
+      labelVariant: "in"
+    }),
+    model: ref()
+  },
+  {
+    name: "Float Label:over Mode",
+    class: "mt-4",
+    descriptor: giveMe.aSelect({
+      label: "Over Mode",
+      labelVariant: "over "
+    }),
+    model: ref()
+  },
 ];
 </script>
