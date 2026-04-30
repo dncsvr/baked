@@ -26,7 +26,7 @@ public class Child(IEntityContext<Child> _context)
         string? name = default,
         Parent? parent = default,
         ParentWrapper? parentWrapper = default
-      )
+    )
     {
         Name = name ?? Name;
         Parent = parent ?? parentWrapper?.Parent ?? Parent;

@@ -5,5 +5,7 @@ parent @entity {
   name @column
   surname @column
   description @column
+  status @column
+  role @column
 }
 

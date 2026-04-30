@@ -6,10 +6,12 @@ namespace Baked.Playground.Orm;
 public class Parent(IEntityContext<Parent> _context, Func<Child> _newChild, Children _childEntities)
     : IParentInterface
 {
-    public Id Id { get; private set; } = default!;
-    public string Name { get; private set; } = default!;
-    public string Surname { get; private set; } = default!;
-    public string? Description { get; private set; } = default!;
+    public Id Id { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public string Surname { get; set; } = default!;
+    public string? Description { get; set; } = default!;
+    public ParentStatus? Status { get; set; } = default;
+    public ParentRole? Role { get; set; } = default!;
 
     // NOTE Calculated reference (directly or over interface) introduces a case
     // where `Orm.AutoMap.ManyToOneFetcherTemplate` and
@@ -18,10 +20,15 @@ public class Parent(IEntityContext<Parent> _context, Func<Child> _newChild, Chil
     internal Entity? CalculatedReference => null;
     Entity? IParentInterface.CalculatedReferenceOverInterface => CalculatedReference;
 
-    public Parent With(string name, string surname)
+    public Parent With(string name, string surname,
+        ParentStatus? status,
+        ParentRole? role
+    )
     {
         Name = name;
         Surname = surname;
+        Status = status;
+        Role = role;
 
         return _context.Insert(this);
     }

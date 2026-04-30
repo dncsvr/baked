@@ -5,6 +5,7 @@ using Baked.Theme.Default;
 using Baked.Ui;
 using Humanizer;
 
+using static Baked.Theme.Default.DomainComponents;
 using static Baked.Ui.Datas;
 using static Baked.Ui.Actions;
 
@@ -126,6 +127,24 @@ public class FormSampleDomainOverrideFeature : IFeature
                     {
                         it.Schema.LabelMode = "ifta";
                     }
+                }
+            );
+            // Properties
+            builder.Conventions.AddPropertyComponent(
+                when: c => c.Property.PropertyType.SkipNullable().IsEnum,
+                component: () => B.Text()
+            );
+            // Parameters
+            builder.Conventions.AddParameterComponent(
+                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent) && c.Parameter.Name == "role",
+                component: (c, cc) => ParameterSelect(c.Parameter, cc)
+            );
+            builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
+                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent),
+                component: (sb, c, cc) =>
+                {
+                    var (_, l) = cc;
+                    sb.Schema.Label = l(c.Parameter.Name.Titleize());
                 }
             );
         });

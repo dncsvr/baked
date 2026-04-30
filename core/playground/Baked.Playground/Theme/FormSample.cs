@@ -6,11 +6,15 @@ namespace Baked.Playground.Theme;
 [AllowAnonymous]
 public class FormSample(Parents _parents, Func<Parent> _newParent)
 {
-    public void NewParent(string surname, string? name)
+    public void NewParent(string surname,
+        string? name = default,
+        ParentRole? role = default,
+        ParentStatus? status = default
+    )
     {
         name ??= "Dr.";
 
-        _newParent().With(name, surname);
+        _newParent().With(name, surname, status, role);
     }
 
     public void ClearParents()

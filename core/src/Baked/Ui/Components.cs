@@ -61,7 +61,7 @@ public static class Components
     ) => options.Apply(new());
 
     public static ComponentDescriptor<Dialog> Dialog(Button open, string header, IComponentDescriptor content,
-       Action<Dialog>? options = default
+        Action<Dialog>? options = default
     ) => new(options.Apply(new(open, header, content)));
 
     public static ComponentDescriptor<ErrorPage> ErrorPage(

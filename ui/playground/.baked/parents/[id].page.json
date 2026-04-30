@@ -224,6 +224,32 @@
                   }
                 },
                 "wide": true
+              },
+              {
+                "key": "status",
+                "label": "Status",
+                "component": {
+                  "type": "Text",
+                  "schema": {},
+                  "data": {
+                    "type": "Context",
+                    "key": "parent",
+                    "prop": "data.status"
+                  }
+                }
+              },
+              {
+                "key": "role",
+                "label": "Role",
+                "component": {
+                  "type": "Text",
+                  "schema": {},
+                  "data": {
+                    "type": "Context",
+                    "key": "parent",
+                    "prop": "data.role"
+                  }
+                }
               }
             ]
           },

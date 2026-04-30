@@ -86,6 +86,15 @@ public static class CoreExtensions
         public string AnEmail() =>
             "info@test.com";
 
+        public T AnEnum<T>() where T : Enum =>
+            (T)Enum.GetValues(typeof(T))
+                .Cast<object>()
+                .OrderBy(_ => Random.Shared.Next())
+                .First();
+
+        public T AnEnum<T>(params T[] values) where T : Enum =>
+            values[Random.Shared.Next(values.Length)];
+
         public Guid AGuid(
             string? starts = default
         )
