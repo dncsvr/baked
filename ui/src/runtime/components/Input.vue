@@ -92,9 +92,6 @@ function checkValue(value) {
 }
 
 function setModel(value) {
-  if(value === undefined) {
-    return;
-  }
   model.value = schema.numeric ? Number(value) : value;
 }
 </script>

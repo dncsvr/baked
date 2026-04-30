@@ -124,7 +124,7 @@
                       {
                         "type": "Inline",
                         "value": {
-                          "take": "10"
+                          "take": 10
                         }
                       },
                       {

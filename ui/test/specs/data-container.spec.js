@@ -12,8 +12,8 @@ test.describe("Inputs", () => {
   test("inputs rendered", async({ page }) => {
     const component = page.getByTestId(id);
 
-    await expect(component.getByTestId("required")).toBeVisible();
-    await expect(component.getByTestId("optional")).toBeVisible();
+    await expect(component.locator(primevue.select.base)).toBeVisible();
+    await expect(component.locator(".b-component--Server-Paginator")).toBeVisible();
   });
 
   test("informs only when required inputs are not selected", async({ page }) => {

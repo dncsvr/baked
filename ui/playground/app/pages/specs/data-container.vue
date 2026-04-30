@@ -11,21 +11,45 @@ import giveMe from "@utils/giveMe";
 const variants = [
   {
     name: "Inputs",
-    descriptor: giveMe.aDataPanel({
+    descriptor: giveMe.aDataContainer({
       inputs: [
         giveMe.anInput({
-          name: "required",
+          name: "take",
           required: true,
-          component: giveMe.anExpectedInput({
-            testId: "required"
+          defaultValue: 10,
+          queryBound: true,
+          numeric: true,
+          component: giveMe.aSelect({
+            label: "Take",
+            localizeLabel: false,
+            stateful: true,
+            noFloatLabel: true,
+            data: [10, 20, 50, 100]
           })
         }),
         giveMe.anInput({
-          name: "optional",
-          required: false,
-          component: giveMe.anExpectedInput({
-            testId: "optional"
-          })
+          name: "skip",
+          required: true,
+          default_: { type: "Inline", value: 0 },
+          queryBound: true,
+          numeric: true,
+          component: {
+            type: "ServerPaginator",
+            schema: {},
+            data: {
+              type: "Composite",
+              parts: [
+                {
+                  type: "Inline",
+                  value: { "length": 10 }
+                },
+                {
+                  type: "Inline",
+                  value: { "take": 10 }
+                }
+              ]
+            }
+          }
         })
       ],
       content: giveMe.anExpected({

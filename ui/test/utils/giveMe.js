@@ -164,6 +164,16 @@ export default {
     };
   },
 
+  aDataContainer({ inputs, content } = {}) {
+    inputs = $(inputs, []);
+    content = $(content, this.anExpected());
+
+    return {
+      type: "DataPanel",
+      schema: { inputs, content }
+    };
+  },
+
   aDataPanel({ title, collapsed, localizeTitle, inputs, content, toggleable } = {}) {
     title = $(title, this.anInlineData("Spec: Test Title"));
     collapsed = $(collapsed, false);

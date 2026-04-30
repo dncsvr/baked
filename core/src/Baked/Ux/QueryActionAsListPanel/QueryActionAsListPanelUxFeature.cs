@@ -75,7 +75,7 @@ public class QueryActionAsListPanelUxFeature : IFeature<UxConfigurator>
                         o.Prop = nameof(DataTable.DataLengthContextKey).Kebaberize(); ;
                         o.TargetProp = "length";
                     });
-                    paginator.Data += Datas.Inline(new { take = "10" });
+                    paginator.Data += Datas.Inline(new { take = 10 });
 
                     paginator.ReloadWhen(nameof(DataTable.DataLengthContextKey).Kebaberize());
                 }
@@ -108,7 +108,8 @@ public class QueryActionAsListPanelUxFeature : IFeature<UxConfigurator>
                     s.Schema.Stateful = true;
                     s.Schema.NoFloatLabel = true;
                     s.Action = Actions.Publish.PageContextValue("list-panel-take", o => o.Data = Datas.Context.Model());
-                }
+                },
+                order: 20
             );
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
