@@ -250,7 +250,7 @@ public class BuildingAttributeExportSets : TestSpec
         var typeExport = model.Types[typeof(Parent)];
         var method = typeExport.Methods.First(m => m.Name == "With");
         method.Parameters.ShouldNotBeNull();
-        method.Parameters.Count.ShouldBe(2);
+        method.Parameters.Count.ShouldBe(4);
         method.Parameters[0].Attributes.ShouldContain(a => a.Type == nameof(ParameterModelAttribute));
     }
 
