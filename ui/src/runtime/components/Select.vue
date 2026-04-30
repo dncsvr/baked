@@ -10,20 +10,6 @@
       :path="path"
       :mode="labelMode"
       :variant="labelVariant"
-      :dt="{
-        colorScheme: {
-          light: {
-            transition: {
-              duration: 0
-            }
-          },
-          dark: {
-            transition: {
-              duration: 0
-            }
-          }
-        }
-      }"
     >
       <Select
         v-bind="$attrs"

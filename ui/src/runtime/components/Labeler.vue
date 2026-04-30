@@ -1,7 +1,7 @@
 <template>
   <component
     :is="labelComponent"
-    :dt
+    :dt="labelDT"
     :pt
     :variant
     class="w-full"
@@ -10,6 +10,7 @@
       <slot />
       <label
         v-if="mode !== 'none'"
+        class="max-sm:truncate max-sm:w-5/6"
         :for="path"
       >
         {{ label }}
@@ -22,13 +23,30 @@
 import { computed } from "vue";
 import { FloatLabel, IftaLabel } from "primevue";
 
-const { label, mode } = defineProps({
+const { label, mode, dt } = defineProps({
   label: { type: String, required: true },
   path: { type: String, required: true },
   mode: { type: String, default: "float" },
   variant: { type: String, default: "on" },
   pt: { type: Object, default: () => { } },
   dt: { type: Object, default: () => { } }
+});
+
+const labelDT = computed(() => {
+  return Object.assign({
+    colorScheme: {
+      light: {
+        transition: {
+          duration: 0
+        }
+      },
+      dark: {
+        transition: {
+          duration: 0
+        }
+      }
+    }
+  }, dt);
 });
 
 const labelComponent = computed(() => {
@@ -45,9 +63,3 @@ const labelComponent = computed(() => {
   }
 });
 </script>
-<style>
-/* I'm not sure with this */
-.p-iftalabel > .p-select:has(.p-select-clear-icon) {
-  @apply mr-2;
-}
-</style>

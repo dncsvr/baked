@@ -86,6 +86,8 @@ public static class CoreExtensions
         public string AnEmail() =>
             "info@test.com";
 
+        // AI-GEN
+        // prompt: Create a generic AnEnum<T> method similar to {ADictionary} pattern
         public T AnEnum<T>() where T : Enum =>
             (T)Enum.GetValues(typeof(T))
                 .Cast<object>()
