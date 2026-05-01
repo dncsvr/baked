@@ -13,16 +13,11 @@
       </template>
     </PageTitle>
     <div class="flex justify-center">
-      <div
-        class="
-          w-full flex flex-col gap-6
-          max-w-screen-xl 3xl:max-w-screen-2xl
-        "
-      >
+      <Contents class="gap-6">
         <div
           v-for="section in sectionsWithGroups"
           :key="section.key"
-          class="grid gap-4"
+          class="w-full col-span-2 grid gap-4"
         >
           <div
             v-if="sectionsWithGroups.length > 1"
@@ -69,14 +64,14 @@
             </div>
           </div>
         </div>
-      </div>
+      </Contents>
     </div>
   </div>
 </template>
 <script setup>
 import { computed, ref } from "vue";
 import { useLocalization } from "#imports";
-import { Button, Inputs, PageTitle } from "#components";
+import { Button, Contents, Inputs, PageTitle } from "#components";
 
 const { localize: l } = useLocalization();
 
