@@ -129,18 +129,33 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 }
             );
             builder.Conventions.AddMethodComponentConfiguration<FormPage>(
-                component: (sf, c, cc) =>
+                component: (fp, c, cc) =>
                 {
+                    var (_, l) = cc;
                     cc = cc.Drill(nameof(FormPage), nameof(FormPage.Inputs));
 
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
-                        sf.Schema.Inputs.Add(
+                        fp.Schema.Inputs.Add(
                             parameter.GetRequiredSchema<Input>(cc)
                         );
+
+                        if (!parameter.TryGet<GroupAttribute>(out var group))
+                        {
+                            group = new();
+                        }
+
+                        var section = fp.Schema.Sections.FirstOrDefault(s => s.Key == group.Name);
+                        if (section is null)
+                        {
+                            fp.Schema.Sections.Add(section = new(group.Name, l(group.Name.Titleize())));
+                        }
+
+                        section.Inputs.Add(parameter.Name);
                     }
                 }
             );
+
             builder.Conventions.AddParameterSchema(
                 when: c => c.Parameter.Has<ParameterModelAttribute>(),
                 schema: (c, cc) => ParameterInput(c.Parameter, cc)
