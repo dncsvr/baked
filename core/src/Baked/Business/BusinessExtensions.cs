@@ -212,15 +212,11 @@ public static class BusinessExtensions
         public bool IsNullable =>
             !parameter.Has<NotNullAttribute>();
 
-        public void ShouldBeRequired()
-        {
+        public void ShouldBeRequired() =>
             parameter.Has<RequiredAttribute>().ShouldBeTrue($"{parameter.Name} should have `[RequiredAttribute]`");
-        }
 
-        public void ShouldNotBeRequired()
-        {
+        public void ShouldNotBeRequired() =>
             parameter.Has<RequiredAttribute>().ShouldBeFalse($"{parameter.Name} should not have `[RequiredAttribute]`");
-        }
     }
 
     extension(Stubber _)
