@@ -1,4 +1,4 @@
-using Baked.CodeGeneration.Diagnostics;
+using Baked.Buildtime.Diagnostics;
 
 // NOTE namespace is at root for a better experience in Coding Style & UX
 // development

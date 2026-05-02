@@ -17,15 +17,15 @@ Bake.New
 
 ## Layers
 
-| Name                 | Run                | Test               |
-| ---                  | ---                | ---                |
-| Code Generation      | :white_check_mark: | :white_check_mark: |
-| Data Access          | :white_check_mark: | :white_check_mark: |
-| Domain               | :white_check_mark: | :white_check_mark: |
-| HTTP Server          | :white_check_mark: | :no_entry:         |
-| Rest API             | :white_check_mark: | :no_entry:         |
-| Runtime              | :white_check_mark: | :white_check_mark: |
-| Testing              | :no_entry:         | :white_check_mark: |
+| Name        | Run                | Test               |
+| ---         | ---                | ---                |
+| Buildtime   | :white_check_mark: | :white_check_mark: |
+| Data Access | :white_check_mark: | :white_check_mark: |
+| Domain      | :white_check_mark: | :white_check_mark: |
+| HTTP Server | :white_check_mark: | :no_entry:         |
+| Rest API    | :white_check_mark: | :no_entry:         |
+| Runtime     | :white_check_mark: | :white_check_mark: |
+| Testing     | :no_entry:         | :white_check_mark: |
 
 ## Features
 

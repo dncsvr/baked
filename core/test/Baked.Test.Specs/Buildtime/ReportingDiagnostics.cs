@@ -1,6 +1,6 @@
-using Baked.CodeGeneration.Diagnostics;
+using Baked.Buildtime.Diagnostics;
 
-namespace Baked.Test.Runtime;
+namespace Baked.Test.Buildtime;
 
 public class ReportingDiagnostics
 {

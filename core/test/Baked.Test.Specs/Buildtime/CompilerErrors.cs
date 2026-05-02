@@ -1,4 +1,4 @@
-namespace Baked.Test.CodeGeneration;
+namespace Baked.Test.Buildtime;
 
 public class CompilerErrors : TestSpec
 {

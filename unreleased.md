@@ -6,6 +6,7 @@
   and extensions
   - `configurator.CodeGeneration` is now `configurator.Buildtime`
   - `CodeGenerationLayer` is now `BuildtimeLayer`
+  - Anything under `Baked.CodeGeneration` is now under `Baked.Buildtime`
 - `FormPage` schema is completely redesigned, migrate your existing
   configurations to match the new one
 - `configurator.Domain.ConfigureInspect` is now removed, `Inspect` instance can

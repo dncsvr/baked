@@ -1,5 +1,5 @@
 ﻿using Baked.Architecture;
-using Baked.CodeGeneration.Diagnostics;
+using Baked.Buildtime.Diagnostics;
 using Baked.Domain;
 using Baked.Domain.Configuration;
 using Baked.Domain.Inspection;

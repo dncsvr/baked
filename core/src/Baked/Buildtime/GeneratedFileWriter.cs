@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Baked.CodeGeneration;
+namespace Baked.Buildtime;
 
 public class GeneratedFileWriter(GeneratedFileDescriptor _descriptor)
 {

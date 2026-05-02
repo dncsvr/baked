@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Baked.CodeGeneration;
+namespace Baked.Buildtime;
 
 public interface ICodeTemplate
 {

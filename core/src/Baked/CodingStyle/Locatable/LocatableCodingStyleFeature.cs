@@ -39,7 +39,7 @@ public class LocatableCodingStyleFeature : IFeature<CodingStyleConfigurator>
             );
         });
 
-        configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
+        configurator.Buildtime.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
         {
             configurator.Domain.UsingDomainModel(domain =>
             {
@@ -57,7 +57,7 @@ public class LocatableCodingStyleFeature : IFeature<CodingStyleConfigurator>
             services.AddScopedWithFactory<LocatableInitializations>();
             services.AddSingleton<InitializeLocatablesFilter>();
 
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 services.AddFromAssembly(generatedContext.Assemblies[nameof(LocatableCodingStyleFeature)]);
 
@@ -75,7 +75,7 @@ public class LocatableCodingStyleFeature : IFeature<CodingStyleConfigurator>
         {
             if (options.SerializerSettings.ContractResolver is not ExtendedContractResolver contractResolver) { return; }
 
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 generatedContext.Assemblies[nameof(LocatableCodingStyleFeature)]
                     .CreateRequiredImplementationInstance<ILocatableContext>()
@@ -85,7 +85,7 @@ public class LocatableCodingStyleFeature : IFeature<CodingStyleConfigurator>
 
         configurator.RestApi.ConfigureSwaggerGenOptions(swaggerGenOptions =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 var idPropertyNames = generatedContext.Assemblies[nameof(LocatableCodingStyleFeature)]
                     .CreateRequiredImplementationInstance<ILocatableContext>()

@@ -109,7 +109,7 @@ public abstract class DataSourceRecipe
 
         public override void Apply(ApplicationDescriptor app)
         {
-            app.Layers.AddCodeGeneration();
+            app.Layers.AddBuildtime();
             app.Layers.AddDataAccess();
             app.Layers.AddDomain();
             app.Layers.AddHttpServer();
@@ -151,7 +151,7 @@ public abstract class DataSourceRecipe
 
         public override void Apply(ApplicationDescriptor app)
         {
-            app.Layers.AddCodeGeneration();
+            app.Layers.AddBuildtime();
             app.Layers.AddDataAccess();
             app.Layers.AddDomain();
             app.Layers.AddRuntime();

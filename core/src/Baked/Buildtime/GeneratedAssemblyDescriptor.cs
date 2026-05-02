@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using System.Reflection;
 
-namespace Baked.CodeGeneration;
+namespace Baked.Buildtime;
 
 public record GeneratedAssemblyDescriptor(string Name)
 {
