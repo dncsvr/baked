@@ -76,32 +76,31 @@ Bake.New
 
 ```mermaid
 flowchart LR;
+  subgraph Generate
+    AD(AddDomainTypes)
+    BD(BuildDomainModel)
+    G(Generate)
+    C(Compile)
 
-    subgraph Generate
-      AD(AddDomainTypes)
-      BD(BuildDomainModel)
-      GC(GenerateCode)
-      C(Compile)
+    AD -->|IDomainTypeCollection| BD
+    BD -->|DomainModel| G
+    G -->|IGeneratedAssemblyCollection<br/>IGeneratedFileCollection| C
+  end
 
-      AD -->|IDomainTypeCollection| BD
-      BD -->|DomainModel| GC
-      GC -->|IGeneratedAssemblyCollection<br/>IGeneratedFileCollection| C
-    end
+  subgraph Start
+    CB(CreateBuilder)
+    BC(BuildConfiguration)
+    AS(AddServices)
+    B(Build)
+    PB(PostBuild)
+    R(Run)
 
-    subgraph Start
-      CB(CreateBuilder)
-      BC(BuildConfiguration)
-      AS(AddServices)
-      B(Build)
-      PB(PostBuild)
-      R(Run)
+    CB -->|ConfigurationManager<br/>WebApplicationBuilder| BC
+    BC -->|GeneratedContext| AS
+    AS -->|IServiceCollection| B
+    B -->|IServiceProvider<br/>WebApplication|PB
+    PB --> R
+  end
 
-      CB -->|ConfigurationManager<br/>WebApplicationBuilder| BC
-      BC -->|GeneratedContext| AS
-      AS -->|IServiceCollection| B
-      B -->|IServiceProvider<br/>WebApplication|PB
-      PB --> R
-    end
-
-    Generate --> Start
+  Generate --> Start
 ```

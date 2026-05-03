@@ -108,7 +108,7 @@ configurator.Domain.ConfigureDomainModelBuilder(builder =>
 
 ### `DomainServiceCollection`
 
-This target is provided in `GenerateCode` phase and it is used to generate
+This target is provided in `Generate` phase and it is used to generate
 `IServiceAdder` to add domain services during `AddService` phase in `Start`
 mode. To configure it in a feature;
 
@@ -122,8 +122,8 @@ configurator.Domain.ConfigureDomainServiceCollection((services, domain) =>
 
 ### `AttributeProperties`
 
-This target is provided in `GenerateCode` phase and it is used to configure
-exported properties for attributes;
+This target is provided in `Generate` phase and it is used to configure exported
+properties for attributes;
 
 ```csharp
 configurator.Domain.ConfigureAttributeProperties(properties =>
@@ -135,9 +135,8 @@ configurator.Domain.ConfigureAttributeProperties(properties =>
 
 ### `ExportConfigurations`
 
-This target is provided in `GenerateCode` phase and it is used to export
-attribute data of matching types and their members. To configure it in a
-feature;
+This target is provided in `Generate` phase and it is used to export attribute
+data of matching types and their members. To configure it in a feature;
 
 ```csharp
 configurator.Domain.ConfigureExportConfigurations(exports =>

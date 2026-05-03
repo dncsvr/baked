@@ -48,7 +48,8 @@ public class ActionsAreContentsUxFeature : IFeature<UxConfigurator>
                     foreach (var method in members.Methods.Having<ActionModelAttribute>())
                     {
                         if (method.Has<InitializerAttribute>()) { continue; }
-                        if (!method.TryGet<ActionModelAttribute>(out var action)) { continue; }
+
+                        var action = method.Get<ActionModelAttribute>();
                         if (action.Method != HttpMethod.Get) { continue; }
 
                         var tabName = method.Get<GroupAttribute>().TabName;

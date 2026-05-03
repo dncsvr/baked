@@ -7,6 +7,7 @@
   - `configurator.CodeGeneration` is now `configurator.Buildtime`
   - `CodeGenerationLayer` is now `BuildtimeLayer`
   - Anything under `Baked.CodeGeneration` is now under `Baked.Buildtime`
+- `CodeGeneration.GenerateCode` phase is now renamed as `Buildtime.Generate`
 - `DescriptorBuilderAttribute` and `ComponentDescriptorBuilderAttribute` are
   renamed as `GeneratorAttribute` and `ComponentGeneratorAttribute` respectively
   - `Build` method is renamed as `Generate`

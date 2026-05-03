@@ -35,7 +35,7 @@ and `PageDescriptors` configuration target for registering pages using
 
 ### `AppDescriptor`
 
-This target is provided in `GenerateCode` phase. To configure it in a feature;
+This target is provided in `Generate` phase. To configure it in a feature;
 
 ```csharp
 configurator.Ui.ConfigureAppDescriptor(app =>
@@ -46,7 +46,7 @@ configurator.Ui.ConfigureAppDescriptor(app =>
 
 ### `ComponentExports`
 
-This target is provided in `GenerateCode` phase. To configure it in a feature;
+This target is provided in `Generate` phase. To configure it in a feature;
 
 ```csharp
 configurator.Ui.ConfigureComponentExports(exports =>
@@ -57,7 +57,7 @@ configurator.Ui.ConfigureComponentExports(exports =>
 
 ### `LayoutDescriptors`
 
-This target is provided in `GenerateCode` phase. To configure it in a feature;
+This target is provided in `Generate` phase. To configure it in a feature;
 
 ```csharp
 configurator.Ui.ConfigureLayoutDescriptors(layouts =>
@@ -68,7 +68,7 @@ configurator.Ui.ConfigureLayoutDescriptors(layouts =>
 
 ### `PageDescriptors`
 
-This target is provided in `GenerateCode` phase. To configure it in a feature;
+This target is provided in `Generate` phase. To configure it in a feature;
 
 ```csharp
 configurator.Ui.ConfigurePageDescriptors(pages =>
