@@ -35,23 +35,27 @@
               {{ l(section.label) }}
             </span>
           </div>
-          <div
-            class="
-              grid grid-cols-2 grid-flow-col
-              gap-4 items-start
-              max-md:flex max-md:flex-col
-            "
-            :style="{ 'grid-template-rows': `repeat(${calculateRowCount(section)}, auto)` }"
+          <template
+            v-for="(inputGroups, i) in splitByWide(section.inputGroups)"
+            :key="`${section.key}_${i}`"
           >
             <div
-              v-for="inputGroup in section.inputGroups"
-              :key="inputGroup.key"
-              :class="{ 'col-span-2': inputGroup.wide }"
-              class="w-full"
+              v-if="inputGroups.length > 0"
+              class="
+                grid grid-cols-2 grid-flow-col
+                gap-4 items-start
+                max-md:flex max-md:flex-col
+              "
+              :style="{ 'grid-template-rows': `repeat(${Math.ceil(inputGroups.length / 2)}, auto)` }"
             >
               <div
-                class="flex gap-2 max-md:flex-col"
-                :class="{ 'reset-min-w': inputGroup.inputs.length > 1 }"
+                v-for="inputGroup in inputGroups"
+                :key="inputGroup.key"
+                class="w-full flex gap-4 max-md:flex-col"
+                :class="{
+                  'col-span-2': inputGroup.wide,
+                  'reset-min-w': inputGroup.inputs.length > 1
+                }"
               >
                 <Inputs
                   :inputs="inputGroup.inputs"
@@ -61,7 +65,7 @@
                 />
               </div>
             </div>
-          </div>
+          </template>
         </div>
       </Contents>
     </div>
@@ -85,10 +89,24 @@ const formData = ref({});
 const readyData = ref({});
 const ready = computed(() => Object.values(readyData.value).every(v => v));
 
-function calculateRowCount(section) {
-  const cellCount = section.inputGroups.reduce((sum, group) => sum + !!group.wide + 1, 0);
+function splitByWide(inputGroups) {
+  const result = [];
+  let cur = [];
+  for(const inputGroup of inputGroups) {
+    if(!inputGroup.wide) {
+      cur.push(inputGroup);
 
-  return Math.ceil(cellCount / 2);
+      continue;
+    }
+
+    result.push(cur);
+    result.push([inputGroup]);
+    cur = [];
+  }
+
+  result.push(cur);
+
+  return result;
 }
 
 function onReady(key, value) {
