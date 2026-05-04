@@ -51,18 +51,6 @@ public class ReportPageSampleDomainOverrideFeature : IFeature
                 when: c => c.Type.Is<ReportPageSample>() && c.Method.Name == nameof(ReportPageSample.GetFirst) && c.Parameter.Name == "count",
                 component: (c, cc) => ParameterSelect(c.Parameter, cc)
             );
-            // TODO: update label modes with enum
-            builder.Conventions.AddParameterComponentConfiguration<Select>(
-                when: c => c.Type.Is<ReportPageSample>(),
-                component: (it, c, cc) =>
-                {
-                    if (it.Schema is ILabeler labeler)
-                    {
-                        it.Schema.LabelMode = "float";
-                        it.Schema.LabelVariant = "on";
-                    }
-                }
-            );
 
             // Page overrides
             builder.Conventions.AddTypeComponentConfiguration<TabbedPage>(
