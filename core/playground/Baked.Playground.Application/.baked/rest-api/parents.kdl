@@ -8,12 +8,8 @@ parent {
     surname {
       @parameter-model required=#true
     }
-    status {
-      @parameter-model required=#true
-    }
-    role {
-      @parameter-model required=#true
-    }
+    status @parameter-model
+    role @parameter-model
   }
   get-children {
     @action-model route="GET /parents/{id}/children" required-claims="BaseA, BaseB"

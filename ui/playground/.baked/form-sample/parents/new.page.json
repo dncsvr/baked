@@ -41,7 +41,8 @@
                 "component": {
                   "type": "InputText",
                   "schema": {
-                    "label": "Name"
+                    "label": "Name",
+                    "labelMode": "ifta"
                   }
                 }
               }
@@ -57,83 +58,85 @@
                 "component": {
                   "type": "InputText",
                   "schema": {
-                    "label": "Surname"
+                    "label": "Surname",
+                    "labelMode": "ifta"
+                  }
+                }
+              }
+            ],
+            "wide": true
+          },
+          {
+            "key": "role",
+            "inputs": [
+              {
+                "name": "role",
+                "component": {
+                  "type": "Select",
+                  "schema": {
+                    "label": "Role",
+                    "optionLabel": "label",
+                    "optionValue": "value",
+                    "localizeLabel": true,
+                    "showClear": true,
+                    "labelMode": "ifta"
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      {
+                        "label": "ParentRole.Admin",
+                        "value": "Admin"
+                      },
+                      {
+                        "label": "ParentRole.Moderator",
+                        "value": "Moderator"
+                      },
+                      {
+                        "label": "ParentRole.Writer",
+                        "value": "Writer"
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "wide": true
+          },
+          {
+            "key": "status",
+            "inputs": [
+              {
+                "name": "status",
+                "component": {
+                  "type": "SelectButton",
+                  "schema": {
+                    "allowEmpty": true,
+                    "optionLabel": "label",
+                    "optionValue": "value",
+                    "localizeLabel": true,
+                    "label": "Status",
+                    "labelMode": "ifta"
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      {
+                        "label": "ParentStatus.Active",
+                        "value": "Active"
+                      },
+                      {
+                        "label": "ParentStatus.Passive",
+                        "value": "Passive"
+                      }
+                    ]
                   }
                 }
               }
             ],
             "wide": true
           }
-        }
-      },
-      {
-        "name": "surname",
-        "required": true,
-        "component": {
-          "type": "InputText",
-          "schema": {
-            "label": "Surname",
-            "labelMode": "ifta"
-          }
-        }
-      },
-      {
-        "name": "role",
-        "component": {
-          "type": "Select",
-          "schema": {
-            "label": "Role",
-            "optionLabel": "label",
-            "optionValue": "value",
-            "localizeLabel": true,
-            "showClear": true,
-            "labelMode": "ifta"
-          },
-          "data": {
-            "type": "Inline",
-            "value": [
-              {
-                "label": "ParentRole.Admin",
-                "value": "Admin"
-              },
-              {
-                "label": "ParentRole.Moderator",
-                "value": "Moderator"
-              },
-              {
-                "label": "ParentRole.Writer",
-                "value": "Writer"
-              }
-            ]
-          }
-        }
-      },
-      {
-        "name": "status",
-        "component": {
-          "type": "SelectButton",
-          "schema": {
-            "allowEmpty": true,
-            "optionLabel": "label",
-            "optionValue": "value",
-            "localizeLabel": true,
-            "label": "Status",
-            "labelMode": "ifta"
-          },
-          "data": {
-            "type": "Inline",
-            "value": [
-              {
-                "label": "ParentStatus.Active",
-                "value": "Active"
-              },
-              {
-                "label": "ParentStatus.Passive",
-                "value": "Passive"
-              }
-            ]
-          }
-        }
+        ]
       }
     ],
     "path": "form-sample/parents/new"
