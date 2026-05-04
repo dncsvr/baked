@@ -13,7 +13,10 @@
       </template>
     </PageTitle>
     <div class="flex justify-center">
-      <Contents class="gap-6">
+      <Contents
+        v-focustrap
+        class="gap-6"
+      >
         <div
           v-for="section in sections"
           :key="section.key"

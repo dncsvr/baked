@@ -118,11 +118,11 @@ function setSelected(value) {
 <style>
 .b-component--Select {
   /*
-  placeholder gives select the initial width, but it overlaps with label so it is
-  hidden
+  placeholder gives select the initial width, but it overlaps with label and
+  tab key skip select if placeholder is hidden so it is opacity zero
   */
   .p-placeholder {
-    visibility: hidden;
+    opacity: 0;
   }
 
   .p-select-label {

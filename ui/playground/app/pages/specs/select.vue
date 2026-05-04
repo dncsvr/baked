@@ -195,7 +195,7 @@ const variants = [
     class: "mt-4",
     descriptor: giveMe.aSelect({
       label: "Over Mode",
-      labelVariant: "over "
+      labelVariant: "over"
     }),
     model: ref()
   }
