@@ -1,14 +1,12 @@
 <template>
   <Bake
-    ref="inputRef"
     v-model="model"
     :name="schema.name"
     :descriptor="schema.component"
-    :auto-next-tick="!schema.queryBound"
   />
 </template>
 <script setup>
-import { computed, useTemplateRef, watch } from "vue";
+import { computed, watch } from "vue";
 import { useRoute, useRouter } from "#app";
 import { useDataMounter } from "#imports";
 import { Bake } from "#components";
@@ -24,7 +22,6 @@ const model = defineModel({ type: null, required: true });
 
 const defaultValue = mountData(schema.default);
 const query = schema.queryBound ? computed(() => route.query[schema.name]) : undefined;
-const inputRef = useTemplateRef("inputRef");
 
 onAfterMountData(async() => {
   // parent component might set model to null during setup, because of that on
@@ -98,9 +95,5 @@ function checkValue(value) {
 async function setModel(value) {
   const newValue = schema.numeric ? Number(value) : value;
   model.value = newValue;
-
-  if(schema.queryBound) {
-    await inputRef.value?.onModelUpdate(newValue);
-  }
 }
 </script>

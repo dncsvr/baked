@@ -64,7 +64,7 @@ const inputs = [
   giveMe.anInput({
     name: "requiredWithDefault",
     component: giveMe.anExpectedInput({
-      testId: "required",
+      testId: "required-with-default",
       action: giveMe.aPublishAction({ pageContextKey: "required-with-default" })
     }),
     required: true,

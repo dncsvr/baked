@@ -1,15 +1,16 @@
 <template>
   <component
-    :is="render()"
+    :is="component"
     v-if="visible"
     :key="loading"
     :class="classes"
+    v-bind="getComponentProps()"
   >
     <slot v-if="$slots.default" />
   </component>
 </template>
 <script setup>
-import { defineExpose, h, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { defineExpose, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useActionExecuter, useComponentResolver, useContext, useDataFetcher, useFormat, useReactionHandler } from "#imports";
 
 const actionExecuter = useActionExecuter();
@@ -95,27 +96,24 @@ function buildComponentProps() {
 
   if(descriptor.schema) { result.schema = descriptor.schema; }
   if(component.emits?.includes("submit")) { result.onSubmit = onModelUpdate; }
-  if(component.props?.modelValue) {
-    result["onUpdate:modelValue"] = onModelUpdate;
-
-    if(autoNextTick) {
-      nextTick(async() => await onModelUpdate(model.value));
-    }
-  }
+  if(component.props?.modelValue) { result["onUpdate:modelValue"] = onModelUpdate; }
 
   return result;
 }
 
-function render() {
-  if(descriptor.data) {
-    componentProps.data = data.value;
+function getComponentProps() {
+  const result = { ...componentProps };
+
+  if(descriptor.data) { result.data = data.value; }
+  if(component.props?.modelValue) { 
+    result.modelValue = model.value; 
+
+    if(autoNextTick) {
+      nextTick(() => onModelUpdate(model.value));
+    }
   }
 
-  if(component.props?.modelValue) {
-    componentProps.modelValue = model.value;
-  }
-
-  return h(component, componentProps);
+  return result;
 }
 
 async function onModelUpdate(newModel) {
