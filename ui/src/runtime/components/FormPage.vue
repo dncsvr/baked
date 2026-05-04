@@ -51,7 +51,7 @@
               <div
                 v-for="inputGroup in inputGroups"
                 :key="inputGroup.key"
-                class="w-full flex gap-4 max-md:flex-col"
+                class="w-full flex gap-4 max-md:flex-col self-end"
                 :class="{
                   'col-span-2': inputGroup.wide,
                   'reset-min-w': inputGroup.inputs.length > 1
@@ -106,7 +106,7 @@ function splitByWide(inputGroups) {
 
   result.push(cur);
 
-  return result;
+  return result.filter(r => r.length);
 }
 
 function onReady(key, value) {
