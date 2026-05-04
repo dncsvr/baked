@@ -92,7 +92,7 @@
                   },
                   "action": {
                     "type": "Publish",
-                    "pageContextKey": "list-panel-take",
+                    "pageContextKey": "data-container-take",
                     "data": {
                       "type": "Context",
                       "key": "model"
@@ -130,7 +130,7 @@
                       {
                         "type": "Context",
                         "key": "page",
-                        "prop": "list-panel-take",
+                        "prop": "data-container-take",
                         "targetProp": "take"
                       }
                     ]
@@ -145,7 +145,7 @@
                         },
                         {
                           "type": "When",
-                          "when": "list-panel-take"
+                          "when": "data-container-take"
                         }
                       ]
                     }

@@ -43,10 +43,10 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                     var skipInput = dp.Schema.Inputs.First(i => i.Name == skipParameter.Name);
                     skipInput.Component.Data += Datas.Context.Page(o =>
                     {
-                        o.Prop = "list-panel-take";
+                        o.Prop = "data-container-take";
                         o.TargetProp = "take";
                     });
-                    skipInput.Component.ReloadWhen("list-panel-take");
+                    skipInput.Component.ReloadWhen("data-container-take");
                 },
                 order: 20
             );
@@ -101,16 +101,6 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                     return B.Select(l("Take"), Datas.Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false));
                 }
             );
-            builder.Conventions.AddParameterComponentConfiguration<Select>(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
-                component: s =>
-                {
-                    s.Schema.Stateful = true;
-                    s.Schema.NoFloatLabel = true;
-                    s.Action = Actions.Publish.PageContextValue("list-panel-take", o => o.Data = Datas.Context.Model());
-                },
-                order: 20
-            );
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
                 schema: input =>
@@ -119,6 +109,16 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                     input.Numeric = true;
                 },
                 order: 10
+            );
+            builder.Conventions.AddParameterComponentConfiguration<Select>(
+                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
+                component: s =>
+                {
+                    s.Schema.Stateful = true;
+                    s.Schema.NoFloatLabel = true;
+                    s.Action = Actions.Publish.PageContextValue("data-container-take", o => o.Data = Datas.Context.Model());
+                },
+                order: 20
             );
         });
     }

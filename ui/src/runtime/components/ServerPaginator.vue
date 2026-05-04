@@ -37,7 +37,10 @@ const { data } = defineProps({
   data: { type: null, required: true }
 });
 const model = defineModel({ type: null, required: true });
-console.log(data);
+
+const path = context.injectPath();
+const takeStateKey = path + ".take";
+const contextData = context.injectContextData();
 
 const allowPrevious = computed(() => !Number.isNaN(page.value) && page.value > 1);
 const allowNext = computed(() => !Number.isNaN(page.value) && data.length >= data.take);
@@ -48,10 +51,6 @@ const page = computed({
   }
 });
 
-const path = context.injectPath();
-const takeStateKey = path + ".take";
-const contextData = context.injectContextData();
-console.log(contextData);
 if(data && contextData.page[takeStateKey] !== data.take) {
   contextData.page[takeStateKey] = data.take;
 
