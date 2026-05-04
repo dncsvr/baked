@@ -154,24 +154,24 @@ public static class DomainComponents
         return B.Input(api.Name, parameter.GenerateRequiredComponent(context.Drill(nameof(Input.Component))), options: options);
     }
 
-    public static ComponentDescriptor<InputText> ParameterInputText(ParameterModel parameter, ComponentContext context,
+    public static ComponentDescriptor<InputText> ParameterInputText(ParameterModel _, ComponentContext context,
         Action<InputText>? options = default
     )
     {
         context = context.Drill(nameof(InputText));
         var (_, l) = context;
 
-        return B.InputText(l(parameter.Name.Titleize()), options: options);
+        return B.InputText(options: options);
     }
 
-    public static ComponentDescriptor<InputNumber> ParameterInputNumber(ParameterModel parameter, ComponentContext context,
+    public static ComponentDescriptor<InputNumber> ParameterInputNumber(ParameterModel _, ComponentContext context,
         Action<InputNumber>? options = default
     )
     {
         context = context.Drill(nameof(InputNumber));
         var (_, l) = context;
 
-        return B.InputNumber(l(parameter.Name.Titleize()), options: options);
+        return B.InputNumber(options: options);
     }
 
     public static ComponentDescriptor<Select> ParameterSelect(ParameterModel parameter, ComponentContext context,
@@ -194,7 +194,7 @@ public static class DomainComponents
 
         var data = metadata.GenerateRequiredSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
 
-        return B.Select(l(parameter.Name.Titleize()), data, options: options);
+        return B.Select(data, options: options);
     }
 
     public static ComponentDescriptor<SelectButton> ParameterSelectButton(ParameterModel parameter, ComponentContext context,

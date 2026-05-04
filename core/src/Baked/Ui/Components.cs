@@ -109,13 +109,13 @@ public static class Components
         Action<Icon>? options = default
     ) => new(options.Apply(new(iconClass)));
 
-    public static ComponentDescriptor<InputText> InputText(string label,
+    public static ComponentDescriptor<InputText> InputText(
         Action<InputText>? options = default
-    ) => new(options.Apply(new(label)));
+    ) => new(options.Apply(new()));
 
-    public static ComponentDescriptor<InputNumber> InputNumber(string label,
+    public static ComponentDescriptor<InputNumber> InputNumber(
         Action<InputNumber>? options = default
-    ) => new(options.Apply(new(label)));
+    ) => new(options.Apply(new()));
 
     public static ComponentDescriptor<LanguageSwitcher> LanguageSwitcher(
         Action<LanguageSwitcher>? options = default
@@ -191,9 +191,9 @@ public static class Components
         IData? data = default
     ) => new(options.Apply(new())) { Data = data };
 
-    public static ComponentDescriptor<Select> Select(string label, IData data,
+    public static ComponentDescriptor<Select> Select(IData data,
         Action<Select>? options = default
-    ) => new(options.Apply(new(label) { LocalizeLabel = data.RequireLocalization })) { Data = data };
+    ) => new(options.Apply(new() { LocalizeLabel = data.RequireLocalization })) { Data = data };
 
     public static ComponentDescriptor<SelectButton> SelectButton(IData data,
         Action<SelectButton>? options = default
