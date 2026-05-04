@@ -105,8 +105,8 @@ function getComponentProps() {
   const result = { ...componentProps };
 
   if(descriptor.data) { result.data = data.value; }
-  if(component.props?.modelValue) { 
-    result.modelValue = model.value; 
+  if(component.props?.modelValue) {
+    result.modelValue = model.value;
 
     if(autoNextTick) {
       nextTick(() => onModelUpdate(model.value));
