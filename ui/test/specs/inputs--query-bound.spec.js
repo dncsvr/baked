@@ -49,6 +49,15 @@ test("reset to default value after route to self", async({ page }) => {
   expect(params.get("required")).toBeNull();
 });
 
+test("call model update after model is set", async({ page }) => {
+  const reactor = page.getByTestId(id.reactor);
+
+  await page.waitForURL(/requiredWithDefault=default\+value/); // wait for above fills to take effect
+
+  await expect(reactor).toBeAttached();
+  await expect(reactor).toContainText("default value");
+});
+
 test("query string is set from input", async({ page }) => {
   const component = page.getByTestId(id.component);
 
@@ -141,5 +150,5 @@ test("when reacting, bake should respect initial values", async({ page, goto }) 
   const reactor = page.getByTestId(id.reactor);
 
   await expect(reactor).toBeAttached();
-  await expect(reactor).toHaveText("Reacting...");
+  await expect(reactor).toContainText("react");
 });

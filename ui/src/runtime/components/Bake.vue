@@ -9,7 +9,7 @@
   </component>
 </template>
 <script setup>
-import { h, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { defineExpose, h, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useActionExecuter, useComponentResolver, useContext, useDataFetcher, useFormat, useReactionHandler } from "#imports";
 
 const actionExecuter = useActionExecuter();
@@ -19,9 +19,10 @@ const dataFetcher = useDataFetcher();
 const { asClasses } = useFormat();
 const reactionHandler = useReactionHandler();
 
-const { name, descriptor } = defineProps({
+const { name, descriptor, autoNextTick } = defineProps({
   name: { type: String, required: true },
-  descriptor: { type: null, required: true }
+  descriptor: { type: null, required: true },
+  autoNextTick: { type: null, required: false, default: true }
 });
 const model = defineModel({ type: null });
 const emit = defineEmits(["loaded"]);
@@ -39,6 +40,10 @@ const executing = ref(false);
 const visible = ref(true);
 const classes = [`b-component--${descriptor.type}`, ...asClasses(name)];
 let reactions = null;
+
+defineExpose({
+  onModelUpdate
+});
 
 context.providePath(path);
 context.provideDataDescriptor(descriptor.data);
@@ -93,7 +98,9 @@ function buildComponentProps() {
   if(component.props?.modelValue) {
     result["onUpdate:modelValue"] = onModelUpdate;
 
-    nextTick(() => onModelUpdate(model.value));
+    if(autoNextTick) {
+      nextTick(async() => await onModelUpdate(model.value));
+    }
   }
 
   return result;

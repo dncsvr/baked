@@ -24,7 +24,11 @@ const variants = [
             localizeLabel: false,
             stateful: true,
             noFloatLabel: true,
-            data: [10, 20, 50, 100]
+            data: [10, 20, 50, 100],
+            action: giveMe.aPublishAction({
+              pageContextKey: "take",
+              data: giveMe.aContextData({ key: "model" }) }
+            )
           })
         }),
         giveMe.anInput({
@@ -39,17 +43,23 @@ const variants = [
             data: {
               type: "Composite",
               parts: [
-                {
-                  type: "Inline",
-                  value: { "length": 10 }
-                },
-                {
-                  type: "Inline",
-                  value: { "take": 10 }
-                }
+                { type: "Inline", value: { "length": 10 } },
+                { type: "Context", key: "page", prop: "take", targetProp: "take" }
               ]
+            },
+            reactions: {
+              reload: {
+                type: "Composite",
+                parts: [{ type: "When", when: "list-panel-take" }]
+              }
             }
           }
+        }),
+        giveMe.anInput({
+          name: "required",
+          required: true,
+          queryBound: true,
+          component:  giveMe.anExpectedInput({ testId: "required" })
         })
       ],
       content: giveMe.anExpected({

@@ -1,12 +1,14 @@
 <template>
   <Bake
+    ref="inputRef"
     v-model="model"
     :name="schema.name"
     :descriptor="schema.component"
+    :auto-next-tick="!schema.queryBound"
   />
 </template>
 <script setup>
-import { computed, watch } from "vue";
+import { computed, useTemplateRef, watch } from "vue";
 import { useRoute, useRouter } from "#app";
 import { useDataMounter } from "#imports";
 import { Bake } from "#components";
@@ -22,13 +24,14 @@ const model = defineModel({ type: null, required: true });
 
 const defaultValue = mountData(schema.default);
 const query = schema.queryBound ? computed(() => route.query[schema.name]) : undefined;
+const inputRef = useTemplateRef("inputRef");
 
 onAfterMountData(async() => {
   // parent component might set model to null during setup, because of that on
   // mounted is used to set model value if it doesn't check
   if(!checkValue(model.value)) {
     if(schema.queryBound && checkValue(query.value)) {
-      setModel(query.value);
+      await setModel(query.value);
     } else {
       await set(defaultValue.value);
     }
@@ -47,7 +50,7 @@ onAfterMountData(async() => {
         return;
       }
 
-      setModel(newValue);
+      await setModel(newValue);
     }, { immediate: true });
   }
 
@@ -61,10 +64,16 @@ onAfterMountData(async() => {
 });
 
 async function set(value) {
-  if(schema.queryBound) {
+  if(!schema.queryBound) {
+    // prevents setting model to undefined infinitely
+    if(!value) { return; }
+
+    await setModel(value);
+  }
+  else {
     // prevents an unnecessary router push to avoid cancelation on other
     // inputs' router pushes
-    if(value === query.value) { return; }
+    if(String(value) === String(query.value)) { return; }
 
     await router.push({
       path: route.path,
@@ -75,11 +84,6 @@ async function set(value) {
       // prevents extra browser history when setting default value of input
       replace: schema.required && (schema.default || schema.defaultSelfManaged) && !query.value
     });
-  } else {
-    // prevents setting model to undefined infinitely
-    if(!value) { return; }
-
-    setModel(value);
   }
 }
 
@@ -91,7 +95,12 @@ function checkValue(value) {
   return value !== undefined && value !== null;
 }
 
-function setModel(value) {
-  model.value = schema.numeric ? Number(value) : value;
+async function setModel(value) {
+  const newValue = schema.numeric ? Number(value) : value;
+  model.value = newValue;
+
+  if(schema.queryBound) {
+    await inputRef.value?.onModelUpdate(schema.numeric ? Number(value) : value);
+  }
 }
 </script>
