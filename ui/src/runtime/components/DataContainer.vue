@@ -1,67 +1,14 @@
 <template>
-  <Panel
-    ref="panel"
-    :collapsed="collapsedState"
-    :toggleable="false"
-    :pt="
-      {
-        headerActions: 'flex gap-2 items-center',
-        title: 'max-sm:truncate',
-        content: '[contain:inline-size]'
-      }
-    "
-    @update:collapsed="onCollapsed"
-  >
-    <template
-      v-if="$slots.inputs || inputs.length > 0"
-      #icons
-    >
-      <template v-if="isMd">
-        <div class="flex gap-2 text-xs">
-          <Inputs
-            v-if="inputs.length > 0"
-            :inputs="inputs"
-            @ready="onReady"
-            @changed="onChanged"
-          />
-          <slot
-            v-if="$slots.inputs"
-            name="inputs"
-          />
-        </div>
-      </template>
-      <template v-else>
-        <Button
-          v-if="inputs.length > 0 || $slots.inputs"
-          variant="text"
-          icon="pi pi-sliders-h"
-          class="lg:hidden"
-          rounded
-          @click="togglePopover"
-        />
-        <PersistentPopover ref="popover">
-          <div
-            class="
-              flex flex-col gap-2 min-w-24
-              w-full px-2 py-2 text-xs
-            "
-          >
-            <Inputs
-              v-if="inputs.length > 0"
-              :inputs="inputs"
-              input-class="max-md:w-full"
-              @ready="onReady"
-              @changed="onChanged"
-            />
-            <slot
-              v-if="$slots.inputs"
-              name="inputs"
-            />
-          </div>
-        </PersistentPopover>
-      </template>
-    </template>
-    <template #default>
+  <div class="p-panel">
+    <div class="p-panel-header flex gap-2 text-xs items-center justify-end">
+      <Inputs
+        v-if="inputs.length > 0"
+        :inputs="inputs"
+        @ready="onReady"
+        @changed="onChanged"
+      />
+    </div>
+    <div class="p-panel-content [contain:inline-size]">
       <Bake
         v-if="loaded && ready"
         :key="uniqueKey"
@@ -75,20 +22,17 @@
         <i class="pi pi-info-circle" />
         <span class="ml-3">{{ lc("Select required values to view this data") }}</span>
       </Message>
-    </template>
-  </Panel>
+    </div>
+  </div>
 </template>
 <script setup>
-import { ref, useTemplateRef } from "vue";
-import { Message, Panel, Button } from "primevue";
-import { useBreakpoints, useContext, useUiStates, useLocalization } from "#imports";
-import { Bake, Inputs, PersistentPopover } from "#components";
+import { ref } from "vue";
+import { Message } from "primevue";
+import { useContext, useLocalization } from "#imports";
+import { Bake, Inputs } from "#components";
 
-const { value: { panelStates } } = useUiStates();
-const { isMd } = useBreakpoints();
 const context = useContext();
-const { localize: lc } = useLocalization({ group: "DataPanel" });
-const panel = useTemplateRef("panel");
+const { localize: lc } = useLocalization({ group: "DataContainer" });
 
 const { schema } = defineProps({
   schema: { type: null, required: true }
@@ -97,34 +41,14 @@ const { schema } = defineProps({
 const { content, inputs } = schema;
 
 const contextData = context.injectContextData();
-const path = context.injectPath();
 
 const loaded = ref(true);
 const ready = ref(inputs.length === 0); // it is ready when there is no parameter
 const uniqueKey = ref("");
-const popover = ref();
 
 const values = ref({});
 if(inputs.length > 0) {
   contextData.parent["parameters"] = values;
-}
-
-function togglePopover(event) {
-  popover.value.toggle(event);
-}
-
-function onCollapsed(collapsed) {
-  panelStates[path] = collapsed;
-
-  if(!collapsed && !loaded.value) {
-    loaded.value = true;
-  }
-
-  if(!collapsed) {
-    setTimeout(() => {
-      panel.value.$el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 750);
-  }
 }
 
 function onReady(value) {
@@ -136,8 +60,16 @@ function onChanged(event) {
   values.value = event.values;
 }
 </script>
-<style>
-.p-panel-content {
-  @apply [&:has(.p-datatable)]:p-0;
+<style scoped>
+div.p-panel {
+  div.p-panel-header {
+    @apply p-[1.125rem] bg-transparent border-0 rounded-none
+  }
+
+  div.p-panel-content {
+    @apply p-[1.125rem] pt-0
+  }
+
+  @apply block border rounded bg-[var(--p-panel-background)] text-[var(--p-panel-color)]
 }
 </style>

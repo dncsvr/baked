@@ -99,8 +99,6 @@ async function setModel(value) {
   const newValue = schema.numeric ? Number(value) : value;
   model.value = newValue;
 
-  if(schema.queryBound) {
-    await inputRef.value?.onModelUpdate(schema.numeric ? Number(value) : value);
-  }
+  await inputRef.value?.onModelUpdate(newValue);
 }
 </script>

@@ -49,7 +49,7 @@ test("reset to default value after route to self", async({ page }) => {
   expect(params.get("required")).toBeNull();
 });
 
-test("call model update after model is set", async({ page }) => {
+test("calls model update after model is set", async({ page }) => {
   const reactor = page.getByTestId(id.reactor);
 
   await page.waitForURL(/requiredWithDefault=default\+value/); // wait for above fills to take effect

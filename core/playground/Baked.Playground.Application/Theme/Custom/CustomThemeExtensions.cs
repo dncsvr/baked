@@ -59,6 +59,7 @@ public static class CustomThemeExtensions
                 r => r.Child("/specs/language-switcher", "Language Switcher", "/specs") with { Icon = "pi pi-microchip", Description = "Allows change site language", Section = "Input" },
                 r => r.Child("/specs/select", "Select", "/specs") with { Icon = "pi pi-microchip", Description = "Allows select from given options using drow down", Section = "Input" },
                 r => r.Child("/specs/select-button", "Select Button", "/specs") with { Icon = "pi pi-microchip", Description = "Allows select from given options using buttons", Section = "Input" },
+                r => r.Child("/specs/server-paginator", "Server Paginator", "/specs") with { Icon = "pi pi-microchip", Description = "Allows pagination", Section = "Input" },
 
                 // Layout
                 r => r.Child("/specs/data-panel", "Data Panel", "/specs") with { Icon = "pi pi-microchip", Description = "Lazy loads and views a data within a panel", Section = "Layout" },

@@ -169,7 +169,7 @@ export default {
     content = $(content, this.anExpected());
 
     return {
-      type: "DataPanel",
+      type: "DataContainer",
       schema: { inputs, content }
     };
   },

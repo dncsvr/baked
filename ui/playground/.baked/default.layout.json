@@ -251,6 +251,12 @@
             "title": "Select Button",
             "parentRoute": "/specs"
           },
+          "/specs/server-paginator": {
+            "route": "/specs/server-paginator",
+            "icon": "pi pi-microchip",
+            "title": "Server Paginator",
+            "parentRoute": "/specs"
+          },
           "/specs/data-panel": {
             "route": "/specs/data-panel",
             "icon": "pi pi-microchip",

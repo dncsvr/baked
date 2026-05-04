@@ -43,15 +43,12 @@ const variants = [
             data: {
               type: "Composite",
               parts: [
-                { type: "Inline", value: { "length": 10 } },
-                { type: "Context", key: "page", prop: "take", targetProp: "take" }
+                giveMe.anInlineData({ "length": 10 } ),
+                giveMe.aContextData({ key: "page", prop: "take", targetProp: "take" })
               ]
             },
             reactions: {
-              reload: {
-                type: "Composite",
-                parts: [{ type: "When", when: "list-panel-take" }]
-              }
+              reload: giveMe.aTrigger({ when: "take" })
             }
           }
         }),
