@@ -1,15 +1,15 @@
 ﻿using Baked.Architecture;
-using Baked.CodeGeneration;
+using Baked.Buildtime;
 using Baked.Runtime;
 using Baked.Ui.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-using static Baked.CodeGeneration.CodeGenerationLayer;
+using static Baked.Buildtime.BuildtimeLayer;
 
 namespace Baked.Ui;
 
-public class UiLayer : LayerBase<GenerateCode>
+public class UiLayer : LayerBase<Generate>
 {
     public const int MinConventionOrder = -ConventionOrderLimit;
     public const int MaxConventionOrder = ConventionOrderLimit;
@@ -38,7 +38,7 @@ public class UiLayer : LayerBase<GenerateCode>
     readonly PageDescriptors _pageDescriptors = new();
     readonly LocaleTemplate _localeTemplate = new();
 
-    protected override PhaseContext GetContext(GenerateCode phase)
+    protected override PhaseContext GetContext(Generate phase)
     {
         if (NoUi) { return phase.CreateEmptyContext(); }
 

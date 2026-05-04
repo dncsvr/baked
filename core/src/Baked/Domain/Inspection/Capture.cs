@@ -17,9 +17,12 @@ internal class Capture<T>
     };
 
     static string FormatValue(object? value) =>
-        value is string || value?.GetType().SkipNullable().IsValueType == true
-            ? $"{value}"
-            : JsonConvert.SerializeObject(value, Formatting.Indented, SerializerSettings);
+        value is null ? $"[gray]<null>[/]" :
+        Markup.Escape(
+            value.GetType().IsAnonymous
+                ? JsonConvert.SerializeObject(value, Formatting.Indented, SerializerSettings)
+                : $"{value}"
+        );
 
     readonly Inspection _inspection;
     readonly StackTrace _stackTrace;
@@ -44,7 +47,7 @@ internal class Capture<T>
         _initial = initial;
     }
 
-    string Property => Markup.Escape(_inspection.Expression.StripLambdaFromASingleMemberAccessExpression());
+    string Property => Markup.Escape(_inspection.Expression.StripNoiseFromExpressionString());
 
     public T Execute()
     {
@@ -57,12 +60,12 @@ internal class Capture<T>
             Diagnostics.Current.ReportInfo($"[steelblue3]{_captureType.BuildTitle(type)}[/] [gray]{_captureType.Id}[/]", group: _captureType.Id);
         }
 
-        if (Equals(value, previousValue)) { return target; }
+        if (!_initial && Equals(value, previousValue)) { return target; }
 
         var source = TryFindFeatureSource(out var featureSource)
             ? $"[magenta]{featureSource}[/]"
             : $"[magenta]<unknown>[/]{Environment.NewLine}[gray]{Markup.Escape($"{_stackTrace}")}[/]";
-        Diagnostics.Current.ReportInfo($"  [darkgoldenrod]{Property}:[/] {Markup.Escape(FormatValue(value))} [gray]«[/] {source}", group: _captureType.Id);
+        Diagnostics.Current.ReportInfo($"  [darkgoldenrod]{Property}:[/] {FormatValue(value)} [gray]«[/] {source}", group: _captureType.Id);
 
         return target;
     }

@@ -16,17 +16,17 @@ Bake.New
 
 ## Layers
 
-| Name                 | Run                                 | Test               |
-| ---                  | ---                                 | ---                |
-| Code Generation      | :white_check_mark:                  | :white_check_mark: |
-| Data Access          | :white_check_mark:                  | :white_check_mark: |
-| Domain               | :white_check_mark:                  | :white_check_mark: |
-| HTTP Client          | :white_check_mark:                  | :no_entry:         |
-| HTTP Server          | :white_check_mark:                  | :no_entry:         |
-| Rest API             | :white_check_mark:                  | :no_entry:         |
-| Runtime              | :white_check_mark:                  | :white_check_mark: |
-| Testing              | :no_entry:                          | :white_check_mark: |
-| UI                   | :white_check_mark: (When Theme Set) | :no_entry:         |
+| Name        | Run                                 | Test               |
+| ---         | ---                                 | ---                |
+| Buildtime   | :white_check_mark:                  | :white_check_mark: |
+| Data Access | :white_check_mark:                  | :white_check_mark: |
+| Domain      | :white_check_mark:                  | :white_check_mark: |
+| HTTP Client | :white_check_mark:                  | :no_entry:         |
+| HTTP Server | :white_check_mark:                  | :no_entry:         |
+| Rest API    | :white_check_mark:                  | :no_entry:         |
+| Runtime     | :white_check_mark:                  | :white_check_mark: |
+| Testing     | :no_entry:                          | :white_check_mark: |
+| UI          | :white_check_mark: (When Theme Set) | :no_entry:         |
 
 ## Features
 
@@ -105,32 +105,31 @@ Bake.New
 
 ```mermaid
 flowchart LR;
+  subgraph Generate
+    AD(AddDomainTypes)
+    BD(BuildDomainModel)
+    G(Generate)
+    C(Compile)
 
-    subgraph Generate
-      AD(AddDomainTypes)
-      BD(BuildDomainModel)
-      GC(GenerateCode)
-      C(Compile)
+    AD -->|IDomainTypeCollection| BD
+    BD -->|DomainModel| G
+    G -->|IGeneratedAssemblyCollection<br/>IGeneratedFileCollection| C
+  end
 
-      AD -->|IDomainTypeCollection| BD
-      BD -->|DomainModel| GC
-      GC -->|IGeneratedAssemblyCollection<br/>IGeneratedFileCollection| C
-    end
+  subgraph Start
+    CB(CreateBuilder)
+    BC(BuildConfiguration)
+    AS(AddServices)
+    B(Build)
+    PB(PostBuild)
+    R(Run)
 
-    subgraph Start
-      CB(CreateBuilder)
-      BC(BuildConfiguration)
-      AS(AddServices)
-      B(Build)
-      PB(PostBuild)
-      R(Run)
+    CB -->|ConfigurationManager<br/>WebApplicationBuilder| BC
+    BC -->|GeneratedContext| AS
+    AS -->|IServiceCollection| B
+    B -->|IServiceProvider<br/>WebApplication| PB
+    PB --> R
+  end
 
-      CB -->|ConfigurationManager<br/>WebApplicationBuilder| BC
-      BC -->|GeneratedContext| AS
-      AS -->|IServiceCollection| B
-      B -->|IServiceProvider<br/>WebApplication| PB
-      PB --> R
-    end
-
-    Generate --> Start
+  Generate --> Start
 ```

@@ -1,5 +1,5 @@
 ﻿using Baked.Architecture;
-using Baked.CodeGeneration;
+using Baked.Buildtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;

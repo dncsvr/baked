@@ -1,13 +1,13 @@
-﻿using Baked.Architecture;
+using Baked.Architecture;
 using Baked.Domain.Model;
 using System.Reflection;
 
-using static Baked.CodeGeneration.CodeGenerationLayer;
+using static Baked.Buildtime.BuildtimeLayer;
 using static Baked.Runtime.RuntimeLayer;
 
-namespace Baked.CodeGeneration;
+namespace Baked.Buildtime;
 
-public class CodeGenerationLayer : LayerBase<GenerateCode, Compile, BuildConfiguration>
+public class BuildtimeLayer : LayerBase<Generate, Compile, BuildConfiguration>
 {
     readonly IGeneratedAssemblyCollection _generatedAssemblies = new GeneratedAssemblyCollection();
     readonly IGeneratedFileCollection _generatedFiles = new GeneratedFileCollection();
@@ -28,7 +28,7 @@ public class CodeGenerationLayer : LayerBase<GenerateCode, Compile, BuildConfigu
         }
     }
 
-    protected override PhaseContext GetContext(GenerateCode phase)
+    protected override PhaseContext GetContext(Generate phase)
     {
         if (!Directory.Exists(Location))
         {
@@ -82,7 +82,7 @@ public class CodeGenerationLayer : LayerBase<GenerateCode, Compile, BuildConfigu
 
     protected override IEnumerable<IPhase> GetGeneratePhases()
     {
-        yield return new GenerateCode(_generatedAssemblies, _generatedFiles);
+        yield return new Generate(_generatedAssemblies, _generatedFiles);
         yield return new Compile(Location,
             onCompiled: RemoveFromRemainingFiles
         );
@@ -103,7 +103,7 @@ public class CodeGenerationLayer : LayerBase<GenerateCode, Compile, BuildConfigu
         }
     }
 
-    public class GenerateCode(IGeneratedAssemblyCollection _generatedAssemblies, IGeneratedFileCollection _generatedFiles)
+    public class Generate(IGeneratedAssemblyCollection _generatedAssemblies, IGeneratedFileCollection _generatedFiles)
         : PhaseBase<DomainModel>(PhaseOrder.Early)
     {
         protected override void Initialize(DomainModel _)

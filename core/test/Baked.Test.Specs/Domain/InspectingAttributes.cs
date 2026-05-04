@@ -1,4 +1,4 @@
-using Baked.CodeGeneration.Diagnostics;
+using Baked.Buildtime.Diagnostics;
 using Baked.Domain.Configuration;
 using Baked.Domain.Inspection;
 using Baked.Playground.Business;
@@ -115,7 +115,7 @@ public class InspectingAttributes : TestSpec
             _trace.CaptureAttribute(c, () => new CustomAttribute());
         }
 
-        _messages.ShouldContain(m => m.Message.Contains("<this>"));
+        _messages.ShouldContain(m => m.Message.Contains("<self>"));
     }
 
     [Test]
@@ -244,7 +244,7 @@ public class InspectingAttributes : TestSpec
     public void Reports_attribute_type_and_property_name()
     {
         _inspect.Attribute<CustomAttribute>(
-            attribute: d => d.Value
+            attribute: c => c.Value
         );
         var c = new TypeModelContext { Domain = GiveMe.TheDomainModel(), Type = GiveMe.TheTypeModel<Parent>() };
 
@@ -258,7 +258,43 @@ public class InspectingAttributes : TestSpec
     }
 
     [Test]
-    public void Reports_new_value_as_json_when_value_is_not_value_type_or_string()
+    public void Reports_value_even_if_initial_value_is_null()
+    {
+        _inspect.Attribute<CustomAttribute>(
+            attribute: c => c.NullableValue
+        );
+        var c = new TypeModelContext { Domain = GiveMe.TheDomainModel(), Type = GiveMe.TheTypeModel<Parent>() };
+
+        using (_diagnostics)
+        {
+            _trace.CaptureAttribute(c, () => new CustomAttribute());
+        }
+
+        _messages.ShouldContain(m => m.Message.Contains("[darkgoldenrod]NullableValue:[/] [gray]<null>[/]"));
+    }
+
+    [Test]
+    public void Reports_new_value_as_json_when_value_is_anonymous_type()
+    {
+        _inspect.Attribute<CustomAttribute>(
+            attribute: c => new { c.Value }
+        );
+        var c = GiveMe.ATypeModelContext<Parent>();
+
+        using (_diagnostics)
+        {
+            _trace.CaptureAttribute(c, () => new CustomAttribute { Value = "Test" });
+        }
+
+        _messages.ShouldNotContain(m => m.Message.Contains("""
+        [darkgoldenrod]Value:[/] {
+          "value": "Test"
+        }
+        """));
+    }
+
+    [Test]
+    public void Reports_new_value_as_tring_when_value_is_any_other_type()
     {
         _inspect.Attribute<CustomAttribute>();
         var c = GiveMe.ATypeModelContext<Parent>();
@@ -268,11 +304,7 @@ public class InspectingAttributes : TestSpec
             _trace.CaptureAttribute(c, () => new CustomAttribute { Value = "Test" });
         }
 
-        _messages.ShouldContain(m => m.Message.Contains("""
-        {
-          "value": "Test"
-        }
-        """));
+        _messages.ShouldContain(m => m.Message.Contains("CustomAttribute"));
     }
 
     [Test]
@@ -292,6 +324,24 @@ public class InspectingAttributes : TestSpec
         }
 
         _messages.Count(ca => ca.Message.Contains("updated")).ShouldBe(1);
+    }
+
+    [Test]
+    public void Null_updates_are_in_gray_color()
+    {
+        _inspect.Attribute<CustomAttribute>(
+            attribute: ca => ca.NullableValue
+        );
+        var c = GiveMe.ATypeModelContext<Parent>();
+
+        using (_diagnostics)
+        {
+            var ca = new CustomAttribute { NullableValue = "initial" };
+
+            _trace.CaptureAttribute(c, ca, () => ca.NullableValue = null);
+        }
+
+        _messages.ShouldContain(m => m.Message.Contains("[darkgoldenrod]NullableValue:[/] [gray]<null>[/]"));
     }
 
     [Test]
@@ -364,11 +414,11 @@ public class InspectingAttributes : TestSpec
 
         using (_diagnostics)
         {
-            var ca = _trace.CaptureAttribute(c, () => new CustomAttribute { SecondValue = "create" });
-            _trace.CaptureAttribute(c, ca, () => ca.SecondValue = "update");
+            var ca = _trace.CaptureAttribute(c, () => new CustomAttribute { NullableValue = "create" });
+            _trace.CaptureAttribute(c, ca, () => ca.NullableValue = "update");
         }
 
-        _messages.Count(m => m.Message.Contains($"SecondValue")).ShouldBe(0);
+        _messages.Count(m => m.Message.Contains($"NullableValue")).ShouldBe(0);
     }
 
     [Test]

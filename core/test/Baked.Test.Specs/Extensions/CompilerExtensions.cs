@@ -1,4 +1,4 @@
-using Baked.CodeGeneration;
+using Baked.Buildtime;
 using Baked.Testing;
 
 namespace Baked.Test;

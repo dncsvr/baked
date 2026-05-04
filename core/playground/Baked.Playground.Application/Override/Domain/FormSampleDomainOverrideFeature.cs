@@ -26,8 +26,8 @@ public class FormSampleDomainOverrideFeature : IFeature
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent),
                 component: fp =>
                 {
-                    fp.Schema.SingleColumn = true;
-                    fp.Schema.Inputs.Move("name", toTop: true);
+                    fp.Schema.ForEachInputGroup(g => g.Wide = true);
+                    fp.Schema.Sections[0].InputGroups.Move("name", toTop: true);
                 }
             );
 
@@ -52,7 +52,7 @@ public class FormSampleDomainOverrideFeature : IFeature
                     dt.ReloadOn(nameof(FormSample.ClearParents).Kebaberize());
                     dt.ReloadOn("page-changed");
                     dt.Schema.Paginator = false;
-                    dt.Schema.Sort = c.Method.DefaultOverload.Parameters["sort"].GetComponent(cc.Drill(nameof(DataTable.Sort)));
+                    dt.Schema.Sort = c.Method.DefaultOverload.Parameters["sort"].GenerateComponent(cc.Drill(nameof(DataTable.Sort)));
 
                     if (dt.Schema.Sort is not null && dt.Schema.Sort.Schema is ISelect select)
                     {

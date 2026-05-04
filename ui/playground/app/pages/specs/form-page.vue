@@ -40,17 +40,58 @@ const variants = [
     descriptor: giveMe.aFormPage({
       action: giveMe.aLocalAction({ showMessage: "ok" }),
       inputs: [
-        giveMe.anInput({
-          name: "param-1",
-          component: giveMe.anExpectedInput()
+        giveMe.anInput({ name: "param-1" }),
+        giveMe.anInput({ name: "param-2" }),
+        giveMe.anInput({ name: "param-3" })
+      ]
+    })
+  },
+  {
+    name: "Sections",
+    descriptor: giveMe.aFormPage({
+      action: giveMe.aLocalAction({ showMessage: "ok" }),
+      sections: [
+        giveMe.aFormPageSection({
+          key: "section-1",
+          label: "Spec: Section 1"
         }),
-        giveMe.anInput({
-          name: "param-2",
-          component: giveMe.anExpectedInput()
-        }),
-        giveMe.anInput({
-          name: "param-3",
-          component: giveMe.anExpectedInput()
+        giveMe.aFormPageSection({
+          key: "section-2",
+          label: "Spec: Section 2"
+        })
+      ]
+    })
+  },
+  {
+    name: "Layout Options",
+    descriptor: giveMe.aFormPage({
+      action: giveMe.aLocalAction({ showMessage: "ok" }),
+      sections: [
+        giveMe.aFormPageSection({
+          inputGroups: [
+            giveMe.aFormPageInputGroup({
+              inputs: [
+                giveMe.anInput({ name: "narrow-1" }),
+                giveMe.anInput({ name: "narrow-1-2" })
+              ]
+            }),
+            giveMe.aFormPageInputGroup({ inputs: [giveMe.anInput({ name: "narrow-2" })] }),
+            giveMe.aFormPageInputGroup({ inputs: [giveMe.anInput({ name: "narrow-3" })] }),
+            giveMe.aFormPageInputGroup({ inputs: [giveMe.anInput({ name: "narrow-4" })] }),
+            giveMe.aFormPageInputGroup({
+              inputs: [giveMe.anInput({ name: "wide-1" })],
+              wide: true
+            }),
+            giveMe.aFormPageInputGroup({
+              inputs: [
+                giveMe.anInput({ name: "wide-2" }),
+                giveMe.anInput({ name: "wide-2-2" }),
+                giveMe.anInput({ name: "wide-2-3" })
+              ],
+              wide: true
+            }),
+            giveMe.aFormPageInputGroup({ inputs: [giveMe.anInput({ name: "narrow-trailing" })] })
+          ]
         })
       ]
     })

@@ -26,7 +26,7 @@ public class ValueTypeCodingStyleFeature : IFeature<CodingStyleConfigurator>
             );
         });
 
-        configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
+        configurator.Buildtime.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
         {
             configurator.Domain.UsingDomainModel(domain =>
             {
@@ -41,7 +41,7 @@ public class ValueTypeCodingStyleFeature : IFeature<CodingStyleConfigurator>
 
         configurator.DataAccess.ConfigureAutoPersistenceModel(model =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 var valueTypes = generatedContext
                     .Assemblies[nameof(ValueTypeCodingStyleFeature)]
@@ -53,7 +53,7 @@ public class ValueTypeCodingStyleFeature : IFeature<CodingStyleConfigurator>
 
         configurator.RestApi.ConfigureMvcNewtonsoftJsonOptions(options =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 var valueTypes = generatedContext
                     .Assemblies[nameof(ValueTypeCodingStyleFeature)]
@@ -77,7 +77,7 @@ public class ValueTypeCodingStyleFeature : IFeature<CodingStyleConfigurator>
 
         configurator.RestApi.ConfigureSwaggerGenOptions(swaggerGenOptions =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 var valueTypes = generatedContext
                     .Assemblies[nameof(ValueTypeCodingStyleFeature)]

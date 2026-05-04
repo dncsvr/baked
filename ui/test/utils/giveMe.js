@@ -377,24 +377,43 @@ export default {
     };
   },
 
-  aFormPage({ action, title, description, submit, inputs } = {}) {
+  aFormPage({ action, title, description, submit, inputs, sections } = {}) {
     title = this.aPageTitle({ title, description }).schema;
     submit = $(submit, this.aButton({ label: "Test Submit" }).schema);
     inputs = $(inputs, []);
+    sections = $(sections, [this.aFormPageSection({ inputs })]);
 
     return {
       type: "FormPage",
       schema: {
         title,
         submit,
-        inputs,
-        sections: [{ name: "Default", inputs: inputs.map(i => i.name) }],
-        groups: {},
-        wide: [],
-        singleColumn: true
+        sections
       },
       action
     };
+  },
+
+  aFormPageInputGroup({ key, wide, inputs } = {}) {
+    inputs = $(inputs, [this.anInput()]);
+    key = $(key, inputs[0]?.name || "default");
+
+    return {
+      key,
+      wide,
+      inputs
+    };
+  },
+
+  aFormPageSection({ key, label, inputs, inputGroups } = {}) {
+    key = $(key, "default");
+    label = $(label, "Default");
+    inputs = $(inputs, [this.anInput()]);
+    inputGroups = $(inputGroups,
+      inputs.map(input => this.aFormPageInputGroup({ inputs: [input], wide: true }))
+    );
+
+    return { key, label, inputGroups };
   },
 
   aHeader({ sitemapItems, data } = {}) {
@@ -442,7 +461,7 @@ export default {
   anInput({ name, required, defaultValue, default_, defaultSelfManaged, queryBound, component } = {}) {
     name = $(name, "test");
     required = $(required, false);
-    component = $(component, this.anExpectedInput());
+    component = $(component, this.anExpectedInput({ testId: name }));
     default_ = $(default_, defaultValue ? this.anInlineData(defaultValue) : undefined);
     defaultSelfManaged = $(defaultSelfManaged, false);
     queryBound = $(queryBound, undefined);

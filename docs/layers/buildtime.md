@@ -1,22 +1,22 @@
-# Code Generation
+# Buildtime
 
 Allows meta-programming-like experience to reduce repetitive code.
 
 ```csharp
-app.Layers.AddCodeGeneration();
+app.Layers.AddBuildtime();
 ```
 
 ## Configuration Targets
 
-Code generation layer provides `IGeneratedAssemblyCollection`,
+Buildtime layer provides `IGeneratedAssemblyCollection`,
 `IGeneratedFileCollection` and `GeneratedContext` configuration targets.
 
 ### `IGeneratedAssemblyCollection`
 
-This target is provided in `GenerateCode` phase. To configure it in a feature;
+This target is provided in `Generate` phase. To configure it in a feature;
 
 ```csharp
-configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(assemblies =>
+configurator.Buildtime.ConfigureGeneratedAssemblyCollection(assemblies =>
 {
     ...
 });
@@ -27,7 +27,7 @@ configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(assemblies =>
 This target is provided in `Compile` phase. To configure it in a feature;
 
 ```csharp
-configurator.CodeGeneration.ConfigureGeneratedFileCollection(files =>
+configurator.Buildtime.ConfigureGeneratedFileCollection(files =>
 {
     ...
 });
@@ -37,8 +37,8 @@ configurator.CodeGeneration.ConfigureGeneratedFileCollection(files =>
 
 This layer introduces following `Generate` phases to the application it is added;
 
-- `GenerateCode`: This phase creates a `IGeneratedAssemblyCollection` instance
-  and places it in the application context
+- `Generate`: This phase creates a `IGeneratedAssemblyCollection` instance and
+  places it in the application context
 - `Compile`: This phase compiles generated code during above phase, saves
   generated assemblies and files to entry assembly location with
   `ASPNETCORE_ENVIRONMENT` subfolder
@@ -49,7 +49,7 @@ This layer introduces following `Generate` phases to the application it is added
 > method;
 >
 > ```csharp
-> configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+> configurator.Buildtime.UsingGeneratedContext(generatedContext =>
 > {
 >     // generated assembly
 >     var assembly = generatedContext.Assemblies[...];
@@ -66,7 +66,7 @@ This layer introduces following `Generate` phases to the application it is added
 To have a better error output during generation we provide a diagnostics
 mechanism.
 
-To define a known build error add an extension to `DiagnosticsCode`;
+To define a known build error add an extension to `DiagnosticCode`;
 
 ```csharp
 extension(DiagnosticCode)
