@@ -10,53 +10,28 @@ import giveMe from "@utils/giveMe";
 
 const variants = [
   {
-    name: "Inputs",
+    name: "Base",
     descriptor: giveMe.aDataContainer({
+      content: giveMe.anExpected({ testId: "content", value: "TEST DATA" })
+    })
+  },
+  {
+    name: "Inputs",
+    descriptor: giveMe.aDataPanel({
       inputs: [
-        giveMe.anInput({
-          name: "take",
-          required: true,
-          defaultValue: 10,
-          queryBound: true,
-          numeric: true,
-          component: giveMe.aSelect({
-            label: "Take",
-            localizeLabel: false,
-            stateful: true,
-            noFloatLabel: true,
-            data: [10, 20, 50, 100],
-            action: giveMe.aPublishAction({
-              pageContextKey: "take",
-              data: giveMe.aContextData({ key: "model" }) }
-            )
-          })
-        }),
-        giveMe.anInput({
-          name: "skip",
-          required: true,
-          default_: { type: "Inline", value: 0 },
-          queryBound: true,
-          numeric: true,
-          component: {
-            type: "ServerPaginator",
-            schema: {},
-            data: {
-              type: "Composite",
-              parts: [
-                giveMe.anInlineData({ "length": 10 } ),
-                giveMe.aContextData({ key: "page", prop: "take", targetProp: "take" })
-              ]
-            },
-            reactions: {
-              reload: giveMe.aTrigger({ when: "take" })
-            }
-          }
-        }),
         giveMe.anInput({
           name: "required",
           required: true,
-          queryBound: true,
-          component:  giveMe.anExpectedInput({ testId: "required" })
+          component: giveMe.anExpectedInput({
+            testId: "required"
+          })
+        }),
+        giveMe.anInput({
+          name: "optional",
+          required: false,
+          component: giveMe.anExpectedInput({
+            testId: "optional"
+          })
         })
       ],
       content: giveMe.anExpected({

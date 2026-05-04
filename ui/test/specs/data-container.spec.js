@@ -1,20 +1,34 @@
 import { expect, test } from "@nuxt/test-utils/playwright";
-import giveMe from "../utils/giveMe";
 import primevue from "../utils/locators/primevue";
 
 test.beforeEach(async({ goto }) => {
   await goto("/specs/data-container", { waitUntil: "hydration" });
 });
 
+test.describe("Base", () => {
+  const id = "Base";
+
+  test("content", async({ page }) => {
+    const component = page.getByTestId(id);
+
+    await expect(component.getByTestId("content")).toHaveText("TEST DATA");
+  });
+
+  test("visual", { tag: "@visual" }, async({ page }) => {
+    const component = page.getByTestId(id);
+
+    await expect(component).toHaveScreenshot();
+  });
+});
+
 test.describe("Inputs", () => {
   const id = "Inputs";
 
-  test("inputs are rendered", async({ page }) => {
+  test("inputs rendered", async({ page }) => {
     const component = page.getByTestId(id);
 
-    await expect(component.locator(primevue.select.base)).toBeVisible();
-    await expect(component.locator(".b-component--ServerPaginator")).toBeVisible();
     await expect(component.getByTestId("required")).toBeVisible();
+    await expect(component.getByTestId("optional")).toBeVisible();
   });
 
   test("informs only when required inputs are not selected", async({ page }) => {
@@ -42,14 +56,5 @@ test.describe("Inputs", () => {
     await component.getByTestId("required").fill("value");
 
     await expect(component.getByTestId("content")).toHaveText(/value/);
-  });
-
-  test("visual", { tag: "@visual" }, async({ page }) => {
-    const component = page.getByTestId(id);
-    const screen = giveMe.aScreenSize({ name: "lg" });
-
-    await page.setViewportSize({ ...screen });
-
-    await expect(component).toHaveScreenshot();
   });
 });

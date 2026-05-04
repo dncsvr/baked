@@ -8,9 +8,9 @@ using static Baked.Theme.Default.DomainComponents;
 
 using B = Baked.Ui.Components;
 
-namespace Baked.Ux.QueryActionAsListPanel;
+namespace Baked.Ux.QueryActionAsDataContainer;
 
-public class QueryActionAsListPanelUxFeature : IFeature<UxConfigurator>
+public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
 {
     public void Configure(LayerConfigurator configurator)
     {

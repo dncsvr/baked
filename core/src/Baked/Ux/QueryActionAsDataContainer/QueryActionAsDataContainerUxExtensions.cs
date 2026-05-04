@@ -1,15 +1,15 @@
 using Baked.Business;
 using Baked.Domain.Model;
 using Baked.Ux;
-using Baked.Ux.QueryActionAsListPanel;
+using Baked.Ux.QueryActionAsDataContainer;
 
 namespace Baked;
 
-public static class QueryActionAsListPanelUxExtensions
+public static class QueryActionAsDataContainerUxExtensions
 {
     extension(UxConfigurator _)
     {
-        public QueryActionAsListPanelUxFeature QueryActionAsListPanel() =>
+        public QueryActionAsDataContainerUxFeature QueryActionAsDataContainer() =>
             new();
     }
 
@@ -19,6 +19,6 @@ public static class QueryActionAsListPanelUxExtensions
             parameter.Has<PagingAttribute>() && parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip;
 
         public bool IsTake =>
-            parameter.Has<PagingAttribute>() && parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip;
+            parameter.Has<PagingAttribute>() && parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take;
     }
 }
