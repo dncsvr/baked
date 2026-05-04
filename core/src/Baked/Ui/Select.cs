@@ -1,9 +1,8 @@
 ﻿namespace Baked.Ui;
 
-public record Select(string Label)
-    : ISelect, ILabeler, IComponentSchema
+public record Select : ISelect, IHasLabel
 {
-    public string Label { get; set; } = Label;
+    public string? Label { get; set; }
     public string? OptionLabel { get; set; }
     public string? OptionValue { get; set; }
     public bool? LocalizeLabel { get; set; }

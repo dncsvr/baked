@@ -21,7 +21,7 @@ public static class UiExtensions
             _configurator.Configure(configure);
 
         public void UsingLocaleTemplate(Action<ILocaleTemplate> localeTemplate) =>
-           _configurator.Use(localeTemplate);
+            _configurator.Use(localeTemplate);
 
         public void UsingLocalization(Action<NewLocaleKey> l) =>
             _configurator.Use(l);
@@ -108,5 +108,37 @@ public static class UiExtensions
             schemas.Remove(input);
             schemas.Insert(index, input);
         }
+    }
+
+    extension(IHasLabel hasLabel)
+    {
+        public void LabeLFloatIn(string label) =>
+            hasLabel.LabelMode("float", label, variant: "in");
+
+        public void LabelFloatOn(string label) =>
+            hasLabel.LabelMode("float", label, variant: "on");
+        public void LabelFLoatOver(string label) =>
+            hasLabel.LabelMode("float", label, variant: "over");
+
+        public void LabelIfta(string label) =>
+            hasLabel.LabelMode("ifta", label);
+
+        public void LabelNone() =>
+            hasLabel.LabelMode(null, null);
+
+        // WARNING
+        //
+        // Do NOT remove this warning disable section unintentionally.
+        // Without this, GitHub Actions fails on dotnet format
+#pragma warning disable IDE0051
+        void LabelMode(string? mode, string? label,
+            string? variant = default
+        )
+        {
+            hasLabel.LabelMode = mode;
+            hasLabel.Label = label;
+            hasLabel.LabelVariant = variant;
+        }
+#pragma warning restore IDE0051
     }
 }

@@ -6,8 +6,8 @@
       </div>
     </template>
     <Labeler
-      :label="l(label)"
-      :path="path"
+      :label
+      :path
       :mode="labelMode"
       :variant="labelVariant"
     >
@@ -23,11 +23,10 @@
 <script setup>
 import { ref } from "vue";
 import { InputText, Skeleton } from "primevue";
-import { useContext, useLocalization } from "#imports";
+import { useContext } from "#imports";
 import { AwaitLoading, Labeler } from "#components";
 
 const context = useContext();
-const { localize: l } = useLocalization();
 
 const { schema } = defineProps({
   schema: { type: null, required: true }

@@ -6,9 +6,9 @@
       </div>
     </template>
     <Labeler
-      :label="l(label)"
-      :path="path"
-      :mode="labelMode"
+      :label
+      :path
+      :mode="labelMode !== 'ifta' ? 'none' : labelMode"
       :variant="labelVariant"
       :dt="{
         colorScheme: {
@@ -56,7 +56,7 @@ const model = defineModel({ type: null, required: true });
 const {
   allowEmpty = false,
   label,
-  labelMode = "ifta",
+  labelMode,
   labelVariant,
   localizeLabel,
   optionLabel,

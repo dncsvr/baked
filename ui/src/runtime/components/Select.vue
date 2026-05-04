@@ -6,8 +6,8 @@
       </div>
     </template>
     <Labeler
-      :label="l(label)"
-      :path="path"
+      :label
+      :path
       :mode="labelMode"
       :variant="labelVariant"
     >

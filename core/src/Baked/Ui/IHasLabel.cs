@@ -1,8 +1,9 @@
 namespace Baked.Ui;
 
-// TODO: Label mode and variants must be enum 🧐
-public interface ILabeler : IComponentSchema
+public interface IHasLabel : IComponentSchema
 {
+    string? Label { get; set; }
     string? LabelMode { get; set; }
     string? LabelVariant { get; set; }
+
 }
