@@ -15,7 +15,7 @@ This layer provides `ApiModel` to generate controllers from domain objects,
 
 ### `ApiModel`
 
-This target is provided in `GenerateCode` phase. To configure it in a feature;
+This target is provided in `Generate` phase. To configure it in a feature;
 
 ```csharp
 configurator.RestApi.ConfigureApiModel(api =>

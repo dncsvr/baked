@@ -31,7 +31,7 @@ public static class DomainComponents
         var (_, l) = context;
 
         var path = context.Route.Path.Trim('/');
-        var title = type.GetRequiredComponent(context.Drill(nameof(SimplePage.Title)));
+        var title = type.GenerateRequiredComponent(context.Drill(nameof(SimplePage.Title)));
 
         return B.SimplePage(path, title, options: options);
     }
@@ -63,11 +63,11 @@ public static class DomainComponents
         var (_, l) = context;
 
         var path = context.Route.Path.Trim('/');
-        var title = method.GetRequiredComponent<PageTitle>(context.Drill(nameof(FormPage.Title))).Schema;
-        var button = method.GetRequiredComponent<Button>(context.Drill(nameof(FormPage.Submit))).Schema;
+        var title = method.GenerateRequiredComponent<PageTitle>(context.Drill(nameof(FormPage.Title))).Schema;
+        var button = method.GenerateRequiredComponent<Button>(context.Drill(nameof(FormPage.Submit))).Schema;
 
         return B.FormPage(path, title, button,
-            action: method.GetSchema<RemoteAction>(context.Drill(nameof(IComponentDescriptor.Action))),
+            action: method.GenerateSchema<RemoteAction>(context.Drill(nameof(IComponentDescriptor.Action))),
             options: options
         );
     }
@@ -99,7 +99,7 @@ public static class DomainComponents
         var (_, l) = context;
 
         var path = context.Route.Path.Trim('/');
-        var title = type.GetRequiredComponent<PageTitle>(context.Drill(nameof(TabbedPage.Title))).Schema;
+        var title = type.GenerateRequiredComponent<PageTitle>(context.Drill(nameof(TabbedPage.Title))).Schema;
 
         return B.TabbedPage(path, title, options: options);
     }
@@ -113,7 +113,7 @@ public static class DomainComponents
 
         return B.Tab(name.Kebaberize(), options: t =>
         {
-            t.Icon = type.GetComponent(context.Drill(nameof(Tab.Icon)));
+            t.Icon = type.GenerateComponent(context.Drill(nameof(Tab.Icon)));
 
             options.Apply(t);
         });
@@ -125,7 +125,7 @@ public static class DomainComponents
     {
         context = context.Drill(method.Name);
 
-        return B.Content(method.GetRequiredComponent(context.Drill(nameof(Content.Component))), method.Name.Kebaberize(),
+        return B.Content(method.GenerateRequiredComponent(context.Drill(nameof(Content.Component))), method.Name.Kebaberize(),
             options: options
         );
     }
@@ -138,8 +138,8 @@ public static class DomainComponents
         var (_, l) = context;
 
         return B.DataPanel(
-            method.GetRequiredSchema<InlineData>(context.Drill(nameof(DataPanel.Title))),
-            method.GetRequiredComponent(context.Drill(nameof(DataPanel.Content))),
+            method.GenerateRequiredSchema<InlineData>(context.Drill(nameof(DataPanel.Title))),
+            method.GenerateRequiredComponent(context.Drill(nameof(DataPanel.Content))),
             options: options
         );
     }
@@ -152,7 +152,7 @@ public static class DomainComponents
         var (_, l) = context;
 
         return B.DataContainer(
-            method.GetRequiredComponent(context.Drill(nameof(DataContainer.Content))),
+            method.GenerateRequiredComponent(context.Drill(nameof(DataContainer.Content))),
             options: options
         );
     }
@@ -164,7 +164,7 @@ public static class DomainComponents
         context = context.Drill(parameter.Name);
         var api = parameter.Get<ParameterModelAttribute>();
 
-        return B.Input(api.Name, parameter.GetRequiredComponent(context.Drill(nameof(Input.Component))), options: options);
+        return B.Input(api.Name, parameter.GenerateRequiredComponent(context.Drill(nameof(Input.Component))), options: options);
     }
 
     public static ComponentDescriptor<InputText> ParameterInputText(ParameterModel parameter, ComponentContext context,
@@ -205,7 +205,7 @@ public static class DomainComponents
             );
         }
 
-        var data = metadata.GetRequiredSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
+        var data = metadata.GenerateRequiredSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
 
         return B.Select(l(parameter.Name.Titleize()), data, options: options);
     }
@@ -228,7 +228,7 @@ public static class DomainComponents
             );
         }
 
-        var data = metadata.GetRequiredSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
+        var data = metadata.GenerateRequiredSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
 
         return B.SelectButton(data, options: options);
     }
@@ -246,14 +246,14 @@ public static class DomainComponents
         return B.DataTable(
             options: dt =>
             {
-                dt.ExportOptions = method.GetSchema<DataTable.Export>(context.Drill(nameof(DataTable.ExportOptions)));
-                dt.FooterTemplate = method.GetSchema<DataTable.Footer>(context.Drill(nameof(DataTable.FooterTemplate)));
-                dt.VirtualScrollerOptions = method.GetSchema<DataTable.VirtualScroller>(context.Drill(nameof(DataTable.VirtualScrollerOptions)));
-                dt.Actions = method.GetSchema<DataTable.Column>(context.Drill(nameof(DataTable.Actions)));
+                dt.ExportOptions = method.GenerateSchema<DataTable.Export>(context.Drill(nameof(DataTable.ExportOptions)));
+                dt.FooterTemplate = method.GenerateSchema<DataTable.Footer>(context.Drill(nameof(DataTable.FooterTemplate)));
+                dt.VirtualScrollerOptions = method.GenerateSchema<DataTable.VirtualScroller>(context.Drill(nameof(DataTable.VirtualScrollerOptions)));
+                dt.Actions = method.GenerateSchema<DataTable.Column>(context.Drill(nameof(DataTable.Actions)));
 
                 options.Apply(dt);
             },
-            data: method.GetSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)))
+            data: method.GenerateSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)))
         );
     }
 
@@ -290,7 +290,7 @@ public static class DomainComponents
         return B.DataTableColumn(data.Prop,
             options: dtc =>
             {
-                dtc.Component = property.GetRequiredComponent(context.Drill(nameof(DataTable.Column.Component)));
+                dtc.Component = property.GenerateRequiredComponent(context.Drill(nameof(DataTable.Column.Component)));
 
                 options.Apply(dtc);
             }
@@ -319,7 +319,7 @@ public static class DomainComponents
         var (_, l) = context;
 
         return B.Button(l(method.Name.Humanize().Titleize()),
-            action: method.GetSchema<RemoteAction>(context.Drill(nameof(IComponentDescriptor.Action))),
+            action: method.GenerateSchema<RemoteAction>(context.Drill(nameof(IComponentDescriptor.Action))),
             options: options
         );
     }
@@ -331,13 +331,13 @@ public static class DomainComponents
         context = context.Drill(nameof(SimpleForm));
         var (_, l) = context;
 
-        var submit = method.GetRequiredComponent<Button>(context.Drill(nameof(SimpleForm.Submit))).Schema;
+        var submit = method.GenerateRequiredComponent<Button>(context.Drill(nameof(SimpleForm.Submit))).Schema;
 
         return B.SimpleForm(l(method.Name.Titleize()), submit,
-            action: method.GetSchema<RemoteAction>(context.Drill(nameof(IComponentDescriptor.Action))),
+            action: method.GenerateSchema<RemoteAction>(context.Drill(nameof(IComponentDescriptor.Action))),
             options: sf =>
             {
-                sf.DialogOptions = method.GetSchema<SimpleForm.Dialog>(context.Drill(nameof(SimpleForm.DialogOptions)));
+                sf.DialogOptions = method.GenerateSchema<SimpleForm.Dialog>(context.Drill(nameof(SimpleForm.DialogOptions)));
 
                 options.Apply(sf);
             }
@@ -348,8 +348,8 @@ public static class DomainComponents
         Action<SimpleForm.Dialog>? options = default
     )
     {
-        var cancel = method.GetRequiredComponent<Button>(context.Drill(nameof(SimpleForm.DialogOptions.Cancel))).Schema;
-        var open = method.GetRequiredComponent<Button>(context.Drill(nameof(SimpleForm.DialogOptions.Open))).Schema;
+        var cancel = method.GenerateRequiredComponent<Button>(context.Drill(nameof(SimpleForm.DialogOptions.Cancel))).Schema;
+        var open = method.GenerateRequiredComponent<Button>(context.Drill(nameof(SimpleForm.DialogOptions.Open))).Schema;
 
         return B.SimpleFormDialog(open, cancel, options: options);
     }
@@ -358,7 +358,7 @@ public static class DomainComponents
         Action<Content>? options = default
     )
     {
-        var component = type.GetRequiredComponent(context.Drill(nameof(Content.Component)));
+        var component = type.GenerateRequiredComponent(context.Drill(nameof(Content.Component)));
 
         return B.Content(component, key, options: options);
     }
@@ -381,7 +381,7 @@ public static class DomainComponents
             );
         }
 
-        var data = type.GetSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
+        var data = type.GenerateSchema<TData>(context.Drill(nameof(IComponentDescriptor.Data)));
 
         return B.Fieldset(labelData.Prop, options: options, data: data);
     }
@@ -396,7 +396,7 @@ public static class DomainComponents
         return B.Field(property.Name.Camelize(), l(property.Name.Titleize()),
             options: f =>
             {
-                f.Component = property.GetComponent(context.Drill(nameof(Field.Component))) ?? f.Component;
+                f.Component = property.GenerateComponent(context.Drill(nameof(Field.Component))) ?? f.Component;
 
                 options.Apply(f);
             }
@@ -410,8 +410,8 @@ public static class DomainComponents
         context = context.Drill(nameof(Dialog));
         var (_, l) = context;
 
-        var open = property.GetRequiredComponent<Button>(context.Drill(nameof(Dialog.Open)));
-        var content = property.GetRequiredComponent(context.Drill(nameof(Dialog.Content)));
+        var open = property.GenerateRequiredComponent<Button>(context.Drill(nameof(Dialog.Open)));
+        var content = property.GenerateRequiredComponent(context.Drill(nameof(Dialog.Content)));
 
         return B.Dialog(
             open: open.Schema,

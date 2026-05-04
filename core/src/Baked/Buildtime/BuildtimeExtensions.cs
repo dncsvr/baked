@@ -1,5 +1,5 @@
-﻿using Baked.Architecture;
-using Baked.CodeGeneration;
+using Baked.Architecture;
+using Baked.Buildtime;
 using Baked.Testing;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Baked;
 
-public static class CodeGenerationExtensions
+public static class BuildtimeExtensions
 {
     public class Configurator(LayerConfigurator _configurator)
     {
@@ -25,13 +25,13 @@ public static class CodeGenerationExtensions
 
     extension(LayerConfigurator configurator)
     {
-        public Configurator CodeGeneration => new(configurator);
+        public Configurator Buildtime => new(configurator);
     }
 
     extension(ICollection<ILayer> layers)
     {
-        public void AddCodeGeneration() =>
-            layers.Add(new CodeGenerationLayer());
+        public void AddBuildtime() =>
+            layers.Add(new BuildtimeLayer());
     }
 
     extension(ApplicationContext context)

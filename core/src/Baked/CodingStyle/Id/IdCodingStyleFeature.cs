@@ -51,7 +51,7 @@ public class IdCodingStyleFeature : IFeature<CodingStyleConfigurator>
             );
         });
 
-        configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
+        configurator.Buildtime.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
         {
             configurator.Domain.UsingDomainModel(domain =>
             {
@@ -66,7 +66,7 @@ public class IdCodingStyleFeature : IFeature<CodingStyleConfigurator>
 
         configurator.DataAccess.ConfigureAutoPersistenceModel(model =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(context =>
+            configurator.Buildtime.UsingGeneratedContext(context =>
             {
                 context.Assemblies[nameof(IdCodingStyleFeature)]
                     .CreateImplementationInstance<IAutoPersistenceModelConfigurer>()

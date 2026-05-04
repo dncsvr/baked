@@ -1,17 +1,17 @@
 ﻿using Baked.Architecture;
-using Baked.CodeGeneration;
+using Baked.Buildtime;
 using Baked.Domain.Configuration;
 using Baked.Domain.Export;
 using Baked.Domain.Inspection;
 using Humanizer;
 
-using static Baked.CodeGeneration.CodeGenerationLayer;
+using static Baked.Buildtime.BuildtimeLayer;
 using static Baked.Domain.DomainLayer;
 using static Baked.Runtime.RuntimeLayer;
 
 namespace Baked.Domain;
 
-public class DomainLayer : LayerBase<AddDomainTypes, GenerateCode, AddServices>
+public class DomainLayer : LayerBase<AddDomainTypes, Generate, AddServices>
 {
     readonly Inspect _inspect = new();
     readonly IDomainTypeCollection _domainTypes = new DomainTypeCollection();
@@ -27,7 +27,7 @@ public class DomainLayer : LayerBase<AddDomainTypes, GenerateCode, AddServices>
             .Add(_builderOptions)
             .Build();
 
-    protected override PhaseContext GetContext(GenerateCode phase)
+    protected override PhaseContext GetContext(Generate phase)
     {
         var generatedAssemblies = Context.GetGeneratedAssemblyCollection();
         _domainServiceCollection.References.Add<DomainLayer>();

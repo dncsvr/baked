@@ -26,7 +26,7 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                 {
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
-                        var input = parameter.GetRequiredSchema<Input>(cc.Drill(nameof(DataContainer), nameof(DataContainer.Inputs)));
+                        var input = parameter.GenerateRequiredSchema<Input>(cc.Drill(nameof(DataContainer), nameof(DataContainer.Inputs)));
                         input.QueryBound = true;
 
                         dp.Schema.Inputs.Add(input);
@@ -114,6 +114,7 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
                 component: s =>
                 {
+                    s.Schema.ShowClear = false;
                     s.Schema.Stateful = true;
                     s.Schema.NoFloatLabel = true;
                     s.Action = Actions.Publish.PageContextValue("data-container-take", o => o.Data = Datas.Context.Model());

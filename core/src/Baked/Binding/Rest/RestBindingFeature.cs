@@ -97,7 +97,7 @@ public class RestBindingFeature : IFeature<BindingConfigurator>
             ]);
             properties.Set<ParameterModelAttribute>(parameter =>
             [
-                new("required", !parameter.IsOptional),
+                new("required", parameter.FromRoute || parameter.HasRequiredAttributes),
                 new("in", Value: parameter.FromBodyOrForm ? null : $"{parameter.From}".Kebaberize())
             ]);
         });
@@ -137,7 +137,7 @@ public class RestBindingFeature : IFeature<BindingConfigurator>
             });
         });
 
-        configurator.CodeGeneration.ConfigureGeneratedFileCollection(files =>
+        configurator.Buildtime.ConfigureGeneratedFileCollection(files =>
         {
             files.AddAsJson(_tagDescriptions);
             files.AddAsJson(_examples);
@@ -171,7 +171,7 @@ public class RestBindingFeature : IFeature<BindingConfigurator>
             swaggerGenOptions.SchemaFilter<RemoveNonPublicPropertiesSchemaFilter>();
             swaggerGenOptions.DocumentFilter<RemoveUnusedSchemasDocumentFilter>();
 
-            configurator.CodeGeneration.UsingGeneratedContext(generatedContext =>
+            configurator.Buildtime.UsingGeneratedContext(generatedContext =>
             {
                 var tagDescriptions = generatedContext.ReadFileAsJson<TagDescriptions>() ?? [];
                 swaggerGenOptions.DocumentFilter<ApplyTagDescriptionsDocumentFilter>(tagDescriptions);

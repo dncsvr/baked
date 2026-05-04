@@ -106,6 +106,13 @@ public static class DomainExtensions
                 .Cast<AttributeUsageAttribute>()
                 .FirstOrDefault()
                 ?.AllowMultiple == true;
+
+        public bool IsAnonymous =>
+            type.Namespace == null &&
+            type.IsSealed &&
+            type.IsGenericType &&
+            type.Name.Contains("AnonymousType") &&
+            Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute));
     }
 
     extension(ICollection<TypeBuildLevelFilter> filters)
@@ -184,21 +191,6 @@ public static class DomainExtensions
 
             model.TryGet<TAttribute>(out var attribute).ShouldBeTrue();
             matcher(attribute).ShouldBeTrue();
-        }
-    }
-
-    extension(ParameterModel parameter)
-    {
-        public void ShouldBeRequired()
-        {
-            parameter.IsOptional.ShouldBeFalse($"{parameter.Name} should not be optional");
-            parameter.Has<NotNullAttribute>().ShouldBeTrue($"{parameter.Name} should have `[NotNullAttribute]`");
-        }
-
-        public void ShouldNotBeRequired()
-        {
-            parameter.IsOptional.ShouldBeTrue($"{parameter.Name} should be optional");
-            parameter.Has<NotNullAttribute>().ShouldBeFalse($"{parameter.Name} should not have `[NotNullAttribute]`");
         }
     }
 

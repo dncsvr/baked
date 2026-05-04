@@ -67,7 +67,7 @@ public class EntitySubclassCodingStyleFeature : IFeature<CodingStyleConfigurator
             builder.Conventions.Add(new AddSubclassNameToRouteConvention(), order: RestApiLayer.MaxConventionOrder);
         });
 
-        configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
+        configurator.Buildtime.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
         {
             configurator.Domain.UsingDomainModel(domain =>
             {
@@ -82,7 +82,7 @@ public class EntitySubclassCodingStyleFeature : IFeature<CodingStyleConfigurator
 
         configurator.Runtime.ConfigureServiceCollection(services =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(context =>
+            configurator.Buildtime.UsingGeneratedContext(context =>
             {
                 services.AddFromAssembly(context.Assemblies[nameof(EntitySubclassCodingStyleFeature)]);
             });

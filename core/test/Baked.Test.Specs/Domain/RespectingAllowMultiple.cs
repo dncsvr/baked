@@ -1,4 +1,4 @@
-using Baked.CodeGeneration.Diagnostics;
+using Baked.Buildtime.Diagnostics;
 using Baked.Domain.Model;
 
 namespace Baked.Test.Domain;

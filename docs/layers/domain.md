@@ -8,6 +8,20 @@ features while configuring configuration targets.
 app.Layers.AddDomain();
 ```
 
+> [!NOTE]
+>
+> The generated domain metadata files will be saved to `.baked` folder at
+> `$(ProjectDir)` of your application project.
+>
+>```xml
+> <Target Name="SetCopyComponentDescriptors" BeforeTargets="Generate">
+>   <PropertyGroup>
+>     <CopyExportFiles>true</CopyExportFiles>
+>     ...
+>   </PropertyGroup>
+> </Target>
+>```
+
 ## Configuration Targets
 
 This layer provides `IDomainTypeCollection` and `DomainModelBuilderOptions`
@@ -64,10 +78,10 @@ configurator.Domain.ConfigureInspect(inspect =>
 });
 ```
 
-> [!WARNING]
+> [!NOTE]
 >
-> Only one inspect is taken into consideration. If you configure more than one,
-> only the last one will be set as current.
+> Only one inspect is allowed. If you configure more than one,
+> `InvalidOperationException` will be thrown
 
 ### `IDomainTypeCollection`
 
@@ -94,7 +108,7 @@ configurator.Domain.ConfigureDomainModelBuilder(builder =>
 
 ### `DomainServiceCollection`
 
-This target is provided in `GenerateCode` phase and it is used to generate
+This target is provided in `Generate` phase and it is used to generate
 `IServiceAdder` to add domain services during `AddService` phase in `Start`
 mode. To configure it in a feature;
 
@@ -108,8 +122,8 @@ configurator.Domain.ConfigureDomainServiceCollection((services, domain) =>
 
 ### `AttributeProperties`
 
-This target is provided in `GenerateCode` phase and it is used to configure
-exported properties for attributes;
+This target is provided in `Generate` phase and it is used to configure exported
+properties for attributes;
 
 ```csharp
 configurator.Domain.ConfigureAttributeProperties(properties =>
@@ -121,9 +135,8 @@ configurator.Domain.ConfigureAttributeProperties(properties =>
 
 ### `ExportConfigurations`
 
-This target is provided in `GenerateCode` phase and it is used to export
-attribute data of matching types and their members. To configure it in a
-feature;
+This target is provided in `Generate` phase and it is used to export attribute
+data of matching types and their members. To configure it in a feature;
 
 ```csharp
 configurator.Domain.ConfigureExportConfigurations(exports =>

@@ -1,4 +1,4 @@
-﻿namespace Baked.CodeGeneration;
+﻿namespace Baked.Buildtime;
 
 public record GeneratedFileDescriptor(string Name)
 {

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Reflection;
 
-namespace Baked.CodeGeneration;
+namespace Baked.Buildtime;
 
 public class GeneratedContext
 {

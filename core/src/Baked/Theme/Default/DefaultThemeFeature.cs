@@ -47,6 +47,12 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 }
             );
 
+            // Enum Data
+            builder.Conventions.AddTypeSchema(
+                when: c => c.Type.SkipNullable().IsEnum,
+                schema: (c, cc) => EnumInline(c.Type, cc)
+            );
+
             // Property defaults
             builder.Index.Property.Add<DataAttribute>();
             builder.Conventions.SetPropertyAttribute(
@@ -73,16 +79,10 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
 
             // Method defaults
             builder.Index.Method.Add<ActionAttribute>();
-            builder.Index.Method.Add<TabNameAttribute>();
             builder.Index.Method.Add<RouteAttribute>();
             builder.Conventions.SetMethodAttribute(
                 when: c => c.Method.Has<ActionModelAttribute>(),
                 attribute: () => new ActionAttribute(),
-                order: RestApiLayer.MaxConventionOrder + 10
-            );
-            builder.Conventions.SetMethodAttribute(
-                when: c => c.Method.Has<ActionModelAttribute>(),
-                attribute: () => new TabNameAttribute(),
                 order: RestApiLayer.MaxConventionOrder + 10
             );
             builder.Conventions.AddMethodComponent(
@@ -117,24 +117,42 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
                         sf.Schema.Inputs.Add(
-                            parameter.GetRequiredSchema<Input>(cc)
+                            parameter.GenerateRequiredSchema<Input>(cc)
                         );
                     }
                 }
             );
+
+            builder.Conventions.AddParameterAttributeConfiguration<GroupAttribute>(
+                attribute: (group, c) => group.InputGroupKey = c.Parameter.Name
+            );
             builder.Conventions.AddMethodComponentConfiguration<FormPage>(
-                component: (sf, c, cc) =>
+                component: (fp, c, cc) =>
                 {
-                    cc = cc.Drill(nameof(FormPage), nameof(FormPage.Inputs));
+                    var (_, l) = cc;
+                    cc = cc.Drill(nameof(FormPage), nameof(FormPage.Sections));
 
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
-                        sf.Schema.Inputs.Add(
-                            parameter.GetRequiredSchema<Input>(cc)
+                        if (!parameter.TryGet<GroupAttribute>(out var group))
+                        {
+                            group = new();
+                        }
+
+                        var section = fp.Schema.Sections.FirstOrDefault(s => s.Key == group.SectionKey);
+                        if (section is null)
+                        {
+                            fp.Schema.Sections.Add(section = new(group.SectionKey, l(group.SectionKey.Titleize())));
+                        }
+
+                        var parameterCc = cc.Drill(group.SectionKey, nameof(FormPage.Section.InputGroups), group.InputGroupKey, nameof(FormPage.InputGroup.Inputs));
+                        section.InputGroups.Add(
+                            new(group.InputGroupKey) { Inputs = [parameter.GenerateRequiredSchema<Input>(parameterCc)] }
                         );
                     }
                 }
             );
+
             builder.Conventions.AddParameterSchema(
                 when: c => c.Parameter.Has<ParameterModelAttribute>(),
                 schema: (c, cc) => ParameterInput(c.Parameter, cc)
@@ -151,10 +169,8 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 when: c => c.Parameter.Has<ParameterModelAttribute>(),
                 schema: (p, c) =>
                 {
-                    var api = c.Parameter.Get<ParameterModelAttribute>();
-
-                    p.Required = !api.IsOptional ? true : null;
-                    p.DefaultValue = api.DefaultValue;
+                    p.Required = !c.Parameter.IsNullable ? true : null;
+                    p.DefaultValue = c.Parameter.DefaultValue;
                 }
             );
             builder.Conventions.AddParameterComponent(
@@ -190,7 +206,7 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                         if (action.Method == HttpMethod.Get) { continue; }
                         if (method.Has<InitializerAttribute>()) { continue; }
 
-                        var actionComponent = method.GetComponent(cc.Drill(nameof(PageTitle.Actions), method.Name));
+                        var actionComponent = method.GenerateComponent(cc.Drill(nameof(PageTitle.Actions), method.Name));
                         if (actionComponent is null) { continue; }
 
                         pt.Schema.Actions.Add(actionComponent);
@@ -203,10 +219,14 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 schema: ra => ra.Params = Computed.UseRoute("params")
             );
 
-            // Enum Data
-            builder.Conventions.AddTypeSchema(
-                when: c => c.Type.SkipNullable().IsEnum,
-                schema: (c, cc) => EnumInline(c.Type, cc)
+            // `Select` defaults
+            builder.Conventions.AddParameterComponentConfiguration<Select>(
+                component: (s, c) => s.Schema.ShowClear = c.Parameter.IsNullable ? true : null
+            );
+
+            // `SelectButton` defaults
+            builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
+                component: (s, c) => s.Schema.AllowEmpty = c.Parameter.IsNullable ? true : null
             );
         });
 

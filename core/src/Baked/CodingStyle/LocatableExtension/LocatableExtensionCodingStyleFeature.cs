@@ -72,7 +72,7 @@ public class LocatableExtensionCodingStyleFeature : IFeature<CodingStyleConfigur
             builder.Conventions.Add(new ExtensionsAreServedUnderLocatableRoutesConvention(), order: RestApiLayer.MaxConventionOrder);
         });
 
-        configurator.CodeGeneration.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
+        configurator.Buildtime.ConfigureGeneratedAssemblyCollection(generatedAssemblies =>
         {
             configurator.Domain.UsingDomainModel(domain =>
             {
@@ -87,7 +87,7 @@ public class LocatableExtensionCodingStyleFeature : IFeature<CodingStyleConfigur
 
         configurator.Runtime.ConfigureServiceCollection(services =>
         {
-            configurator.CodeGeneration.UsingGeneratedContext(context =>
+            configurator.Buildtime.UsingGeneratedContext(context =>
             {
                 services.AddFromAssembly(context.Assemblies[nameof(LocatableExtensionCodingStyleFeature)]);
             });

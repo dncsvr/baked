@@ -7,13 +7,13 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-using static Baked.CodeGeneration.CodeGenerationLayer;
+using static Baked.Buildtime.BuildtimeLayer;
 using static Baked.HttpServer.HttpServerLayer;
 using static Baked.Runtime.RuntimeLayer;
 
 namespace Baked.RestApi;
 
-public class RestApiLayer : LayerBase<GenerateCode, AddServices, Build>
+public class RestApiLayer : LayerBase<Generate, AddServices, Build>
 {
     public const int MinConventionOrder = -ConventionOrderLimit;
     public const int MaxConventionOrder = ConventionOrderLimit;
@@ -30,7 +30,7 @@ public class RestApiLayer : LayerBase<GenerateCode, AddServices, Build>
         _mvcNewtonsoftJsonOptions.SerializerSettings.ContractResolver = new ExtendedContractResolver();
     }
 
-    protected override PhaseContext GetContext(GenerateCode phase)
+    protected override PhaseContext GetContext(Generate phase)
     {
         var generatedAssemblies = Context.GetGeneratedAssemblyCollection();
         _apiModel.References.Add<RestApiLayer>();

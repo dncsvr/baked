@@ -1,7 +1,7 @@
 ﻿using Baked.Domain.Model;
 using System.Reflection;
 
-namespace Baked.CodeGeneration;
+namespace Baked.Buildtime;
 
 public abstract class CodeTemplateBase : ICodeTemplate
 {

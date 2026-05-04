@@ -1,6 +1,6 @@
 ﻿using Baked.Architecture;
+using Baked.Business;
 using Baked.Playground.Theme;
-using Baked.Theme.Default;
 using Baked.Ui;
 
 using static Baked.Theme.Default.DomainComponents;
@@ -17,13 +17,13 @@ public class ReportPageSampleDomainOverrideFeature : IFeature
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
         {
             // Tabs
-            builder.Conventions.AddMethodAttributeConfiguration<TabNameAttribute>(
+            builder.Conventions.AddMethodAttributeConfiguration<GroupAttribute>(
                 when: c => c.Type.Is<ReportPageSample>() && c.Method.DefaultOverload.ReturnType.SkipTask().Is<string>(),
-                attribute: (tabName, c) => tabName.Value = "SingleValue"
+                attribute: group => group.TabName = "SingleValue"
             );
-            builder.Conventions.AddMethodAttributeConfiguration<TabNameAttribute>(
+            builder.Conventions.AddMethodAttributeConfiguration<GroupAttribute>(
                 when: c => c.Type.Is<ReportPageSample>() && c.Method.DefaultOverload.ReturnsList(),
-                attribute: (tabName, c) => tabName.Value = "DataTable"
+                attribute: group => group.TabName = "DataTable"
             );
             builder.Conventions.AddTypeComponent(
                 when: c => c.Type.Is<ReportPageSample>(),
@@ -44,7 +44,7 @@ public class ReportPageSampleDomainOverrideFeature : IFeature
 
             // Parameter overrides
             builder.Conventions.AddParameterComponent(
-                when: c => c.Type.Is<ReportPageSample>() && c.Method.Name == nameof(ReportPageSample.With) && !c.Parameter.IsOptional,
+                when: c => c.Type.Is<ReportPageSample>() && c.Method.Name == nameof(ReportPageSample.With) && !c.Parameter.IsNullable,
                 component: (c, cc) => ParameterSelect(c.Parameter, cc)
             );
             builder.Conventions.AddParameterComponent(

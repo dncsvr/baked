@@ -38,22 +38,6 @@ public static class UiExtensions
             layers.Add(new UiLayer());
     }
 
-    extension(ComponentExports exports)
-    {
-        public void AddFromExtensions(Type type)
-        {
-            var extensions = type.GetMethods(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public) ?? [];
-            var componentTypes = extensions
-                .Where(m =>
-                    m.ReturnType.IsAssignableTo(typeof(IComponentDescriptor)) &&
-                    !m.GetGenericArguments().Any()
-                )
-                .Select(m => m.Name);
-
-            exports.AddRange(componentTypes);
-        }
-    }
-
     extension(ISupportsReaction source)
     {
         public void ReloadOn(string @event,
@@ -81,16 +65,48 @@ public static class UiExtensions
         }
     }
 
-    extension(List<Input> inputs)
+    extension<T>(List<T> schemas) where T : IOrderableSchema
     {
-        public void Move(string name, int index)
-        {
-            var input =
-                inputs.Find(i => i.Name == name) ??
-                throw DiagnosticCode.MissingItem.Exception($"{name} not found in input list");
+        public T Get(string key) =>
+            schemas.Find(i => i.Key == key) ??
+            throw DiagnosticCode.MissingItem.Exception($"{key} not found in {typeof(T).Name} list");
 
-            inputs.Remove(input);
-            inputs.Insert(index, input);
+        public void Move(string key,
+            bool toTop = true,
+            bool toBottom = true,
+            string? before = default,
+            string? after = default
+        )
+        {
+            int? index = null;
+            if (before is not null)
+            {
+                index = schemas.FindIndex(i => i.Key == before);
+            }
+            else if (after is not null)
+            {
+                index = schemas.FindIndex(i => i.Key == after) + 1;
+            }
+            else if (toTop)
+            {
+                index = 0;
+            }
+            else if (toBottom)
+            {
+                index = schemas.Count - 1;
+            }
+
+            if (index is null) { return; }
+
+            schemas.Move(key, index.Value);
+        }
+
+        public void Move(string key, int index)
+        {
+            var input = schemas.Get(key);
+
+            schemas.Remove(input);
+            schemas.Insert(index, input);
         }
     }
 }

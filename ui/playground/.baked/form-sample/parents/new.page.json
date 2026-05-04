@@ -28,25 +28,43 @@
       "label": "Save",
       "severity": "primary"
     },
-    "inputs": [
+    "sections": [
       {
-        "name": "name",
-        "component": {
-          "type": "InputText",
-          "schema": {
-            "label": "Name"
+        "key": "default",
+        "label": "Default",
+        "inputGroups": [
+          {
+            "key": "name",
+            "inputs": [
+              {
+                "name": "name",
+                "component": {
+                  "type": "InputText",
+                  "schema": {
+                    "label": "Name"
+                  }
+                }
+              }
+            ],
+            "wide": true
+          },
+          {
+            "key": "surname",
+            "inputs": [
+              {
+                "name": "surname",
+                "required": true,
+                "component": {
+                  "type": "InputText",
+                  "schema": {
+                    "label": "Surname"
+                  }
+                }
+              }
+            ],
+            "wide": true
           }
-        }
-      },
-      {
-        "name": "surname",
-        "required": true,
-        "component": {
-          "type": "InputText",
-          "schema": {
-            "label": "Surname"
-          }
-        }
+        ]
       }
     ],
     "path": "form-sample/parents/new"
