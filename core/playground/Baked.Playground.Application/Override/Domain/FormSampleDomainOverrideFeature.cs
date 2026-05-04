@@ -1,6 +1,7 @@
 ﻿using Baked.Architecture;
 using Baked.Playground.Orm;
 using Baked.Playground.Theme;
+using Baked.Theme;
 using Baked.Theme.Default;
 using Baked.Ui;
 using Humanizer;
@@ -77,75 +78,26 @@ public class FormSampleDomainOverrideFeature : IFeature
                 schema: (c, cc) => B.DataTableServerPaginator(options: dtsp =>
                 {
                     var (_, l) = cc;
-                    // TODO: update label mode with enum
-                    dtsp.Take = B.Select(l("Take"), Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false),
+
+                    dtsp.Take = B.Select(Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false),
                         options: s =>
                         {
                             s.Stateful = true;
-                            s.LabelMode = "none";
+                            s.LabelNone();
                         }
                     );
                 })
             );
-            // Labeler Options. added just test purpose
-            // TODO: move to correct feature.
-            builder.Conventions.AddParameterComponentConfiguration<InputText>(
-                when: c => c.Type.Is<FormSample>(),
-                component: (it, c, cc) =>
-                {
-                    if (it.Schema is ILabeler labeler)
-                    {
-                        it.Schema.LabelMode = "ifta";
-                    }
-                }
-            );
-            builder.Conventions.AddParameterComponentConfiguration<InputNumber>(
-                when: c => c.Type.Is<FormSample>(),
-                component: (it, c, cc) =>
-                {
-                    if (it.Schema is ILabeler labeler)
-                    {
-                        it.Schema.LabelMode = "ifta";
-                    }
-                }
-            );
-            builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
-                when: c => c.Type.Is<FormSample>(),
-                component: (it, c, cc) =>
-                {
-                    if (it.Schema is ILabeler labeler)
-                    {
-                        it.Schema.LabelMode = "ifta";
-                    }
-                }
-            );
-            builder.Conventions.AddParameterComponentConfiguration<Select>(
-                when: c => c.Type.Is<FormSample>(),
-                component: (it, c, cc) =>
-                {
-                    if (it.Schema is ILabeler labeler)
-                    {
-                        it.Schema.LabelMode = "ifta";
-                    }
-                }
-            );
             // Properties
             builder.Conventions.AddPropertyComponent(
                 when: c => c.Property.PropertyType.SkipNullable().IsEnum,
+                where: cc => cc.Path.StartsWith(nameof(Page), nameof(FormSample)),
                 component: () => B.Text()
             );
             // Parameters
             builder.Conventions.AddParameterComponent(
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent) && c.Parameter.Name == "role",
                 component: (c, cc) => ParameterSelect(c.Parameter, cc)
-            );
-            builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
-                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent),
-                component: (sb, c, cc) =>
-                {
-                    var (_, l) = cc;
-                    sb.Schema.Label = l(c.Parameter.Name.Titleize());
-                }
             );
         });
     }
