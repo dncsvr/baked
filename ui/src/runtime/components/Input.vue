@@ -66,7 +66,7 @@ onAfterMountData(async() => {
 async function set(value) {
   if(!schema.queryBound) {
     // prevents setting model to undefined infinitely
-    if(!value) { return; }
+    if(!checkValue(value)) { return; }
 
     await setModel(value);
   }
@@ -99,6 +99,8 @@ async function setModel(value) {
   const newValue = schema.numeric ? Number(value) : value;
   model.value = newValue;
 
-  await inputRef.value?.onModelUpdate(newValue);
+  if(schema.queryBound) {
+    await inputRef.value?.onModelUpdate(newValue);
+  }
 }
 </script>
