@@ -257,16 +257,16 @@
             "title": "Server Paginator",
             "parentRoute": "/specs"
           },
-          "/specs/data-panel": {
-            "route": "/specs/data-panel",
-            "icon": "pi pi-microchip",
-            "title": "Data Panel",
-            "parentRoute": "/specs"
-          },
           "/specs/data-container": {
             "route": "/specs/data-container",
             "icon": "pi pi-microchip",
             "title": "Data Container",
+            "parentRoute": "/specs"
+          },
+          "/specs/data-panel": {
+            "route": "/specs/data-panel",
+            "icon": "pi pi-microchip",
+            "title": "Data Panel",
             "parentRoute": "/specs"
           },
           "/specs/header": {
