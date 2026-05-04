@@ -17,7 +17,11 @@
         "queryBound": true,
         "component": {
           "type": "SelectButton",
-          "schema": {},
+          "schema": {
+            "label": "Parameter",
+            "labelMode": "float",
+            "labelVariant": "on"
+          },
           "data": {
             "type": "Inline",
             "value": [

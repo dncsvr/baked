@@ -108,7 +108,6 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 schema: ra => ra.Body = Context.Model()
             );
 
-            // Parameter defaults
             builder.Conventions.AddMethodComponentConfiguration<SimpleForm>(
                 component: (sf, c, cc) =>
                 {
@@ -121,10 +120,6 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                         );
                     }
                 }
-            );
-
-            builder.Conventions.AddParameterAttributeConfiguration<GroupAttribute>(
-                attribute: (group, c) => group.InputGroupKey = c.Parameter.Name
             );
             builder.Conventions.AddMethodComponentConfiguration<FormPage>(
                 component: (fp, c, cc) =>
@@ -153,6 +148,11 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 }
             );
 
+            // Parameter defaults
+            builder.Conventions.AddParameterAttributeConfiguration<GroupAttribute>(
+                attribute: (group, c) => group.InputGroupKey = c.Parameter.Name
+            );
+
             builder.Conventions.AddParameterSchema(
                 when: c => c.Parameter.Has<ParameterModelAttribute>(),
                 schema: (c, cc) => ParameterInput(c.Parameter, cc)
@@ -164,6 +164,18 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                     p.DefaultValue = c.Parameter.DefaultValue;
                 }
             );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                where: cc => cc.Path.EndsWith("*Form*", "**", "Inputs"),
+                schema: (i, c, cc) =>
+                {
+                    if (i.Component.Schema is not IHasLabel hl) { return; }
+
+                    var (_, l) = cc;
+
+                    hl.LabelIfta(l(c.Parameter.Name.Titleize()));
+                }
+            );
+
             builder.Conventions.AddParameterComponent(
                 when: c =>
                     c.Parameter.ParameterType.Is<string>() ||

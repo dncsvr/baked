@@ -21,9 +21,7 @@
                   "required": true,
                   "component": {
                     "type": "InputText",
-                    "schema": {
-                      "label": "Name"
-                    }
+                    "schema": {}
                   }
                 }
               ],
@@ -75,27 +73,21 @@
                   "name": "name",
                   "component": {
                     "type": "InputText",
-                    "schema": {
-                      "label": "Name"
-                    }
+                    "schema": {}
                   }
                 },
                 {
                   "name": "surname",
                   "component": {
                     "type": "InputText",
-                    "schema": {
-                      "label": "Surname"
-                    }
+                    "schema": {}
                   }
                 },
                 {
                   "name": "description",
                   "component": {
                     "type": "InputText",
-                    "schema": {
-                      "label": "Description"
-                    }
+                    "schema": {}
                   }
                 }
               ],

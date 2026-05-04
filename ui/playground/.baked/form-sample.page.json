@@ -187,10 +187,8 @@
                   "take": {
                     "type": "Select",
                     "schema": {
-                      "label": "Take",
                       "localizeLabel": false,
-                      "stateful": true,
-                      "labelMode": "none"
+                      "stateful": true
                     },
                     "data": {
                       "type": "Inline",
@@ -233,7 +231,8 @@
                                 "component": {
                                   "type": "InputText",
                                   "schema": {
-                                    "label": "Name"
+                                    "label": "Name",
+                                    "labelMode": "ifta"
                                   }
                                 }
                               },
@@ -242,7 +241,8 @@
                                 "component": {
                                   "type": "InputText",
                                   "schema": {
-                                    "label": "Surname"
+                                    "label": "Surname",
+                                    "labelMode": "ifta"
                                   }
                                 }
                               },
@@ -251,7 +251,8 @@
                                 "component": {
                                   "type": "InputText",
                                   "schema": {
-                                    "label": "Description"
+                                    "label": "Description",
+                                    "labelMode": "ifta"
                                   }
                                 }
                               }
@@ -340,8 +341,7 @@
                     "optionLabel": "label",
                     "optionValue": "value",
                     "localizeLabel": true,
-                    "stateful": true,
-                    "labelMode": "ifta"
+                    "stateful": true
                   },
                   "data": {
                     "type": "Inline",
