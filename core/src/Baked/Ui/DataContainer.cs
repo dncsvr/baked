@@ -1,6 +1,5 @@
 ﻿namespace Baked.Ui;
 
-// TODO Datapanel aware olsun, style wise
 public record DataContainer(IComponentDescriptor Content)
     : IComponentSchema
 {
