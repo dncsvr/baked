@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="component"
+    :is="componentTemplate"
     v-if="visible"
     :key="loading"
     :class="classes"
@@ -10,7 +10,7 @@
   </component>
 </template>
 <script setup>
-import { defineExpose, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useActionExecuter, useComponentResolver, useContext, useDataFetcher, useFormat, useReactionHandler } from "#imports";
 
 const actionExecuter = useActionExecuter();
@@ -20,10 +20,9 @@ const dataFetcher = useDataFetcher();
 const { asClasses } = useFormat();
 const reactionHandler = useReactionHandler();
 
-const { name, descriptor, autoNextTick } = defineProps({
+const { name, descriptor } = defineProps({
   name: { type: String, required: true },
-  descriptor: { type: null, required: true },
-  autoNextTick: { type: null, required: false, default: true }
+  descriptor: { type: null, required: true }
 });
 const model = defineModel({ type: null });
 const emit = defineEmits(["loaded"]);
@@ -32,7 +31,7 @@ const parentPath = context.injectPath();
 const path = parentPath && parentPath !== "" ? `${parentPath}/${name}` : name;
 const events = context.injectEvents();
 const contextData = context.injectContextData();
-const component = componentResolver.resolve(descriptor.type, "MissingComponent");
+const componentTemplate = componentResolver.resolve(descriptor.type, "MissingComponent");
 const componentProps = buildComponentProps();
 const data = ref(dataFetcher.get({ data: descriptor.data, contextData }));
 const shouldLoad = dataFetcher.shouldLoad(descriptor.data);
@@ -41,10 +40,6 @@ const executing = ref(false);
 const visible = ref(true);
 const classes = [`b-component--${descriptor.type}`, ...asClasses(name)];
 let reactions = null;
-
-defineExpose({
-  onModelUpdate
-});
 
 context.providePath(path);
 context.provideDataDescriptor(descriptor.data);
@@ -95,8 +90,8 @@ function buildComponentProps() {
   const result = {};
 
   if(descriptor.schema) { result.schema = descriptor.schema; }
-  if(component.emits?.includes("submit")) { result.onSubmit = onModelUpdate; }
-  if(component.props?.modelValue) { result["onUpdate:modelValue"] = onModelUpdate; }
+  if(componentTemplate.emits?.includes("submit")) { result.onSubmit = onModelUpdate; }
+  if(componentTemplate.props?.modelValue) { result["onUpdate:modelValue"] = onModelUpdate; }
 
   return result;
 }
@@ -105,19 +100,17 @@ function getComponentProps() {
   const result = { ...componentProps };
 
   if(descriptor.data) { result.data = data.value; }
-  if(component.props?.modelValue) {
+  if(componentTemplate.props?.modelValue) {
     result.modelValue = model.value;
 
-    if(autoNextTick) {
-      nextTick(() => onModelUpdate(model.value));
-    }
+    nextTick(() => onModelUpdate(model.value));
   }
 
   return result;
 }
 
 async function onModelUpdate(newModel) {
-  if(component.props?.modelValue) {
+  if(componentTemplate.props?.modelValue) {
     model.value = newModel;
   }
 

@@ -17,7 +17,7 @@ const variants = [
   },
   {
     name: "Inputs",
-    descriptor: giveMe.aDataPanel({
+    descriptor: giveMe.aDataContainer({
       inputs: [
         giveMe.anInput({
           name: "required",

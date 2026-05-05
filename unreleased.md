@@ -50,6 +50,7 @@
 
 - `DataContainer` component is added to render enumerable datas with basic input
   support
+- `Input` now supports numeric datas
 
 ## Bugfixes
 
