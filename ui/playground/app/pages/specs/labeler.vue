@@ -13,7 +13,7 @@ const variants = [
   {
     name: "Select: No Label Mode",
     descriptor: giveMe.aSelect({
-      labelMode: null,
+      labelMode: null
     })
   },
   {
@@ -101,6 +101,6 @@ const variants = [
       labelMode: "ifta",
       label: "Ifta Mode"
     })
-  },
+  }
 ];
 </script>

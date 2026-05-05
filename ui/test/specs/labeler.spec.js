@@ -47,13 +47,13 @@ test.describe("SelectButton Input Label Mode", () => {
       if(expected === null ) { return; }
 
       const component = page.getByTestId(id);
-  
+
       await expect(component.getByText(expected)).toBeVisible();
     });
-  
+
     test(`visual ${expected}`, { tag: "@visual" }, async({ page }) => {
       const component = page.getByTestId(id);
-  
+
       await expect(component).toHaveScreenshot();
     });
   });

@@ -488,7 +488,7 @@ export default {
     return {
       type: "InputNumber",
       schema: {
-        ...labelMode,
+        ...labelMode
       }
     };
   },

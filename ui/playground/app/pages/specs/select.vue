@@ -165,6 +165,6 @@ const variants = [
       filter: true
     }),
     model: ref()
-  },
+  }
 ];
 </script>
