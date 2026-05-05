@@ -25,14 +25,6 @@ const variants = [
     model: ref()
   },
   {
-    name: "Ifta Label",
-    descriptor: giveMe.anInputText({
-      label: "Spec: IftaLabel",
-      labelMode: "ifta"
-    }),
-    model: ref()
-  },
-  {
     name: "Target Prop",
     descriptor: giveMe.anInputText({
       label: "Id",

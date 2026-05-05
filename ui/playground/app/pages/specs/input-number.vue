@@ -23,14 +23,6 @@ const variants = [
       label: "Spec: This is a very very very very long label"
     }),
     model: ref()
-  },
-  {
-    name: "Ifta Label",
-    descriptor: giveMe.anInputNumber({
-      label: "Spec: IftaLabel",
-      labelMode: "ifta"
-    }),
-    model: ref()
   }
 ];
 </script>
