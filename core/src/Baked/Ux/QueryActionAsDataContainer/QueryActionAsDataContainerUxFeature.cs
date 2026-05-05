@@ -65,9 +65,9 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
             // Skip
             builder.Conventions.AddParameterComponent(
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip,
-                component: () => B.ServerPaginator()
+                component: () => B.Paginator()
             );
-            builder.Conventions.AddParameterComponentConfiguration<ServerPaginator>(
+            builder.Conventions.AddParameterComponentConfiguration<Paginator>(
                 when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip,
                 component: paginator =>
                 {

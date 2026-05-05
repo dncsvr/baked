@@ -109,6 +109,10 @@ public static class Components
         Action<Icon>? options = default
     ) => new(options.Apply(new(iconClass)));
 
+    public static Input Input(string name, IComponentDescriptor component,
+        Action<Input>? options = default
+    ) => options.Apply(new(name, component));
+
     public static ComponentDescriptor<InputText> InputText(string label,
         Action<InputText>? options = default
     ) => new(options.Apply(new(label)));
@@ -182,9 +186,9 @@ public static class Components
         Action<PageTitle>? options = default
     ) => new(options.Apply(new(title)));
 
-    public static Input Input(string name, IComponentDescriptor component,
-        Action<Input>? options = default
-    ) => options.Apply(new(name, component));
+    public static ComponentDescriptor<Paginator> Paginator(
+        Action<Paginator>? options = default
+    ) => new(options.Apply(new()));
 
     public static ComponentDescriptor<Rate> Rate(
         Action<Rate>? options = default,
@@ -198,10 +202,6 @@ public static class Components
     public static ComponentDescriptor<SelectButton> SelectButton(IData data,
         Action<SelectButton>? options = default
     ) => new(options.Apply(new() { LocalizeLabel = data.RequireLocalization })) { Data = data };
-
-    public static ComponentDescriptor<ServerPaginator> ServerPaginator(
-        Action<ServerPaginator>? options = default
-    ) => new(options.Apply(new()));
 
     public static ComponentDescriptor<SideMenu> SideMenu(
         Action<SideMenu>? options = default,

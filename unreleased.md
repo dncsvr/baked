@@ -8,7 +8,7 @@
     unnecessarily long (and for some attributes failing) serializations
 - `QueryMethodCodingStyle` feature is now added which marks methods of a query
   as `QueryMethod` along with `sort`, `skip` and `take` parameters
--  New UX features are introduced in `Monolith` recipe
+- New UX features are introduced in `Monolith` recipe
   - `QuerActionAsDataContainerUxFeature` to configure descriptor properties of
     query methods 
 
@@ -41,6 +41,10 @@
     ```
 - `TabNameAttribute` is now removed, instead get `GroupAttribute` and use its
   `TabName` extension property
+- `ServerPaginator` is renamed to `Paginator` and converted to a component
+- `ServerPaginator` is removed from `DataTable` schema
+- `Take` is removed from `DataTable` schema  
+- `Sort` is removed from `DataTable` schema
 
 ## Improvements
 

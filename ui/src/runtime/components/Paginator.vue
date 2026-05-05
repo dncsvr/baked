@@ -31,7 +31,7 @@ import { useContext, useLocalization } from "#imports";
 import { AwaitLoading } from "#components";
 
 const context = useContext();
-const { localize: lc } = useLocalization({ group: "ServerPaginator" });
+const { localize: lc } = useLocalization({ group: "Paginator" });
 
 const { data } = defineProps({
   data: { type: null, required: true }

@@ -111,7 +111,7 @@
                 "numeric": true,
                 "queryBound": true,
                 "component": {
-                  "type": "ServerPaginator",
+                  "type": "Paginator",
                   "schema": {},
                   "data": {
                     "type": "Composite",

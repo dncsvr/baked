@@ -1,6 +1,6 @@
 <template>
   <UiSpec
-    title="ServerPaginator"
+    title="Paginator"
     :variants
     no-loading-variant
     use-model
@@ -29,7 +29,7 @@ const variants = [
   {
     name: "Base",
     descriptor: {
-      type: "ServerPaginator",
+      type: "Paginator",
       schema: {},
       data: {
         type: "Composite",

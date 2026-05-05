@@ -357,6 +357,18 @@
             }
           },
           {
+            "title": "Paginator",
+            "component": {
+              "type": "CardLink",
+              "schema": {
+                "route": "/specs/paginator",
+                "icon": "pi pi-microchip",
+                "title": "Paginator",
+                "description": "Renders component for pagination"
+              }
+            }
+          },
+          {
             "title": "Select",
             "component": {
               "type": "CardLink",
@@ -377,18 +389,6 @@
                 "icon": "pi pi-microchip",
                 "title": "Select Button",
                 "description": "Allows select from given options using buttons"
-              }
-            }
-          },
-          {
-            "title": "Server Paginator",
-            "component": {
-              "type": "CardLink",
-              "schema": {
-                "route": "/specs/server-paginator",
-                "icon": "pi pi-microchip",
-                "title": "Server Paginator",
-                "description": "Renders component for pagination"
               }
             }
           }
