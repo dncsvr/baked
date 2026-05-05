@@ -34,7 +34,7 @@ public class InitializerParametersAreInPageTitleUxFeature : IFeature<UxConfigura
                 where: cc => cc.Path.EndsWith(nameof(TabbedPage), nameof(TabbedPage.Inputs)),
                 schema: (i, c, cc) =>
                 {
-                    if (i.Component.Schema is not IHasLabel hl) { return; }
+                    if (i.Component.Schema is not ILabeler hl) { return; }
 
                     var (_, l) = cc;
 

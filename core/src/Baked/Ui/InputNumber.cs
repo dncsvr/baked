@@ -1,6 +1,6 @@
 namespace Baked.Ui;
 
-public record InputNumber : IHasLabel, IComponentSchema
+public record InputNumber : ILabeler, IComponentSchema
 {
     public string? Label { get; set; }
     public string? LabelMode { get; set; }

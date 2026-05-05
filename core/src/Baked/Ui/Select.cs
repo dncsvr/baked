@@ -1,6 +1,6 @@
 ﻿namespace Baked.Ui;
 
-public record Select : ISelect, IHasLabel
+public record Select : ISelect, ILabeler
 {
     public string? Label { get; set; }
     public string? OptionLabel { get; set; }

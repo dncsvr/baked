@@ -1,6 +1,6 @@
 namespace Baked.Ui;
 
-public interface IHasLabel : IComponentSchema
+public interface ILabeler : IComponentSchema
 {
     string? Label { get; set; }
     string? LabelMode { get; set; }

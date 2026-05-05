@@ -110,21 +110,21 @@ public static class UiExtensions
         }
     }
 
-    extension(IHasLabel hasLabel)
+    extension(ILabeler labeler)
     {
         public void LabeLFloatIn(string label) =>
-            hasLabel.LabelMode("float", label, variant: "in");
+            labeler.LabelMode("float", label, variant: "in");
 
         public void LabelFloatOn(string label) =>
-            hasLabel.LabelMode("float", label, variant: "on");
+            labeler.LabelMode("float", label, variant: "on");
         public void LabelFLoatOver(string label) =>
-            hasLabel.LabelMode("float", label, variant: "over");
+            labeler.LabelMode("float", label, variant: "over");
 
         public void LabelIfta(string label) =>
-            hasLabel.LabelMode("ifta", label);
+            labeler.LabelMode("ifta", label);
 
         public void LabelNone() =>
-            hasLabel.LabelMode(null, null);
+            labeler.LabelMode(null, null);
 
         // WARNING
         //
@@ -135,9 +135,9 @@ public static class UiExtensions
             string? variant = default
         )
         {
-            hasLabel.LabelMode = mode;
-            hasLabel.Label = label;
-            hasLabel.LabelVariant = variant;
+            labeler.LabelMode = mode;
+            labeler.Label = label;
+            labeler.LabelVariant = variant;
         }
 #pragma warning restore IDE0051
     }

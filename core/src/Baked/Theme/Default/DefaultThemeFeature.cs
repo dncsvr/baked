@@ -168,7 +168,7 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 where: cc => cc.Path.EndsWith("*Form*", "**", "Inputs"),
                 schema: (i, c, cc) =>
                 {
-                    if (i.Component.Schema is not IHasLabel hl) { return; }
+                    if (i.Component.Schema is not ILabeler hl) { return; }
 
                     var (_, l) = cc;
 
