@@ -49,7 +49,7 @@
           >
             <div
               :data-testid="variant.name"
-              :class="variantClass"
+              :class="`variantClass ${variant.class || ''}`"
             >
               <!-- renders given variants -->
               <Bake

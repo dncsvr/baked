@@ -19,13 +19,6 @@ const variants = [
     model: ref()
   },
   {
-    name: "Base w/ Label",
-    descriptor: giveMe.aSelectButton({
-      label: "Ifta Label"
-    }),
-    model: ref()
-  },
-  {
     name: "Base w/ Localization",
     descriptor: giveMe.aSelectButton({
       localizeLabel: true,

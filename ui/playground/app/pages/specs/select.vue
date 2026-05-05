@@ -167,37 +167,5 @@ const variants = [
     }),
     model: ref()
   },
-  {
-    name: "None Label Mode",
-    descriptor: giveMe.aSelect({
-      labelMode: "none"
-    }),
-    model: ref()
-  },
-  {
-    name: "Ifta Label Mode",
-    descriptor: giveMe.aSelect({
-      label: "Ifta Mode",
-      labelMode: "ifta"
-    }),
-    model: ref()
-  },
-  {
-    name: "Float Label:in Mode",
-    descriptor: giveMe.aSelect({
-      label: "In Mode",
-      labelVariant: "in"
-    }),
-    model: ref()
-  },
-  {
-    name: "Float Label:over Mode",
-    class: "mt-4",
-    descriptor: giveMe.aSelect({
-      label: "Over Mode",
-      labelVariant: "over"
-    }),
-    model: ref()
-  }
 ];
 </script>

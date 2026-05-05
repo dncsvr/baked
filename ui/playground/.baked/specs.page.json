@@ -285,6 +285,18 @@
                 "description": "Renders string values"
               }
             }
+          },
+          {
+            "title": "Labeler",
+            "component": {
+              "type": "CardLink",
+              "schema": {
+                "route": "/specs/labeler",
+                "icon": "pi pi-microchip",
+                "title": "Labeler",
+                "description": "Showing multiple variant Inputs"
+              }
+            }
           }
         ]
       },

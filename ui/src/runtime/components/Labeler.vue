@@ -9,7 +9,7 @@
     <template #default>
       <slot />
       <label
-        v-if="mode !== 'none'"
+        v-if="labelComponent !== 'div'"
         class="max-sm:truncate max-sm:w-5/6"
         :for="path"
       >
@@ -29,7 +29,7 @@ const { localize: l } = useLocalization();
 const { label, mode } = defineProps({
   label: { type: String, required: true },
   path: { type: String, required: true },
-  mode: { type: String, default: "none" },
+  mode: { type: String, default: null },
   variant: { type: String, default: "on" },
   pt: { type: Object, default: () => { } },
   dt: { type: Object, default: () => { } }
@@ -43,7 +43,6 @@ const labelComponent = computed(() => {
     return IftaLabel;
   case "float":
     return FloatLabel;
-  case "none":
   default:
     return "div";
   }

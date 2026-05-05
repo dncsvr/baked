@@ -335,36 +335,3 @@ test.describe("Filtering on Select without Option Label", () => {
     await expect(list.getByRole("listbox").first()).toHaveText("Test Option 2");
   });
 });
-
-test.describe("Label Mode Testing", () => {
-  [
-    { id: "None Label Mode", expected: null },
-    { id: "Ifta Label Mode", expected: "Ifta Mode" },
-    { id: "Float Label:in Mode", expected: "In Mode" },
-    { id: "Float Label:over Mode", expected: "Over Mode" }
-  ].forEach(({ id, expected }) => {
-    test(`testing correct label text ${expected}`, async({ page }) => {
-      if(expected === null ) { return; }
-
-      const component = page.getByTestId(id);
-      const options = page.locator(primevue.select.option);
-      await expect(component.locator(primevue.select.base)).toBeAttached();
-      await component.click();
-      await options.nth(1).click();
-      await page.waitForTimeout(100); // waits for animation to finish
-
-      await expect(component.getByText(expected)).toBeVisible();
-    });
-
-    test(`visual ${expected}`, { tag: "@visual" }, async({ page }) => {
-      const component = page.getByTestId(id);
-      const options = page.locator(primevue.select.option);
-      await expect(component.locator(primevue.select.base)).toBeAttached();
-      await component.click();
-      await options.nth(1).click();
-      await page.waitForTimeout(100); // waits for animation to finish
-
-      await expect(component.locator(primevue.select.label)).toHaveScreenshot();
-    });
-  });
-});

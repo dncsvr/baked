@@ -209,6 +209,12 @@
             "title": "Text",
             "parentRoute": "/specs"
           },
+          "/specs/labeler": {
+            "route": "/specs/labeler",
+            "icon": "pi pi-microchip",
+            "title": "Labeler",
+            "parentRoute": "/specs"
+          },
           "/specs/simple-form": {
             "route": "/specs/simple-form",
             "icon": "pi pi-microchip",
