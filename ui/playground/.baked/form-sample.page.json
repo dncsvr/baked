@@ -93,7 +93,7 @@
                   },
                   "action": {
                     "type": "Publish",
-                    "pageContextKey": "data-container-take",
+                    "pageContextKey": "take-context-key",
                     "data": {
                       "type": "Context",
                       "key": "model"
@@ -119,7 +119,7 @@
                       {
                         "type": "Context",
                         "key": "page",
-                        "prop": "data-length-context-key",
+                        "prop": "length-context-key",
                         "targetProp": "length"
                       },
                       {
@@ -131,7 +131,7 @@
                       {
                         "type": "Context",
                         "key": "page",
-                        "prop": "data-container-take",
+                        "prop": "take-context-key",
                         "targetProp": "take"
                       }
                     ]
@@ -142,11 +142,11 @@
                       "parts": [
                         {
                           "type": "When",
-                          "when": "data-length-context-key"
+                          "when": "length-context-key"
                         },
                         {
                           "type": "When",
-                          "when": "data-container-take"
+                          "when": "take-context-key"
                         }
                       ]
                     }
@@ -396,7 +396,7 @@
                   "exportable": false,
                   "frozen": true
                 },
-                "dataLengthContextKey": "data-length-context-key"
+                "dataLengthContextKey": "length-context-key"
               },
               "data": {
                 "type": "Remote",

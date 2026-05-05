@@ -49,15 +49,6 @@ test("reset to default value after route to self", async({ page }) => {
   expect(params.get("required")).toBeNull();
 });
 
-test("calls model update after model is set", async({ page }) => {
-  const reactor = page.getByTestId(id.reactor);
-
-  await page.waitForURL(/requiredWithDefault=default\+value/); // wait for above fills to take effect
-
-  await expect(reactor).toBeAttached();
-  await expect(reactor).toContainText("default value");
-});
-
 test("query string is set from input", async({ page }) => {
   const component = page.getByTestId(id.component);
 
@@ -146,9 +137,16 @@ test("unique key changes with parameter values", async({ page }) => {
 });
 
 test("when reacting, bake should respect initial values", async({ page, goto }) => {
-  await goto("/specs/inputs--query-bound?optional=react", { waitUntil: "hydration" });
   const reactor = page.getByTestId(id.reactor);
 
+  await page.waitForURL(/requiredWithDefault=default\+value/); // wait for above fills to take effect
+
   await expect(reactor).toBeAttached();
-  await expect(reactor).toContainText("react");
+  await expect(reactor).toContainText("\"required-with-default\": \"default value\"");
+  await expect(reactor).toContainText("\"optional\": null");
+
+  await goto("/specs/inputs--query-bound?optional=react", { waitUntil: "hydration" });
+
+  await expect(reactor).toBeAttached();
+  await expect(reactor).toContainText("\"optional\": \"react");
 });

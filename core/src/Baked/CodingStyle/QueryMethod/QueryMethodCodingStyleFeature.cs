@@ -22,6 +22,7 @@ public class QueryMethodCodingStyleFeature : IFeature<CodingStyleConfigurator>
                 attribute: () => new QueryMethodAttribute(),
                 requiresIndex: true
             );
+
             builder.Conventions.AddMethodAttributeConfiguration<QueryMethodAttribute>(
                 when: c => c.Method.DefaultOverload.Parameters.All(p => p.IsOptional),
                 attribute: qm => qm.AllParametersAreOptional = true
@@ -33,6 +34,7 @@ public class QueryMethodCodingStyleFeature : IFeature<CodingStyleConfigurator>
                 requiresIndex: true,
                 order: 35
             );
+
             builder.Conventions.SetParameterAttribute(
                 when: c => c.Method.Has<QueryMethodAttribute>() && _skipParameterNames.Contains(c.Parameter.Name),
                 attribute: p => new PagingAttribute(PagingAttribute.Role.Skip),

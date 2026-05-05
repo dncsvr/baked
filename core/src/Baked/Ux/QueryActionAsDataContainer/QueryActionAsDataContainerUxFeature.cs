@@ -2,7 +2,6 @@
 using Baked.Business;
 using Baked.RestApi.Model;
 using Baked.Ui;
-using Humanizer;
 
 using static Baked.Theme.Default.DomainComponents;
 
@@ -12,6 +11,9 @@ namespace Baked.Ux.QueryActionAsDataContainer;
 
 public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
 {
+    static readonly string _lengthContextKey = "length-context-key";
+    static readonly string _takeContextKey = "take-context-key";
+
     public void Configure(LayerConfigurator configurator)
     {
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
@@ -38,15 +40,14 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                 component: (dp, c, cc) =>
                 {
                     var skipParameter = c.Method.DefaultOverload.Parameters.First(p => p.IsSkip);
-                    var takeParameter = c.Method.DefaultOverload.Parameters.First(p => p.IsTake);
 
                     var skipInput = dp.Schema.Inputs.First(i => i.Name == skipParameter.Name);
                     skipInput.Component.Data += Datas.Context.Page(o =>
                     {
-                        o.Prop = "data-container-take";
+                        o.Prop = _takeContextKey;
                         o.TargetProp = "take";
                     });
-                    skipInput.Component.ReloadWhen("data-container-take");
+                    skipInput.Component.ReloadWhen(_takeContextKey);
                 },
                 order: 20
             );
@@ -57,7 +58,7 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                 {
                     datatable.Schema.Paginator = false;
                     datatable.Schema.VirtualScrollerOptions = default;
-                    datatable.Schema.DataLengthContextKey = nameof(DataTable.DataLengthContextKey).Kebaberize();
+                    datatable.Schema.DataLengthContextKey = _lengthContextKey;
                 }
             );
 
@@ -72,12 +73,12 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                 {
                     paginator.Data = Datas.Context.Page(o =>
                     {
-                        o.Prop = nameof(DataTable.DataLengthContextKey).Kebaberize(); ;
+                        o.Prop = _lengthContextKey;
                         o.TargetProp = "length";
                     });
                     paginator.Data += Datas.Inline(new { take = 10 });
 
-                    paginator.ReloadWhen(nameof(DataTable.DataLengthContextKey).Kebaberize());
+                    paginator.ReloadWhen(_lengthContextKey);
                 }
             );
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
@@ -117,7 +118,7 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                     s.Schema.ShowClear = false;
                     s.Schema.Stateful = true;
                     s.Schema.NoFloatLabel = true;
-                    s.Action = Actions.Publish.PageContextValue("data-container-take", o => o.Data = Datas.Context.Model());
+                    s.Action = Actions.Publish.PageContextValue(_takeContextKey, o => o.Data = Datas.Context.Model());
                 },
                 order: 20
             );

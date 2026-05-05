@@ -185,8 +185,8 @@ public abstract class MonolithRecipe
                     c => c.ListIsDataTable(),
                     c => c.NumericValuesAreFormatted(),
                     c => c.ObjectWithListIsDataTable(),
-                    c => c.QueryActionAsDataContainer(),
                     c => c.PanelParametersAreStateful(),
+                    c => c.QueryActionAsDataContainer(),
                     c => c.PropertiesAsFieldset(),
                     c => c.RoutedTypesAsNavLinks()
                 ]);
