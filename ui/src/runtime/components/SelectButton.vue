@@ -8,8 +8,7 @@
     <Labeler
       :label
       :path
-      :mode="labelMode !== 'ifta' ? 'none' : labelMode"
-      :variant="labelVariant"
+      :mode="labelMode == 'ifta' ? labelMode : null"
       :dt="{
         colorScheme: {
           light: {
@@ -57,7 +56,6 @@ const {
   allowEmpty = false,
   label,
   labelMode,
-  labelVariant,
   localizeLabel,
   optionLabel,
   optionValue,

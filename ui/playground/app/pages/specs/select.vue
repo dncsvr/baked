@@ -3,7 +3,6 @@
     title="Select"
     :variants
     use-model
-    variant-class="mt-2"
   />
 </template>
 <script setup>

@@ -471,22 +471,24 @@ export default {
 
   anInputText({ label, labelMode, labelVariant, targetProp } = {}) {
     targetProp = $(targetProp, undefined);
+    labelMode = this.aLabeler({ label, labelMode, labelVariant }).schema;
 
     return {
       type: "InputText",
       schema: {
-        ...this.aLabeler({ label, labelMode, labelVariant }).schema,
+        ...labelMode,
         targetProp
       }
     };
   },
 
   anInputNumber({ label, labelMode, labelVariant } = {}) {
+    labelMode = this.aLabeler({ label, labelMode, labelVariant }).schema;
 
     return {
       type: "InputNumber",
       schema: {
-        ...this.aLabeler({ label, labelMode, labelVariant }).schema
+        ...labelMode,
       }
     };
   },
@@ -495,6 +497,7 @@ export default {
     label = $(label, "Test Label");
     labelMode = $(labelMode, "float");
     labelVariant = $(labelVariant, "on");
+
     return {
       type: "Labeler",
       schema: {
@@ -776,7 +779,7 @@ export default {
 
     return {
       type: "SelectButton",
-      schema: { ...labelMode, label, allowEmpty, optionLabel, optionValue, stateful, targetProp },
+      schema: { ...labelMode, label, localizeLabel, allowEmpty, optionLabel, optionValue, stateful, targetProp },
       data,
       action
     };
