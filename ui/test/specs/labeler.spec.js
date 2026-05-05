@@ -58,3 +58,49 @@ test.describe("SelectButton Input Label Mode", () => {
     });
   });
 });
+
+test.describe("InputText Label Mode", () => {
+  [
+    { id: "InputText: No Label Mode", expected: null },
+    { id: "InputText: Float:In Mode", expected: "Float:In Mode" },
+    { id: "InputText: Ifta Mode", expected: "Ifta Mode" },
+    { id: "InputText: Float:On Mode", expected: "Float:On Mode" }
+  ].forEach(({ id, expected }) => {
+    test(`testing correct label text ${expected}`, async({ page }) => {
+      if(expected === null ) { return; }
+
+      const component = page.getByTestId(id);
+
+      await expect(component.getByText(expected)).toBeVisible();
+    });
+
+    test(`visual ${expected}`, { tag: "@visual" }, async({ page }) => {
+      const component = page.getByTestId(id);
+
+      await expect(component).toHaveScreenshot();
+    });
+  });
+});
+
+test.describe("InputNumber Label Mode", () => {
+  [
+    { id: "InputNumber: No Label Mode", expected: null },
+    { id: "InputNumber: Float:In Mode", expected: "Float:In Mode" },
+    { id: "InputNumber: Ifta Mode", expected: "Ifta Mode" },
+    { id: "InputNumber: Float:On Mode", expected: "Float:On Mode" }
+  ].forEach(({ id, expected }) => {
+    test(`testing correct label text ${expected}`, async({ page }) => {
+      if(expected === null ) { return; }
+
+      const component = page.getByTestId(id);
+
+      await expect(component.getByText(expected)).toBeVisible();
+    });
+
+    test(`visual ${expected}`, { tag: "@visual" }, async({ page }) => {
+      const component = page.getByTestId(id);
+
+      await expect(component).toHaveScreenshot();
+    });
+  });
+});

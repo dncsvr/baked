@@ -51,35 +51,55 @@ const variants = [
     })
   },
   {
+    name: "InputText: No Label Mode",
+    descriptor: giveMe.anInputText({
+      labelMode: null
+    })
+  },
+  {
     name: "InputText: Float:On Mode",
-    descriptor: giveMe.anInputText()
+    descriptor: giveMe.anInputText({
+      label: "Float:On Mode"
+    })
   },
   {
     name: "InputText: Float:In Mode",
     descriptor: giveMe.anInputText({
-      labelVariant: "in"
+      labelVariant: "in",
+      label: "Float:In Mode"
     })
   },
   {
     name: "InputText: Ifta Mode",
     descriptor: giveMe.anInputText({
-      labelMode: "ifta"
+      labelMode: "ifta",
+      label: "Ifta Mode"
+    })
+  },
+  {
+    name: "InputNumber: No Label Mode",
+    descriptor: giveMe.anInputNumber({
+      labelMode: null
     })
   },
   {
     name: "InputNumber: Float:On Mode",
-    descriptor: giveMe.anInputNumber()
+    descriptor: giveMe.anInputNumber({
+      label: "Float:On Mode"
+    })
   },
   {
     name: "InputNumber: Float:In Mode",
     descriptor: giveMe.anInputNumber({
-      labelVariant: "in"
+      labelVariant: "in",
+      label: "Float:In Mode"
     })
   },
   {
     name: "InputNumber: Ifta Mode",
     descriptor: giveMe.anInputNumber({
-      labelMode: "ifta"
+      labelMode: "ifta",
+      label: "Ifta Mode"
     })
   },
 ];
