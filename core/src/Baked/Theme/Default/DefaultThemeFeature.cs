@@ -168,11 +168,22 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 where: cc => cc.Path.EndsWith("*Form*", "**", "Inputs"),
                 schema: (i, c, cc) =>
                 {
-                    if (i.Component.Schema is not ILabeler hl) { return; }
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
 
                     var (_, l) = cc;
 
-                    hl.LabelIfta(l(c.Parameter.Name.Titleize()));
+                    labeler.LabelIfta(l(c.Parameter.Name.Titleize()));
+                }
+            );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                where: c => c.Path.EndsWith(nameof(SimplePage), nameof(PageTitle.Title), "**", nameof(SimpleForm.Inputs)),
+                schema: (i, c, cc) =>
+                {
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
+
+                    var (_, l) = cc;
+
+                    labeler.LabelIfta(l(c.Parameter.Name.Titleize()));
                 }
             );
 

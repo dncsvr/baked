@@ -21,7 +21,10 @@
                   "required": true,
                   "component": {
                     "type": "InputText",
-                    "schema": {}
+                    "schema": {
+                      "label": "Name",
+                      "labelMode": "ifta"
+                    }
                   }
                 }
               ],
@@ -73,21 +76,30 @@
                   "name": "name",
                   "component": {
                     "type": "InputText",
-                    "schema": {}
+                    "schema": {
+                      "label": "Name",
+                      "labelMode": "ifta"
+                    }
                   }
                 },
                 {
                   "name": "surname",
                   "component": {
                     "type": "InputText",
-                    "schema": {}
+                    "schema": {
+                      "label": "Surname",
+                      "labelMode": "ifta"
+                    }
                   }
                 },
                 {
                   "name": "description",
                   "component": {
                     "type": "InputText",
-                    "schema": {}
+                    "schema": {
+                      "label": "Description",
+                      "labelMode": "ifta"
+                    }
                   }
                 }
               ],
