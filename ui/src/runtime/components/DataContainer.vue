@@ -1,6 +1,6 @@
 <template>
-  <div class="p-panel">
-    <div class="p-panel-header flex gap-2 text-xs items-center justify-end">
+  <div class="block border rounded bg-[var(--p-panel-background)]">
+    <div class="p-[1.125rem] bg-transparent border-0 rounded-none flex gap-2 text-xs items-center justify-end">
       <Inputs
         v-if="inputs.length > 0"
         :inputs="inputs"
@@ -8,7 +8,7 @@
         @changed="onChanged"
       />
     </div>
-    <div class="p-panel-content [contain:inline-size]">
+    <div class="p-[1.125rem] pt-0 [contain:inline-size]">
       <Bake
         v-if="loaded && ready"
         :key="uniqueKey"
@@ -60,16 +60,3 @@ function onChanged(event) {
   values.value = event.values;
 }
 </script>
-<style scoped>
-div.p-panel {
-  div.p-panel-header {
-    @apply p-[1.125rem] bg-transparent border-0 rounded-none
-  }
-
-  div.p-panel-content {
-    @apply p-[1.125rem] pt-0
-  }
-
-  @apply block border rounded bg-[var(--p-panel-background)] text-[var(--p-panel-color)]
-}
-</style>

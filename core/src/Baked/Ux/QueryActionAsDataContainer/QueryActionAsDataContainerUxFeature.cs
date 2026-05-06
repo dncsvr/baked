@@ -1,9 +1,11 @@
 ﻿using Baked.Architecture;
 using Baked.Business;
-using Baked.RestApi.Model;
 using Baked.Ui;
+using Humanizer;
 
 using static Baked.Theme.Default.DomainComponents;
+using static Baked.Ui.Actions;
+using static Baked.Ui.Datas;
 
 using B = Baked.Ui.Components;
 
@@ -19,30 +21,34 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
         {
             builder.Conventions.AddMethodComponent(
-                when: c => c.Type.Has<QueryAttribute>() && c.Method.Has<ActionModelAttribute>() && c.Method.DefaultOverload.ReturnsList(),
+                when: c => c.Method.Has<QueryMethodAttribute>(),
                 where: cc => cc.Path.EndsWith("Contents", "*", "*", nameof(Content.Component)),
                 component: (c, cc) => MethodDataContainer(c.Method, cc)
             );
             builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
-                component: (dp, c, cc) =>
+                component: (dc, c, cc) =>
                 {
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
                         var input = parameter.GenerateRequiredSchema<Input>(cc.Drill(nameof(DataContainer), nameof(DataContainer.Inputs)));
                         input.QueryBound = true;
 
-                        dp.Schema.Inputs.Add(input);
+                        dc.Schema.Inputs.Add(input);
                     }
                 }
             );
             builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
-                when: c => c.Method.DefaultOverload.Parameters.Any(p => p.IsTake) && c.Method.DefaultOverload.Parameters.Any(p => p.IsSkip),
-                component: (dp, c, cc) =>
+                when: c => c.Method.DefaultOverload.Parameters.Having<PagingAttribute>().Any(p => p.Get<PagingAttribute>().IsTake),
+                component: (dc, c, cc) =>
                 {
-                    var skipParameter = c.Method.DefaultOverload.Parameters.First(p => p.IsSkip);
+                    var skipParameter = c.Method.DefaultOverload.Parameters.Having<PagingAttribute>().FirstOrDefault(p => p.Get<PagingAttribute>().IsSkip);
+                    if (skipParameter is null)
+                    {
+                        return;
+                    }
 
-                    var skipInput = dp.Schema.Inputs.First(i => i.Name == skipParameter.Name);
-                    skipInput.Component.Data += Datas.Context.Page(o =>
+                    var skipInput = dc.Schema.Inputs.First(i => i.Name == skipParameter.Name);
+                    skipInput.Component.Data += Context.Page(o =>
                     {
                         o.Prop = _takeContextKey;
                         o.TargetProp = "take";
@@ -63,26 +69,8 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
             );
 
             // Skip
-            builder.Conventions.AddParameterComponent(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip,
-                component: () => B.Paginator()
-            );
-            builder.Conventions.AddParameterComponentConfiguration<Paginator>(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip,
-                component: paginator =>
-                {
-                    paginator.Data = Datas.Context.Page(o =>
-                    {
-                        o.Prop = _lengthContextKey;
-                        o.TargetProp = "length";
-                    });
-                    paginator.Data += Datas.Inline(new { take = 10 });
-
-                    paginator.ReloadWhen(_lengthContextKey);
-                }
-            );
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Skip,
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsSkip,
                 schema: input =>
                 {
                     input.Required = true;
@@ -91,34 +79,58 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                 order: 10
             );
 
-            //Take
             builder.Conventions.AddParameterComponent(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsSkip,
+                component: () => B.Paginator()
+            );
+            builder.Conventions.AddParameterComponentConfiguration<Paginator>(
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsSkip,
+                component: paginator =>
+                {
+                    paginator.Data = Context.Page(o =>
+                    {
+                        o.Prop = _lengthContextKey;
+                        o.TargetProp = "length";
+                    });
+                    paginator.Data += Inline(new { take = 10 });
+
+                    paginator.ReloadWhen(_lengthContextKey);
+                }
+            );
+
+            //Take
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
+                schema: input =>
+                {
+                    input.Required = true;
+                    input.Numeric = true;
+                },
+                order: 10
+            );
+
+            builder.Conventions.AddParameterComponent(
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
                 component: (c, cc) =>
                 {
                     cc = cc.Drill(nameof(Select));
                     var (_, l) = cc;
 
-                    return B.Select(l("Take"), Datas.Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false));
+                    return B.Select(l(c.Parameter.Name.Titleize()), Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false));
                 }
             );
-            builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
-                schema: input =>
-                {
-                    input.Required = true;
-                    input.Numeric = true;
-                },
-                order: 10
+            builder.Conventions.AddParameterComponentConfiguration<Select>(
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
+                component: s => s.Override(B.PageSize())
             );
             builder.Conventions.AddParameterComponentConfiguration<Select>(
-                when: c => c.Parameter.Has<PagingAttribute>() && c.Parameter.Get<PagingAttribute>().RoleOption == PagingAttribute.Role.Take,
+                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
                 component: s =>
                 {
-                    s.Schema.ShowClear = false;
+                    s.Schema.ShowClear = null;
                     s.Schema.Stateful = true;
                     s.Schema.NoFloatLabel = true;
-                    s.Action = Actions.Publish.PageContextValue(_takeContextKey, o => o.Data = Datas.Context.Model());
+                    s.Action = Publish.PageContextValue(_takeContextKey, o => o.Data = Context.Model());
                 },
                 order: 20
             );

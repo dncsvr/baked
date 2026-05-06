@@ -36,11 +36,6 @@ public class FormSampleDomainOverrideFeature : IFeature
             builder.Conventions.RemoveMethodComponent<DataPanel>(
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents)
             );
-            builder.Conventions.AddMethodComponent(
-                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents),
-                where: cc => cc.Path.EndsWith("Contents", "*", "*", nameof(Content.Component)),
-                component: (c, cc) => DomainComponents.MethodDataContainer(c.Method, cc)
-            );
         });
     }
 }

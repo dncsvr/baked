@@ -74,11 +74,10 @@
                 "numeric": true,
                 "queryBound": true,
                 "component": {
-                  "type": "Select",
+                  "type": "PageSize",
                   "schema": {
                     "label": "Take",
                     "localizeLabel": false,
-                    "showClear": false,
                     "stateful": true,
                     "noFloatLabel": true
                   },

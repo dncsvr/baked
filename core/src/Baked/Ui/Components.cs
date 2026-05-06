@@ -182,6 +182,10 @@ public static class Components
         IData? data = default
     ) => new(options.Apply(new())) { Data = data };
 
+    public static ComponentDescriptor<PageSize> PageSize(
+        Action<PageSize>? options = default
+    ) => new(options.Apply(new()));
+
     public static ComponentDescriptor<PageTitle> PageTitle(string title,
         Action<PageTitle>? options = default
     ) => new(options.Apply(new(title)));

@@ -23,7 +23,6 @@
     </div>
   </AwaitLoading>
 </template>
-
 <script setup>
 import { computed } from "vue";
 import { Button } from "primevue";
@@ -56,5 +55,4 @@ if(data && contextData.page[takeStateKey] !== data.take) {
 
   page.value = 1;
 }
-
 </script>
