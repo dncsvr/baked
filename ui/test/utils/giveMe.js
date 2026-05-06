@@ -462,11 +462,12 @@ export default {
     };
   },
 
-  anInputNumber({ label } = {}) {
+  anInputNumber({ label, noGrouping } = {}) {
     return {
       type: "InputNumber",
       schema: {
-        label
+        label,
+        noGrouping
       }
     };
   },

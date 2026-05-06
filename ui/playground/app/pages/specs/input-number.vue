@@ -23,6 +23,10 @@ const variants = [
       label: "Spec: This is a very very very very long label"
     }),
     model: ref()
+  },
+  {
+    name: "No Grouping",
+    descriptor: giveMe.anInputNumber({ noGrouping: true })
   }
 ];
 </script>
