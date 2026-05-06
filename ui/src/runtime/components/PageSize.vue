@@ -1,5 +1,6 @@
 <template>
   <Select
+    v-if="isXs"
     v-model="model"
     :data
     :schema
@@ -7,7 +8,10 @@
   />
 </template>
 <script setup>
+import { useBreakpoints } from "#imports";
 import { Select } from "#components";
+
+const { isXs } = useBreakpoints();
 
 const { schema, data } = defineProps({
   schema: { type: null, required: true },
