@@ -2,8 +2,11 @@
 using Baked.Business;
 using Baked.Playground.Orm;
 using Baked.Playground.Theme;
+using Baked.Theme;
 using Baked.Theme.Default;
 using Baked.Ui;
+
+using B = Baked.Ui.Components;
 
 namespace Baked.Playground.Override.Domain;
 
@@ -35,6 +38,13 @@ public class FormSampleDomainOverrideFeature : IFeature
                     fp.Schema.ForEachInputGroup(g => g.Wide = true);
                     fp.Schema.Sections[0].InputGroups.Move("name", toTop: true);
                 }
+            );
+
+            // Properties
+            builder.Conventions.AddPropertyComponent(
+                when: c => c.Property.PropertyType.SkipNullable().IsEnum,
+                where: cc => cc.Path.StartsWith(nameof(Page), nameof(FormSample)),
+                component: () => B.Text()
             );
         });
     }

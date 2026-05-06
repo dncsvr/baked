@@ -26,16 +26,6 @@ test.describe("Base", () => {
     await expect(model).toHaveText("10");
   });
 
-  test("label", async({ page }) => {
-    const component = page.getByTestId(id);
-    const input = component.locator(primevue.inputNumber.base);
-
-    await input.click();
-    await page.keyboard.press("Digit0");
-
-    await expect(component.locator(primevue.floatLabel.base)).toHaveText("Label");
-  });
-
   test("visual", { tag: "@visual" }, async({ page }) => {
     const component = page.getByTestId(id);
 
@@ -50,5 +40,22 @@ test.describe("Long Label", () => {
     const component = page.getByTestId(id);
 
     await expect(component).toHaveScreenshot();
+  });
+});
+
+test.describe("No Grouping", () => {
+  const id = "No Grouping";
+
+  test("does not group input value", async({ page }) => {
+    const component = page.getByTestId(id);
+    const input = component.locator(primevue.inputNumber.base);
+
+    await input.click();
+    await page.keyboard.press("Digit1");
+    await page.keyboard.press("Digit0");
+    await page.keyboard.press("Digit0");
+    await page.keyboard.press("Digit0");
+
+    await expect(input.locator("input")).toHaveValue("1000");
   });
 });

@@ -2,6 +2,18 @@
 
 ## Features
 
+- `Labeler` component is introduced to standardize labeling of input components
+  - `ILabeler` schema interface is introduced to allow conventions to change 
+    label configuration at once
+  - `Select`, `SelectButton`, `InputText`, `InputNumber` now implements
+    `ILabeler`
+  - `.LabelIfta(...)`, `.LabelFloatOn(...)`, `.LabelFloatIn(...)`,
+    `LabelFloatOver(...)` and `.LabelNone()` extensions are available for any
+    component schema that implements `ILabeler`
+
+# Breaking Changes
+## Features
+
 - `QueryMethodCodingStyle` feature is now added which marks methods of a query
   as `QueryMethod` along with `sort`, `skip` and `take` parameters
 - New UX features are introduced in `Monolith` recipe
@@ -41,6 +53,8 @@
     ```
 - `TabNameAttribute` is now removed, instead get `GroupAttribute` and use its
   `TabName` extension property
+- `Select`, `InputText`, `InputNumber` component schemas does not require
+  `label:` in their component builders and constructors any more
 - `ServerPaginator` is renamed to `Paginator` and converted to a component
 - `ServerPaginator` is removed from `DataTable` schema
 - `Take` is removed from `DataTable` schema  
@@ -52,6 +66,9 @@
   - Add trace wasn't showing up when initial value is null, fixed
   - JSON serialization is restricted to only anonymous types to avoid
     unnecessarily long (and for some attributes failing) serializations
+- `GiveMe.AnEnum<T>` is now available, it returns the first element of given
+  enum
+- `FormPage` now restricts tab navigation with only its inputs via `v-focustrap`
 - `Input` now supports numeric datas
 
 ## Bugfixes

@@ -1,6 +1,6 @@
 ﻿namespace Baked.Ui;
 
-public record SelectButton : ISelect, IComponentSchema
+public record SelectButton : ISelect, ILabeler
 {
     public bool? AllowEmpty { get; set; }
     public string? OptionLabel { get; set; }
@@ -9,4 +9,6 @@ public record SelectButton : ISelect, IComponentSchema
     public bool? Stateful { get; set; }
     public string? TargetProp { get; set; }
     public string? Label { get; set; }
+    public string? LabelMode { get; set; }
+    public string? LabelVariant { get; set; }
 }

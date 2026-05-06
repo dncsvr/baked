@@ -293,23 +293,8 @@ test.describe("Target Prop", () => {
   });
 });
 
-test.describe("Remove Float Label on Select", () => {
-  const id = "No Float Label";
-
-  test("visual", { tag: "@visual" }, async({ page }) => {
-    const component = page.getByTestId(id);
-    const options = page.locator(primevue.select.option);
-    await expect(component.locator(primevue.select.base)).toBeAttached();
-    await component.click();
-    await options.nth(1).click();
-    await page.waitForTimeout(100); // waits for animation to finish
-
-    await expect(component.locator(primevue.select.label)).toHaveScreenshot();
-  });
-});
-
-test.describe("Filtering on Select w/ label", () => {
-  const id = "Filtering w/ Label";
+test.describe("Filtering on Select w/ Option label", () => {
+  const id = "Filtering with Option Label";
 
   test("Select shows the searchbox and list", async({ page }) => {
     const component = page.getByTestId(id);
@@ -335,8 +320,8 @@ test.describe("Filtering on Select w/ label", () => {
   });
 });
 
-test.describe("Filtering on Select without Label", () => {
-  const id = "Filtering no Label";
+test.describe("Filtering on Select without Option Label", () => {
+  const id = "Filtering without Option Label";
 
   test("Select shows the filtered list", async({ page }) => {
     const component = page.getByTestId(id);

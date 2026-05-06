@@ -1,5 +1,6 @@
 ﻿using Baked.Architecture;
 using Baked.Ui;
+using Humanizer;
 
 using static Baked.Theme.Default.DomainComponents;
 using static Baked.Theme.Default.DomainDatas;
@@ -30,6 +31,17 @@ public class ActionsAsDataPanelsUxFeature : IFeature<UxConfigurator>
                             parameter.GenerateRequiredSchema<Input>(cc.Drill(nameof(DataPanel), nameof(DataPanel.Inputs)))
                         );
                     }
+                }
+            );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                where: cc => cc.Path.EndsWith(nameof(DataPanel), nameof(DataPanel.Inputs)),
+                schema: (i, c, cc) =>
+                {
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
+
+                    var (_, l) = cc;
+
+                    labeler.LabelFloatOn(l(c.Parameter.Name.Titleize()));
                 }
             );
         });

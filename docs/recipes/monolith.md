@@ -88,6 +88,7 @@ Bake.New
 |                    | Data Table defaults                      |                                    |
 |                    | Description Property                     |                                    |
 |                    | Enum Parameter is Select                 |                                    |
+|                    | Form Inputs Are Ifta Label               |                                    |
 |                    | Initializer Parameters are in Page Title |                                    |
 |                    | Labels are Frozen                        |                                    |
 |                    | List is Data Table                       |                                    |

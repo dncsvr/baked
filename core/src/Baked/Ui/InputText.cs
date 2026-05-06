@@ -1,8 +1,9 @@
 namespace Baked.Ui;
 
-public record InputText(string Label)
-    : IComponentSchema
+public record InputText : IComponentSchema, ILabeler
 {
-    public string Label { get; set; } = Label;
+    public string? Label { get; set; }
+    public string? LabelMode { get; set; }
+    public string? LabelVariant { get; set; }
     public string? TargetProp { get; set; }
 }

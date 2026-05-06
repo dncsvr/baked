@@ -74,7 +74,9 @@
                 "component": {
                   "type": "InputText",
                   "schema": {
-                    "label": "Name"
+                    "label": "Name",
+                    "labelMode": "float",
+                    "labelVariant": "on"
                   }
                 }
               }
@@ -119,10 +121,8 @@
                     "component": {
                       "type": "PageSize",
                       "schema": {
-                        "label": "Take",
                         "localizeLabel": false,
-                        "stateful": true,
-                        "noFloatLabel": true
+                        "stateful": true
                       },
                       "data": {
                         "type": "Inline",
@@ -287,6 +287,34 @@
                         },
                         "title": "Description",
                         "exportable": true
+                      },
+                      {
+                        "key": "status",
+                        "component": {
+                          "type": "Text",
+                          "schema": {},
+                          "data": {
+                            "type": "Context",
+                            "key": "parent",
+                            "prop": "row.status"
+                          }
+                        },
+                        "title": "Status",
+                        "exportable": true
+                      },
+                      {
+                        "key": "role",
+                        "component": {
+                          "type": "Text",
+                          "schema": {},
+                          "data": {
+                            "type": "Context",
+                            "key": "parent",
+                            "prop": "row.role"
+                          }
+                        },
+                        "title": "Role",
+                        "exportable": true
                       }
                     ],
                     "dataKey": "id",
@@ -321,7 +349,8 @@
                                     "component": {
                                       "type": "InputText",
                                       "schema": {
-                                        "label": "Name"
+                                        "label": "Name",
+                                        "labelMode": "ifta"
                                       }
                                     }
                                   },
@@ -330,7 +359,8 @@
                                     "component": {
                                       "type": "InputText",
                                       "schema": {
-                                        "label": "Surname"
+                                        "label": "Surname",
+                                        "labelMode": "ifta"
                                       }
                                     }
                                   },
@@ -339,7 +369,8 @@
                                     "component": {
                                       "type": "InputText",
                                       "schema": {
-                                        "label": "Description"
+                                        "label": "Description",
+                                        "labelMode": "ifta"
                                       }
                                     }
                                   }

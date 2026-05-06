@@ -5,6 +5,8 @@ form-sample @controller-model {
       @parameter-model required=#true
     }
     name @parameter-model
+    role @parameter-model
+    status @parameter-model
   }
   clear-parents {
     @action-model route="DELETE /form-sample/parents" anonymous=#true

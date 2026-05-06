@@ -19,6 +19,8 @@
           "type": "Select",
           "schema": {
             "label": "Required With Default",
+            "labelMode": "float",
+            "labelVariant": "on",
             "optionLabel": "label",
             "optionValue": "value",
             "localizeLabel": true
@@ -46,6 +48,8 @@
           "type": "Select",
           "schema": {
             "label": "Required",
+            "labelMode": "float",
+            "labelVariant": "on",
             "optionLabel": "label",
             "optionValue": "value",
             "localizeLabel": true
@@ -257,6 +261,8 @@
                       "type": "Select",
                       "schema": {
                         "label": "Count",
+                        "labelMode": "float",
+                        "labelVariant": "on",
                         "optionLabel": "label",
                         "optionValue": "value",
                         "localizeLabel": true,

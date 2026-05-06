@@ -1,7 +1,6 @@
 ﻿namespace Baked.Ui;
 
-public record PageSize()
-    : Select(default(string)!), IComponentOverride<Select>
+public record PageSize : Select, IComponentOverride<Select>
 {
     public Select Base
     {
@@ -15,7 +14,6 @@ public record PageSize()
             Stateful = value.Stateful;
             Filter = value.Filter;
             TargetProp = value.TargetProp;
-            NoFloatLabel = value.NoFloatLabel;
         }
     }
 }

@@ -5,9 +5,11 @@
         <Skeleton class="min-h-10" />
       </div>
     </template>
-    <component
-      :is="labelComponent"
-      v-bind="labelProps"
+    <Labeler
+      :label
+      :path
+      :mode="labelMode"
+      :variant="labelVariant"
     >
       <Select
         v-bind="$attrs"
@@ -31,20 +33,14 @@
           <span>{{ getOptionLabel(slotProps) }}</span>
         </template>
       </Select>
-      <label
-        v-if="!noFloatLabel"
-        :for="path"
-      >
-        {{ l(label) }}
-      </label>
-    </component>
+    </Labeler>
   </AwaitLoading>
 </template>
 <script setup>
-import { computed, ref, watch } from "vue";
-import { FloatLabel, Select, Skeleton } from "primevue";
+import { ref, watch } from "vue";
+import { Select, Skeleton } from "primevue";
 import { useContext, useUiStates, useLocalization } from "#imports";
-import { AwaitLoading } from "#components";
+import { AwaitLoading, Labeler } from "#components";
 
 const context = useContext();
 const { localize: l } = useLocalization();
@@ -56,13 +52,10 @@ const { schema, data } = defineProps({
 });
 const model = defineModel({ type: null, required: true });
 
-const { filter, label, localizeLabel, noFloatLabel, optionLabel, optionValue, showClear, stateful, targetProp } = schema;
+const { filter, label, labelMode, labelVariant, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp } = schema;
 
 const path = context.injectPath();
 const selected = ref();
-
-const labelComponent = computed(() => (noFloatLabel ? "div" : FloatLabel));
-const labelProps = computed(() => (noFloatLabel ? {} : { variant: "on" }));
 
 // two way binding between model and selected
 watch(
@@ -125,11 +118,11 @@ function setSelected(value) {
 <style>
 .b-component--Select {
   /*
-  placeholder gives select the initial width, but it overlaps with label so it is
-  hidden
+  placeholder gives select the initial width, but it overlaps with label and
+  tab key skip select if placeholder is hidden so it is opacity zero
   */
   .p-placeholder {
-    visibility: hidden;
+    opacity: 0;
   }
 
   .p-select-label {

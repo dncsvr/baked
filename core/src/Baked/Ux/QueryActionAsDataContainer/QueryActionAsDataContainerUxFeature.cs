@@ -1,11 +1,10 @@
 ﻿using Baked.Architecture;
 using Baked.Business;
 using Baked.Ui;
-using Humanizer;
 
-using static Baked.Ui.Constraints;
 using static Baked.Theme.Default.DomainComponents;
 using static Baked.Ui.Actions;
+using static Baked.Ui.Constraints;
 using static Baked.Ui.Datas;
 
 using B = Baked.Ui.Components;
@@ -156,7 +155,7 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     cc = cc.Drill(nameof(Select));
                     var (_, l) = cc;
 
-                    return B.Select(l(c.Parameter.Name.Titleize()), Inline(_pageSizeOptions, options: i => i.RequireLocalization = false));
+                    return B.Select(Inline(_pageSizeOptions, options: i => i.RequireLocalization = false));
                 }
             );
             builder.Conventions.AddParameterComponentConfiguration<Select>(
@@ -169,7 +168,6 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 {
                     s.Schema.ShowClear = null;
                     s.Schema.Stateful = true;
-                    s.Schema.NoFloatLabel = true;
                     s.Action = Publish.PageContextValue(_takeContextKey, o => o.Data = Context.Model());
                     s.ShowWhen("isXs", Is("true"));
                 },
