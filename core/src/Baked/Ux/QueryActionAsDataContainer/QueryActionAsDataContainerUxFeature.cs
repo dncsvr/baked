@@ -1,5 +1,6 @@
 ﻿using Baked.Architecture;
 using Baked.Business;
+using Baked.Theme;
 using Baked.Ui;
 using Humanizer;
 
@@ -22,18 +23,24 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
         {
             builder.Conventions.AddMethodComponent(
-                when: c => c.Method.Has<QueryMethodAttribute>(),
+                when: c => c.Method.Has<QueryMethodAttribute>() && !c.Method.Has<ComponentGeneratorAttribute<DataPanel>>(),
                 where: cc => cc.Path.EndsWith("Contents", "*", "*", nameof(Content.Component)),
                 component: (c, cc) => MethodDataContainer(c.Method, cc)
             );
+            builder.Conventions.AddMethodComponent(
+                when: c => c.Method.Has<QueryMethodAttribute>(),
+                where: cc => cc.Path.EndsWith(nameof(DataPanel), nameof(DataPanel.Content)),
+                component: (c, cc) => MethodDataContainer(c.Method, cc)
+            );
+
             builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
                 component: (dc, c, cc) =>
                 {
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
-                        var input = parameter.GenerateRequiredSchema<Input>(cc.Drill(nameof(DataContainer), nameof(DataContainer.Inputs)));
-                        input.QueryBound = true;
+                        if (!parameter.Has<SortingAttribute>() && !parameter.Has<PagingAttribute>()) { continue; }
 
+                        var input = parameter.GenerateRequiredSchema<Input>(cc.Drill(nameof(DataContainer), nameof(DataContainer.Inputs)));
                         dc.Schema.Inputs.Add(input);
                     }
                 }
@@ -54,6 +61,27 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     skipInput.Component.ReloadWhen(_takeContextKey);
                 },
                 order: 20
+            );
+
+            builder.Conventions.AddMethodComponentConfiguration<DataPanel>(
+                when: c => c.Method.Has<QueryMethodAttribute>(),
+                component: (dp, c, cc) =>
+                {
+                    foreach (var parameter in c.Method.DefaultOverload.Parameters)
+                    {
+                        if (!parameter.Has<SortingAttribute>() && !parameter.Has<PagingAttribute>()) { continue; }
+
+                        var input = dp.Schema.Inputs.First(i => i.Name == parameter.Name);
+                        dp.Schema.Inputs.Remove(input);
+                    }
+                },
+                order: 100
+            );
+
+            builder.Conventions.AddMethodSchemaConfiguration<RemoteData>(
+                when: c => c.Method.Has<QueryMethodAttribute>(),
+                schema: rd => rd.Query += Context.Parent(options: cd => cd.Prop = "sort-paging-parameters"),
+                order: 110
             );
 
             builder.Conventions.AddMethodComponentConfiguration<DataTable>(

@@ -48,7 +48,7 @@ const uniqueKey = ref("");
 
 const values = ref({});
 if(inputs.length > 0) {
-  contextData.parent["parameters"] = values;
+  contextData.parent["sort-paging-parameters"] = values;
 }
 
 function onReady(value) {
