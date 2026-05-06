@@ -60,3 +60,10 @@ function onChanged(event) {
   values.value = event.values;
 }
 </script>
+<style>
+.b-component--DataContainer {
+  div {
+    @apply [&:has(.p-datatable)]:p-0;
+  }
+}
+</style>

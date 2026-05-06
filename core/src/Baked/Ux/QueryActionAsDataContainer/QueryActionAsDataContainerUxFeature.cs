@@ -43,10 +43,7 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 component: (dc, c, cc) =>
                 {
                     var skipParameter = c.Method.DefaultOverload.Parameters.Having<PagingAttribute>().FirstOrDefault(p => p.Get<PagingAttribute>().IsSkip);
-                    if (skipParameter is null)
-                    {
-                        return;
-                    }
+                    if (skipParameter is null) { return; }
 
                     var skipInput = dc.Schema.Inputs.First(i => i.Name == skipParameter.Name);
                     skipInput.Component.Data += Context.Page(o =>

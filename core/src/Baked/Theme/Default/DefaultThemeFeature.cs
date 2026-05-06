@@ -163,8 +163,6 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                     c.Parameter.ParameterType.SkipNullable().Is<decimal>() ||
                     c.Parameter.ParameterType.SkipNullable().Is<double>() ||
                     c.Parameter.ParameterType.SkipNullable().Is<float>() ||
-                    c.Parameter.ParameterType.SkipNullable().Is<nint>() ||
-                    c.Parameter.ParameterType.SkipNullable().Is<nuint>() ||
                     c.Parameter.ParameterType.SkipNullable().Is<long>() ||
                     c.Parameter.ParameterType.SkipNullable().Is<short>(),
                 schema: input => input.Numeric = true
