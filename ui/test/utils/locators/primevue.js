@@ -28,6 +28,9 @@ export default {
   floatLabel: {
     base: ".p-floatlabel"
   },
+  iftaLabel: {
+    base: ".p-iftalabel"
+  },
   inputNumber: {
     base: ".p-inputnumber"
   },

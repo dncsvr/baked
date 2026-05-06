@@ -22,7 +22,8 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Name"
+                      "label": "Name",
+                      "labelMode": "ifta"
                     }
                   }
                 }
@@ -76,7 +77,8 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Name"
+                      "label": "Name",
+                      "labelMode": "ifta"
                     }
                   }
                 },
@@ -85,7 +87,8 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Surname"
+                      "label": "Surname",
+                      "labelMode": "ifta"
                     }
                   }
                 },
@@ -94,7 +97,8 @@
                   "component": {
                     "type": "InputText",
                     "schema": {
-                      "label": "Description"
+                      "label": "Description",
+                      "labelMode": "ifta"
                     }
                   }
                 }
@@ -224,6 +228,32 @@
                   }
                 },
                 "wide": true
+              },
+              {
+                "key": "status",
+                "label": "Status",
+                "component": {
+                  "type": "Text",
+                  "schema": {},
+                  "data": {
+                    "type": "Context",
+                    "key": "parent",
+                    "prop": "data.status"
+                  }
+                }
+              },
+              {
+                "key": "role",
+                "label": "Role",
+                "component": {
+                  "type": "Text",
+                  "schema": {},
+                  "data": {
+                    "type": "Context",
+                    "key": "parent",
+                    "prop": "data.role"
+                  }
+                }
               }
             ]
           },

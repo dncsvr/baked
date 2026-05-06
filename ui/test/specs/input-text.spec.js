@@ -24,15 +24,6 @@ test.describe("Base", () => {
     await expect(model).toHaveText("test value");
   });
 
-  test("label", async({ page }) => {
-    const component = page.getByTestId(id);
-    const input = component.locator(primevue.inputText.base);
-
-    await input.fill("x");
-
-    await expect(component.locator(primevue.floatLabel.base)).toHaveText("Label");
-  });
-
   test("visual", { tag: "@visual" }, async({ page }) => {
     const component = page.getByTestId(id);
 

@@ -179,6 +179,7 @@ public abstract class MonolithRecipe
                     c => c.DataTableDefaults(),
                     c => c.DescriptionProperty(),
                     _enumParameterIsSelect,
+                    c => c.FormInputsAreIftaLabel(),
                     c => c.InitializerParametersAreInPageTitle(),
                     c => c.LabelsAreFrozen(),
                     c => c.ListIsDataTable(),

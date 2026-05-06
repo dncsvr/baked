@@ -145,17 +145,9 @@ const variants = [
     model: ref()
   },
   {
-    name: "No Float Label",
+    name: "Filtering with Option Label",
     descriptor: giveMe.aSelect({
-      label: "No Float Label",
-      noFloatLabel: true
-    }),
-    model: ref()
-  },
-  {
-    name: "Filtering w/ Label",
-    descriptor: giveMe.aSelect({
-      label: "Filtering w/ Label",
+      label: "Filtering Option Label",
       optionLabel: "label",
       optionValue: "value",
       filter: true,
@@ -167,9 +159,9 @@ const variants = [
     model: ref()
   },
   {
-    name: "Filtering no Label",
+    name: "Filtering without Option Label",
     descriptor: giveMe.aSelect({
-      label: "Filtering no Label",
+      label: "Without Option Label",
       filter: true
     }),
     model: ref()

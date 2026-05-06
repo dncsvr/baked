@@ -469,25 +469,40 @@ export default {
     return { name, required, default: default_, defaultSelfManaged, queryBound, component };
   },
 
-  anInputText({ label, targetProp } = {}) {
+  anInputText({ label, labeler, targetProp } = {}) {
     targetProp = $(targetProp, undefined);
+    labeler = $(labeler, this.aLabeler({ label }));
 
     return {
       type: "InputText",
       schema: {
-        label,
+        ...labeler,
         targetProp
       }
     };
   },
 
-  anInputNumber({ label, noGrouping } = {}) {
+  anInputNumber({ label, labeler, noGrouping } = {}) {
+    labeler = $(labeler, this.aLabeler({ label }));
+
     return {
       type: "InputNumber",
       schema: {
-        label,
+        ...labeler,
         noGrouping
       }
+    };
+  },
+
+  aLabeler({ label, labelMode, labelVariant } = {}) {
+    label = $(label, "Test Label");
+    labelMode = $(labelMode, "float");
+    labelVariant = $(labelVariant, "on");
+
+    return {
+      label,
+      labelMode,
+      labelVariant
     };
   },
 
@@ -721,15 +736,14 @@ export default {
     return screens.find(screen => screen.name === name) || null;
   },
 
-  aSelect({ action, data, filter, inline, label, localizeLabel, noFloatLabel, optionLabel, optionValue, showClear, stateful, targetProp } = {}) {
+  aSelect({ action, data, filter, inline, label, labeler, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp } = {}) {
     data = $(data, ["Test Option 1", "Test Option 2"]);
     inline = $(inline, true);
     label = $(label, "Spec: Test");
+    labeler = $(labeler, this.aLabeler({ label }));
     localizeLabel = $(localizeLabel, false);
-    noFloatLabel = $(noFloatLabel, false);
     showClear = $(showClear, false);
     stateful = $(stateful, false);
-
     data = inline
       ? this.anInlineData(data)
       : this.aComputedData({
@@ -740,17 +754,18 @@ export default {
 
     return {
       type: "Select",
-      schema: { filter, label, localizeLabel, noFloatLabel, optionLabel, optionValue, showClear, stateful, targetProp },
+      schema: { ...labeler, filter, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp },
       data,
       action
     };
   },
 
-  aSelectButton({ action, allowEmpty, data, inline, label, localizeLabel, optionLabel, optionValue, stateful, targetProp } = {}) {
+  aSelectButton({ action, allowEmpty, data, inline, label, labeler, localizeLabel, optionLabel, optionValue, stateful, targetProp } = {}) {
     data = $(data, ["Test Option 1", "Test Option 2"]);
     inline = $(inline, true);
     allowEmpty = $(allowEmpty, false);
     stateful = $(stateful, false);
+    labeler = $(labeler, this.aLabeler({ label }));
     localizeLabel = $(localizeLabel, false);
     data = inline
       ? this.anInlineData(data)
@@ -762,7 +777,7 @@ export default {
 
     return {
       type: "SelectButton",
-      schema: { allowEmpty, label, localizeLabel, optionLabel, optionValue, stateful, targetProp },
+      schema: { ...labeler, localizeLabel, allowEmpty, optionLabel, optionValue, stateful, targetProp },
       data,
       action
     };

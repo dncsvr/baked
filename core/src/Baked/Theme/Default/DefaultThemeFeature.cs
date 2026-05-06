@@ -36,9 +36,9 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
             );
             builder.Conventions.AddTypeAttributeConfiguration<RouteAttribute>(
                 when: (c, r) =>
-                  r.Path.Contains("[id]") &&
-                  c.Type.TryGetMembers(out var members) &&
-                  members.Properties.Having<IdAttribute>().Any(),
+                    r.Path.Contains("[id]") &&
+                    c.Type.TryGetMembers(out var members) &&
+                    members.Properties.Having<IdAttribute>().Any(),
                 attribute: (r, c) =>
                 {
                     var idAttribute = c.Type.GetMembers().FirstProperty<IdAttribute>().Get<IdAttribute>();
@@ -108,7 +108,6 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 schema: ra => ra.Body = Context.Model()
             );
 
-            // Parameter defaults
             builder.Conventions.AddMethodComponentConfiguration<SimpleForm>(
                 component: (sf, c, cc) =>
                 {
@@ -121,10 +120,6 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                         );
                     }
                 }
-            );
-
-            builder.Conventions.AddParameterAttributeConfiguration<GroupAttribute>(
-                attribute: (group, c) => group.InputGroupKey = c.Parameter.Name
             );
             builder.Conventions.AddMethodComponentConfiguration<FormPage>(
                 component: (fp, c, cc) =>
@@ -153,6 +148,11 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 }
             );
 
+            // Parameter defaults
+            builder.Conventions.AddParameterAttributeConfiguration<GroupAttribute>(
+                attribute: (group, c) => group.InputGroupKey = c.Parameter.Name
+            );
+
             builder.Conventions.AddParameterSchema(
                 when: c => c.Parameter.Has<ParameterModelAttribute>(),
                 schema: (c, cc) => ParameterInput(c.Parameter, cc)
@@ -164,6 +164,7 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                     p.DefaultValue = c.Parameter.DefaultValue;
                 }
             );
+
             builder.Conventions.AddParameterComponent(
                 when: c =>
                     c.Parameter.ParameterType.Is<string>() ||
@@ -218,6 +219,16 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
             // `SelectButton` defaults
             builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
                 component: (s, c) => s.Schema.AllowEmpty = c.Parameter.IsNullable ? true : null
+            );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                schema: i =>
+                {
+                    if (i.Component.Schema is not SelectButton sb) { return; }
+                    if (sb.LabelMode == "ifta") { return; }
+
+                    sb.LabelNone();
+                },
+                order: UiLayer.MaxConventionOrder - 10
             );
         });
 

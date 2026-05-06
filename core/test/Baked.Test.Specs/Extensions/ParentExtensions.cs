@@ -11,13 +11,17 @@ public static class ParentExtensions
         public Parent AParent(
             string? name = default,
             string? surname = default,
+            Status? status = default,
+            Role? role = default,
             bool withChild = false
         )
         {
             name ??= giveMe.AString();
             surname ??= giveMe.AString();
+            status ??= giveMe.AnEnum<Status>();
+            role ??= giveMe.AnEnum<Role>();
 
-            var result = giveMe.A<Parent>().With(name, surname);
+            var result = giveMe.A<Parent>().With(name, surname, status, role);
             if (withChild)
             {
                 result.AddChild(giveMe.AString());

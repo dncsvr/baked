@@ -2,6 +2,7 @@
 using Baked.Business;
 using Baked.Lifetime;
 using Baked.Ui;
+using Humanizer;
 
 namespace Baked.Ux.InitializerParametersAreInPageTitle;
 
@@ -28,6 +29,17 @@ public class InitializerParametersAreInPageTitleUxFeature : IFeature<UxConfigura
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
                 where: cc => cc.Path.EndsWith(nameof(TabbedPage), nameof(TabbedPage.Inputs)),
                 schema: i => i.QueryBound = true
+            );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                where: cc => cc.Path.EndsWith(nameof(TabbedPage), nameof(TabbedPage.Inputs)),
+                schema: (i, c, cc) =>
+                {
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
+
+                    var (_, l) = cc;
+
+                    labeler.LabelFloatOn(l(c.Parameter.Name.Titleize()));
+                }
             );
         });
     }

@@ -28,7 +28,9 @@ public class SerializingOnlyIdAndLabelsForParents : TestNfr
             parent?.id,
             name = "parent",
             surname = "wrapper",
-            description = (string?)null
+            description = (string?)null,
+            status = (string?)null,
+            role = (string?)null
         });
     }
 

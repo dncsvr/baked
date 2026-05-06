@@ -1,6 +1,7 @@
 ﻿using Baked.Architecture;
 using Baked.Playground.Orm;
 using Baked.Playground.Theme;
+using Baked.Theme;
 using Baked.Theme.Default;
 using Baked.Ui;
 using Humanizer;
@@ -77,14 +78,21 @@ public class FormSampleDomainOverrideFeature : IFeature
                 {
                     var (_, l) = cc;
 
-                    dtsp.Take = B.Select(l("Take"), Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false),
+                    dtsp.Take = B.Select(Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false),
                         options: s =>
                         {
                             s.Stateful = true;
-                            s.NoFloatLabel = true;
+                            s.LabelNone();
                         }
                     );
                 })
+            );
+
+            // Properties
+            builder.Conventions.AddPropertyComponent(
+                when: c => c.Property.PropertyType.SkipNullable().IsEnum,
+                where: cc => cc.Path.StartsWith(nameof(Page), nameof(FormSample)),
+                component: () => B.Text()
             );
         });
     }

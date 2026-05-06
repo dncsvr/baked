@@ -41,7 +41,8 @@
                 "component": {
                   "type": "InputText",
                   "schema": {
-                    "label": "Name"
+                    "label": "Name",
+                    "labelMode": "ifta"
                   }
                 }
               }
@@ -57,7 +58,82 @@
                 "component": {
                   "type": "InputText",
                   "schema": {
-                    "label": "Surname"
+                    "label": "Surname",
+                    "labelMode": "ifta"
+                  }
+                }
+              }
+            ],
+            "wide": true
+          },
+          {
+            "key": "role",
+            "inputs": [
+              {
+                "name": "role",
+                "component": {
+                  "type": "Select",
+                  "schema": {
+                    "label": "Role",
+                    "labelMode": "ifta",
+                    "optionLabel": "label",
+                    "optionValue": "value",
+                    "localizeLabel": true,
+                    "showClear": true
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      {
+                        "label": "Role.Admin",
+                        "value": "Admin"
+                      },
+                      {
+                        "label": "Role.Moderator",
+                        "value": "Moderator"
+                      },
+                      {
+                        "label": "Role.Writer",
+                        "value": "Writer"
+                      },
+                      {
+                        "label": "Role.Maintainer",
+                        "value": "Maintainer"
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "wide": true
+          },
+          {
+            "key": "status",
+            "inputs": [
+              {
+                "name": "status",
+                "component": {
+                  "type": "SelectButton",
+                  "schema": {
+                    "allowEmpty": true,
+                    "optionLabel": "label",
+                    "optionValue": "value",
+                    "localizeLabel": true,
+                    "label": "Status",
+                    "labelMode": "ifta"
+                  },
+                  "data": {
+                    "type": "Inline",
+                    "value": [
+                      {
+                        "label": "Status.Active",
+                        "value": "Active"
+                      },
+                      {
+                        "label": "Status.Passive",
+                        "value": "Passive"
+                      }
+                    ]
                   }
                 }
               }

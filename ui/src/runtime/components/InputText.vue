@@ -5,32 +5,35 @@
         <Skeleton class="min-h-10" />
       </div>
     </template>
-    <FloatLabel variant="on">
+    <Labeler
+      :label
+      :path
+      :mode="labelMode"
+      :variant="labelVariant"
+    >
       <InputText
         v-model="input"
         v-bind="$attrs"
         class="min-w-60"
         @update:model-value="onUpdate"
       />
-      <label :for="path">{{ l(label) }}</label>
-    </FloatLabel>
+    </Labeler>
   </AwaitLoading>
 </template>
 <script setup>
 import { ref } from "vue";
-import { FloatLabel, InputText, Skeleton } from "primevue";
-import { useContext, useLocalization } from "#imports";
-import { AwaitLoading } from "#components";
+import { InputText, Skeleton } from "primevue";
+import { useContext } from "#imports";
+import { AwaitLoading, Labeler } from "#components";
 
 const context = useContext();
-const { localize: l } = useLocalization();
 
 const { schema } = defineProps({
   schema: { type: null, required: true }
 });
 const model = defineModel({ type: null, required: true });
 
-const { label, targetProp } = schema;
+const { label, labelMode, labelVariant, targetProp } = schema;
 
 const path = context.injectPath();
 
