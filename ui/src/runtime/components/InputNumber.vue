@@ -9,6 +9,7 @@
       <InputNumber
         v-model="model"
         v-bind="$attrs"
+        :use-grouping="!noGrouping"
         class="min-w-60"
         @input="onInput"
       />
@@ -29,7 +30,7 @@ const { schema } = defineProps({
 });
 const model = defineModel({ type: null, required: true });
 
-const { label } = schema;
+const { label, noGrouping } = schema;
 
 const path = context.injectPath();
 
