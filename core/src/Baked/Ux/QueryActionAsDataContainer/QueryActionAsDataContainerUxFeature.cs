@@ -11,7 +11,8 @@ using B = Baked.Ui.Components;
 
 namespace Baked.Ux.QueryActionAsDataContainer;
 
-public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
+public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
+    : IFeature<UxConfigurator>
 {
     static readonly string _lengthContextKey = "length-context-key";
     static readonly string _takeContextKey = "take-context-key";
@@ -116,7 +117,7 @@ public class QueryActionAsDataContainerUxFeature : IFeature<UxConfigurator>
                     cc = cc.Drill(nameof(Select));
                     var (_, l) = cc;
 
-                    return B.Select(l(c.Parameter.Name.Titleize()), Inline(new[] { 10, 20, 50, 100 }, options: i => i.RequireLocalization = false));
+                    return B.Select(l(c.Parameter.Name.Titleize()), Inline(_pageSizeOptions, options: i => i.RequireLocalization = false));
                 }
             );
             builder.Conventions.AddParameterComponentConfiguration<Select>(

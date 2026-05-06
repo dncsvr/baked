@@ -1,14 +1,14 @@
 ﻿using Baked.Architecture;
 using Baked.Business;
 
-namespace Baked.CodingStyle.QueryStyle;
+namespace Baked.CodingStyle.QueryMethod;
 
-public class QueryMethodCodingStyleFeature : IFeature<CodingStyleConfigurator>
+public class QueryMethodCodingStyleFeature(
+    HashSet<string> _takeParameterNames,
+    HashSet<string> _skipParameterNames,
+    HashSet<string> _sortingParameterNames
+) : IFeature<CodingStyleConfigurator>
 {
-    static readonly HashSet<string> _takeParameterNames = ["take"];
-    static readonly HashSet<string> _skipParameterNames = ["skip"];
-    static readonly HashSet<string> _sortingParameterNames = ["sort"];
-
     public void Configure(LayerConfigurator configurator)
     {
         configurator.Domain.ConfigureDomainModelBuilder(builder =>

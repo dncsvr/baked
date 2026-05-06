@@ -214,6 +214,18 @@ c => c.PropertiesAsFieldset()
     data, e.g., `data.parent.name`
   - Otherwise, sets the property value as component data, e.g., `data.name`
 
+
+## Query Action Is Data Container
+
+Renders controller actions with `QueryMethod` attribute as `DataContainer`.
+
+```csharp
+c => c.QueryActionAsDataContainer()
+```
+
+- Action parameters are added to the panel schema automatically
+- Configures `take` and `skip` paramater components when specified
+
 ## Routed Types as Nav Links
 
 Configures `NavLink` component for types that have `RouteAttribute` under data

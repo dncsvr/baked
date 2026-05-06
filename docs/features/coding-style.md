@@ -164,10 +164,29 @@ e.g. assuming `MyLocatable` is a locatable, `MyLocatables` becomes a query.
 Removes `FirstBy`, `SingleBy` and `By` names from API routes and configure them
 as `GET` endpoints.
 
+```csharp
+c => c.Query()
+```
+
 > [!WARNING]
 >
 > A class that injects `IQueryContext` is not considered as a query class unless
 > it satisfies the plural naming convention.
+
+## QueryMethod
+
+Adds `QueryMethodAttribute` to the methods having name `By` of types with 
+`QueryAttribute` and marks parameters with `SortAttribute` and `PagingAttribute`
+
+```csharp
+c => c.QueryMethod()
+```
+
+> [!INFO]
+>
+> default parameters name for `SortAttribute` is `sort` and 
+> for `PagingAttribute` with role flags are `take` and `skip` 
+
 
 ## Records are DTOs
 
