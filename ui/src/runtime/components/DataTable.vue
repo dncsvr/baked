@@ -293,6 +293,20 @@ function exportFunction({ data, field }) {
   }
 }
 
+/* If Datatable in a DataPanel, clear border and radius */
+.b-component--DataContainer:has(.b-component--DataTable) {
+  .b-component--DataTable {
+    @apply border-none rounded-none;
+
+    .b-Header {
+      @apply rounded-none;
+    }
+    .p-datatable-table-container {
+      @apply border-none;
+    }
+  }
+}
+
 /* Datatable standalone styles */
 .b-component--DataTable {
   @apply

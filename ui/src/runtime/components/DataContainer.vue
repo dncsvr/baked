@@ -1,6 +1,6 @@
 <template>
-  <div class="block border rounded bg-[var(--p-panel-background)]">
-    <div class="p-[1.125rem] bg-transparent border-0 rounded-none flex gap-2 text-xs items-center justify-end">
+  <div class="block border rounded bg-transparent border-[1px] border-slate-200 dark:border-slate-700">
+    <div class="p-[1.125rem] bg-transparent dark:bg-zinc-900 border-0 rounded-none flex gap-2 text-xs items-center justify-end">
       <Inputs
         v-if="inputs.length > 0"
         :inputs="inputs"
@@ -61,6 +61,13 @@ function onChanged(event) {
 }
 </script>
 <style>
+/* If DataContainer in a DataPanel, clear border and radius */
+.p-panel-content:has(.b-component--DataContainer) {
+  .b-component--DataContainer {
+    @apply border-none rounded-none;
+  }
+}
+
 .b-component--DataContainer {
   div {
     @apply [&:has(.p-datatable)]:p-0;

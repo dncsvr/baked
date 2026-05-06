@@ -179,10 +179,15 @@ Adds `QueryMethodAttribute` to the methods having name `By` of types with
 `QueryAttribute` and marks parameters with `SortAttribute` and `PagingAttribute`
 
 ```csharp
-c => c.QueryMethod()
+c => c.QueryMethod(
+    queryMethodNames: [...],
+    takeParameterNames: [...]
+    skipParameterNames: [...],
+    sortParameterNames: [...]
+)
 ```
 
-> [!INFO]
+> [!NOTE]
 >
 > default parameters name for `SortAttribute` is `sort` and 
 > for `PagingAttribute` with role flags are `take` and `skip` 

@@ -17,6 +17,17 @@ public class FormSampleDomainOverrideFeature : IFeature
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent),
                 attribute: (a, c) => a.RoutePathBack = "/form-sample"
             );
+
+            builder.Conventions.AddMethodAttributeConfiguration<ActionAttribute>(
+                when: c => c.Type.Is<Parent>() && c.Method.Name.Contains("Child"),
+                attribute: a => a.HideInLists = true
+            );
+
+            builder.Conventions.SetMethodAttribute(
+                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents),
+                attribute: () => new QueryMethodAttribute()
+            );
+
             builder.Conventions.AddMethodComponentConfiguration<FormPage>(
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent),
                 component: fp =>
@@ -24,14 +35,6 @@ public class FormSampleDomainOverrideFeature : IFeature
                     fp.Schema.ForEachInputGroup(g => g.Wide = true);
                     fp.Schema.Sections[0].InputGroups.Move("name", toTop: true);
                 }
-            );
-            builder.Conventions.AddMethodAttributeConfiguration<ActionAttribute>(
-                when: c => c.Type.Is<Parent>() && c.Method.Name.Contains("Child"),
-                attribute: a => a.HideInLists = true
-            );
-            builder.Conventions.SetMethodAttribute(
-                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents),
-                attribute: () => new QueryMethodAttribute()
             );
         });
     }
