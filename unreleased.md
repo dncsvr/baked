@@ -36,3 +36,7 @@
   - Add trace wasn't showing up when initial value is null, fixed
   - JSON serialization is restricted to only anonymous types to avoid
     unnecessarily long (and for some attributes failing) serializations
+
+## Features
+
+- ...

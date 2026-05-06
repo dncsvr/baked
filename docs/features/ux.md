@@ -109,6 +109,20 @@ c => c.EnumParameterIsSelect(maxMemberCountForSelectButton: ...)
 >
 > Default value of `maxMemberCountForSelectButton` is `3`.
 
+## Form Inputs are Ifta Label
+
+Shows all form inputs label is ifta label. default labels is none.
+
+```csharp
+c => c.FormInputsAreIftaLabel()
+```
+
+- By default, form inputs are shown as a `IftaLabel`
+
+> [!NOTE]
+>
+> Default value of `null` which is without label
+
 ## Initializer Parameters are in Page Title
 
 Adds initializer parameters of a transient class to the page title area of a
