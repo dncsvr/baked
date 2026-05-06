@@ -75,11 +75,11 @@
                   "type": "Select",
                   "schema": {
                     "label": "Role",
+                    "labelMode": "ifta",
+                    "localizeLabel": true,
                     "optionLabel": "label",
                     "optionValue": "value",
-                    "localizeLabel": true,
-                    "showClear": true,
-                    "labelMode": "ifta"
+                    "showClear": true
                   },
                   "data": {
                     "type": "Inline",

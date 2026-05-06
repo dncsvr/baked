@@ -126,7 +126,7 @@
   "RequiredOptions.Required2": "Zorunlu 2",
   "RequiredWithDefaultOptions.RequiredWithDefault1": "Varsayılanlı Zorunlu 1",
   "RequiredWithDefaultOptions.RequiredWithDefault2": "Varsayılanlı Zorunlu 2",
-  "Role": "Yetki",
+  "Role": "Rol",
   "Role.Admin": "Yönetici",
   "Role.Moderator": "Moderatör",
   "Role.Writer": "Yazar",

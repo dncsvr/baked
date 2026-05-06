@@ -19,11 +19,11 @@
           "type": "Select",
           "schema": {
             "label": "Required With Default",
-            "optionLabel": "label",
-            "optionValue": "value",
-            "localizeLabel": true,
             "labelMode": "float",
-            "labelVariant": "on"
+            "labelVariant": "on",
+            "localizeLabel": true,
+            "optionLabel": "label",
+            "optionValue": "value"
           },
           "data": {
             "type": "Inline",
@@ -48,11 +48,11 @@
           "type": "Select",
           "schema": {
             "label": "Required",
-            "optionLabel": "label",
-            "optionValue": "value",
-            "localizeLabel": true,
             "labelMode": "float",
-            "labelVariant": "on"
+            "labelVariant": "on",
+            "localizeLabel": true,
+            "optionLabel": "label",
+            "optionValue": "value"
           },
           "data": {
             "type": "Inline",
@@ -264,12 +264,12 @@
                       "type": "Select",
                       "schema": {
                         "label": "Count",
+                        "labelMode": "float",
+                        "labelVariant": "on",
+                        "localizeLabel": true,
                         "optionLabel": "label",
                         "optionValue": "value",
-                        "localizeLabel": true,
-                        "stateful": true,
-                        "labelMode": "float",
-                        "labelVariant": "on"
+                        "stateful": true
                       },
                       "data": {
                         "type": "Inline",
