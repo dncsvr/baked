@@ -41,17 +41,6 @@ public class InitializerParametersAreInPageTitleUxFeature : IFeature<UxConfigura
                     labeler.LabelFloatOn(l(c.Parameter.Name.Titleize()));
                 }
             );
-            builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                where: c => c.Path.EndsWith(nameof(SimplePage), nameof(PageTitle.Title), "**", nameof(SimpleForm.Inputs)),
-                schema: (i, c, cc) =>
-                {
-                    if (i.Component.Schema is not ILabeler labeler) { return; }
-
-                    var (_, l) = cc;
-
-                    labeler.LabelIfta(l(c.Parameter.Name.Titleize()));
-                }
-            );
         });
     }
 }

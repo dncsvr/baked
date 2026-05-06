@@ -36,9 +36,9 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
             );
             builder.Conventions.AddTypeAttributeConfiguration<RouteAttribute>(
                 when: (c, r) =>
-                  r.Path.Contains("[id]") &&
-                  c.Type.TryGetMembers(out var members) &&
-                  members.Properties.Having<IdAttribute>().Any(),
+                    r.Path.Contains("[id]") &&
+                    c.Type.TryGetMembers(out var members) &&
+                    members.Properties.Having<IdAttribute>().Any(),
                 attribute: (r, c) =>
                 {
                     var idAttribute = c.Type.GetMembers().FirstProperty<IdAttribute>().Get<IdAttribute>();
@@ -162,17 +162,6 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
                 {
                     p.Required = !c.Parameter.IsNullable ? true : null;
                     p.DefaultValue = c.Parameter.DefaultValue;
-                }
-            );
-            builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                where: cc => cc.Path.EndsWith("*Form*", "**", "Inputs"),
-                schema: (i, c, cc) =>
-                {
-                    if (i.Component.Schema is not ILabeler labeler) { return; }
-
-                    var (_, l) = cc;
-
-                    labeler.LabelIfta(l(c.Parameter.Name.Titleize()));
                 }
             );
 
