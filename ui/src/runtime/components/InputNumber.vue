@@ -9,6 +9,7 @@
       :label
       :path
       :mode="labelMode"
+      :variant="labelVariant"
     >
       <InputNumber
         v-model="model"
@@ -31,7 +32,7 @@ const { schema } = defineProps({
 });
 const model = defineModel({ type: null, required: true });
 
-const { label, labelMode } = schema;
+const { label, labelMode, labelVariant } = schema;
 
 const path = context.injectPath();
 
