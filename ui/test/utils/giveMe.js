@@ -471,7 +471,7 @@ export default {
 
   anInputText({ label, labelMode, labelVariant, targetProp } = {}) {
     targetProp = $(targetProp, undefined);
-    labelMode = this.aLabeler({ label, labelMode, labelVariant }).schema;
+    labelMode = this.aLabeler({ label, labelMode, labelVariant });
 
     return {
       type: "InputText",
@@ -483,7 +483,7 @@ export default {
   },
 
   anInputNumber({ label, labelMode, labelVariant } = {}) {
-    labelMode = this.aLabeler({ label, labelMode, labelVariant }).schema;
+    labelMode = this.aLabeler({ label, labelMode, labelVariant });
 
     return {
       type: "InputNumber",
@@ -499,12 +499,9 @@ export default {
     labelVariant = $(labelVariant, "on");
 
     return {
-      type: "Labeler",
-      schema: {
-        labelMode,
-        labelVariant,
-        label
-      }
+      labelMode,
+      labelVariant,
+      label
     };
   },
 
@@ -742,7 +739,7 @@ export default {
     data = $(data, ["Test Option 1", "Test Option 2"]);
     inline = $(inline, true);
     label = $(label, "Spec: Test");
-    labelMode = this.aLabeler({ label, labelMode, labelVariant }).schema,
+    labelMode = this.aLabeler({ label, labelMode, labelVariant });
     localizeLabel = $(localizeLabel, false);
     showClear = $(showClear, false);
     stateful = $(stateful, false);
@@ -767,7 +764,7 @@ export default {
     inline = $(inline, true);
     allowEmpty = $(allowEmpty, false);
     stateful = $(stateful, false);
-    labelMode = this.aLabeler({ label, labelMode }).schema;
+    labelMode = this.aLabeler({ label, labelMode });
     localizeLabel = $(localizeLabel, false);
     data = inline
       ? this.anInlineData(data)
