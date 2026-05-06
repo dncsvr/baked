@@ -76,9 +76,9 @@
                   "schema": {
                     "label": "Role",
                     "labelMode": "ifta",
-                    "localizeLabel": true,
                     "optionLabel": "label",
                     "optionValue": "value",
+                    "localizeLabel": true,
                     "showClear": true
                   },
                   "data": {

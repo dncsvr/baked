@@ -21,9 +21,9 @@
             "label": "Required With Default",
             "labelMode": "float",
             "labelVariant": "on",
-            "localizeLabel": true,
             "optionLabel": "label",
-            "optionValue": "value"
+            "optionValue": "value",
+            "localizeLabel": true
           },
           "data": {
             "type": "Inline",
@@ -50,9 +50,9 @@
             "label": "Required",
             "labelMode": "float",
             "labelVariant": "on",
-            "localizeLabel": true,
             "optionLabel": "label",
-            "optionValue": "value"
+            "optionValue": "value",
+            "localizeLabel": true
           },
           "data": {
             "type": "Inline",
@@ -266,9 +266,9 @@
                         "label": "Count",
                         "labelMode": "float",
                         "labelVariant": "on",
-                        "localizeLabel": true,
                         "optionLabel": "label",
                         "optionValue": "value",
+                        "localizeLabel": true,
                         "stateful": true
                       },
                       "data": {

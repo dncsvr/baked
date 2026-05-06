@@ -499,9 +499,9 @@ export default {
     labelVariant = $(labelVariant, "on");
 
     return {
+      label,
       labelMode,
-      labelVariant,
-      label
+      labelVariant
     };
   },
 
