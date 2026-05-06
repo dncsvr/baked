@@ -89,12 +89,14 @@ public class FormSampleDomainOverrideFeature : IFeature
                 })
             );
             // Properties
+
             builder.Conventions.AddPropertyComponent(
                 when: c => c.Property.PropertyType.SkipNullable().IsEnum,
                 where: cc => cc.Path.StartsWith(nameof(Page), nameof(FormSample)),
                 component: () => B.Text()
             );
             // Parameters
+
             builder.Conventions.AddParameterComponent(
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.NewParent) && c.Parameter.Name == "role",
                 component: (c, cc) => ParameterSelect(c.Parameter, cc)

@@ -85,15 +85,15 @@
                     "type": "Inline",
                     "value": [
                       {
-                        "label": "ParentRole.Admin",
+                        "label": "Role.Admin",
                         "value": "Admin"
                       },
                       {
-                        "label": "ParentRole.Moderator",
+                        "label": "Role.Moderator",
                         "value": "Moderator"
                       },
                       {
-                        "label": "ParentRole.Writer",
+                        "label": "Role.Writer",
                         "value": "Writer"
                       }
                     ]
@@ -122,11 +122,11 @@
                     "type": "Inline",
                     "value": [
                       {
-                        "label": "ParentStatus.Active",
+                        "label": "Status.Active",
                         "value": "Active"
                       },
                       {
-                        "label": "ParentStatus.Passive",
+                        "label": "Status.Passive",
                         "value": "Passive"
                       }
                     ]

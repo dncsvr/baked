@@ -16,8 +16,8 @@ public class SeedData(Entities _entities, Func<Entity> _newEntity, Parents _pare
         {
             for (int i = 0; i < 10; i++)
             {
-                var status = i % 2 == 0 ? ParentStatus.Active : ParentStatus.Passive;
-                var role = i % 2 == 0 ? ParentRole.Admin : ParentRole.Moderator; // TODO: shuffle in roles
+                var status = i % 2 == 0 ? Status.Active : Status.Passive;
+                var role = i % 2 == 0 ? Role.Admin : Role.Moderator; // TODO: shuffle in roles
                 _newParent().With(i % 2 == 0 ? "John" : "Jane", "Doe", status, role).Update(description: $"This is a seed data {i}");
             }
         }
