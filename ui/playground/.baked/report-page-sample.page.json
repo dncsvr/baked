@@ -78,10 +78,7 @@
             "allowEmpty": true,
             "optionLabel": "label",
             "optionValue": "value",
-            "localizeLabel": true,
-            "label": "Optional",
-            "labelMode": "float",
-            "labelVariant": "on"
+            "localizeLabel": true
           },
           "data": {
             "type": "Inline",
@@ -426,10 +423,7 @@
                         "optionLabel": "label",
                         "optionValue": "value",
                         "localizeLabel": true,
-                        "stateful": true,
-                        "label": "Count",
-                        "labelMode": "float",
-                        "labelVariant": "on"
+                        "stateful": true
                       },
                       "data": {
                         "type": "Inline",

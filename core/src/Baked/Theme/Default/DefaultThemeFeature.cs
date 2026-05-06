@@ -220,6 +220,16 @@ public class DefaultThemeFeature(IEnumerable<Route> _routes,
             builder.Conventions.AddParameterComponentConfiguration<SelectButton>(
                 component: (s, c) => s.Schema.AllowEmpty = c.Parameter.IsNullable ? true : null
             );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                schema: i =>
+                {
+                    if (i.Component.Schema is not SelectButton sb) { return; }
+                    if (sb.LabelMode == "ifta") { return; }
+
+                    sb.LabelNone();
+                },
+                order: UiLayer.MaxConventionOrder - 10
+            );
         });
 
         configurator.Ui.ConfigureComponentExports(exports =>

@@ -87,8 +87,8 @@ public static class CoreExtensions
             "info@test.com";
 
         public T AnEnum<T>() where T : Enum =>
-            (T)Enum.GetValues(typeof(T))
-                .Cast<object>()
+            Enum.GetValues(typeof(T))
+                .Cast<T>()
                 .First();
 
         public T AnEnum<T>(params T[] values) where T : Enum =>
