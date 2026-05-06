@@ -117,6 +117,7 @@ public static class UiExtensions
 
         public void LabelFloatOn(string label) =>
             labeler.LabelMode("float", label, variant: "on");
+
         public void LabelFLoatOver(string label) =>
             labeler.LabelMode("float", label, variant: "over");
 

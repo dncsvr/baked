@@ -36,11 +36,11 @@ public class ActionsAsDataPanelsUxFeature : IFeature<UxConfigurator>
                 where: cc => cc.Path.EndsWith(nameof(DataPanel), nameof(DataPanel.Inputs)),
                 schema: (i, c, cc) =>
                 {
-                    if (i.Component.Schema is not ILabeler hl) { return; }
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
 
                     var (_, l) = cc;
 
-                    hl.LabelFloatOn(l(c.Parameter.Name.Titleize()));
+                    labeler.LabelFloatOn(l(c.Parameter.Name.Titleize()));
                 }
             );
         });

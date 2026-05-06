@@ -132,11 +132,4 @@ function onSubmit() {
     @apply min-w-0;
   }
 }
-.two-column {
-  @apply grid grid-cols-2 grid-flow-col items-end max-md:flex max-md:flex-col;
-  grid-template-rows: repeat(var(--var-grid-rows), auto);
-}
-.single-column {
-  @apply flex flex-col;
-}
 </style>

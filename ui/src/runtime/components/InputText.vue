@@ -33,7 +33,7 @@ const { schema } = defineProps({
 });
 const model = defineModel({ type: null, required: true });
 
-const { label, targetProp, labelMode, labelVariant } = schema;
+const { label, labelMode, labelVariant, targetProp } = schema;
 
 const path = context.injectPath();
 

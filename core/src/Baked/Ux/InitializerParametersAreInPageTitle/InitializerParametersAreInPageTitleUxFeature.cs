@@ -34,11 +34,22 @@ public class InitializerParametersAreInPageTitleUxFeature : IFeature<UxConfigura
                 where: cc => cc.Path.EndsWith(nameof(TabbedPage), nameof(TabbedPage.Inputs)),
                 schema: (i, c, cc) =>
                 {
-                    if (i.Component.Schema is not ILabeler hl) { return; }
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
 
                     var (_, l) = cc;
 
-                    hl.LabelFloatOn(l(c.Parameter.Name.Titleize()));
+                    labeler.LabelFloatOn(l(c.Parameter.Name.Titleize()));
+                }
+            );
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                where: c => c.Path.EndsWith(nameof(SimplePage), nameof(PageTitle.Title), "**", nameof(SimpleForm.Inputs)),
+                schema: (i, c, cc) =>
+                {
+                    if (i.Component.Schema is not ILabeler labeler) { return; }
+
+                    var (_, l) = cc;
+
+                    labeler.LabelIfta(l(c.Parameter.Name.Titleize()));
                 }
             );
         });
