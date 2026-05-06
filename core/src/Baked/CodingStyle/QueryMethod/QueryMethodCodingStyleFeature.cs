@@ -4,6 +4,7 @@ using Baked.Business;
 namespace Baked.CodingStyle.QueryMethod;
 
 public class QueryMethodCodingStyleFeature(
+    HashSet<string> _queryMethodNames,
     HashSet<string> _takeParameterNames,
     HashSet<string> _skipParameterNames,
     HashSet<string> _sortingParameterNames
@@ -18,7 +19,7 @@ public class QueryMethodCodingStyleFeature(
             builder.Index.Parameter.Add<SortingAttribute>();
 
             builder.Conventions.SetMethodAttribute(
-                when: c => c.Type.Has<QueryAttribute>() && c.Method.Name == "By",
+                when: c => c.Type.Has<QueryAttribute>() && _queryMethodNames.Contains(c.Method.Name),
                 attribute: () => new QueryMethodAttribute(),
                 requiresIndex: true
             );
