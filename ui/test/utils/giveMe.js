@@ -482,13 +482,14 @@ export default {
     };
   },
 
-  anInputNumber({ label, labeler } = {}) {
+  anInputNumber({ label, labeler, noGrouping } = {}) {
     labeler = $(labeler, this.aLabeler({ label }));
 
     return {
       type: "InputNumber",
       schema: {
-        ...labeler
+        ...labeler,
+        noGrouping
       }
     };
   },

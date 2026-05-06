@@ -42,3 +42,20 @@ test.describe("Long Label", () => {
     await expect(component).toHaveScreenshot();
   });
 });
+
+test.describe("No Grouping", () => {
+  const id = "No Grouping";
+
+  test("does not group input value", async({ page }) => {
+    const component = page.getByTestId(id);
+    const input = component.locator(primevue.inputNumber.base);
+
+    await input.click();
+    await page.keyboard.press("Digit1");
+    await page.keyboard.press("Digit0");
+    await page.keyboard.press("Digit0");
+    await page.keyboard.press("Digit0");
+
+    await expect(input.locator("input")).toHaveValue("1000");
+  });
+});
