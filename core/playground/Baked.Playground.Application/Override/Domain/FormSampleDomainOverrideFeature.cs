@@ -33,9 +33,6 @@ public class FormSampleDomainOverrideFeature : IFeature
                 when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents),
                 attribute: () => new QueryMethodAttribute()
             );
-            builder.Conventions.RemoveMethodComponent<DataPanel>(
-                when: c => c.Type.Is<FormSample>() && c.Method.Name == nameof(FormSample.GetParents)
-            );
         });
     }
 }
