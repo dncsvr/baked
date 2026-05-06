@@ -61,6 +61,7 @@ c => c.ActionsAsDataPanels()
 - Each action is shown inside the tab content where it belongs
 - The panel title is taken from the method name
 - Action parameters are added to the panel schema automatically
+  - Panel parameters use `float:on` label by default
 
 ## Data Table defaults
 
@@ -111,17 +112,11 @@ c => c.EnumParameterIsSelect(maxMemberCountForSelectButton: ...)
 
 ## Form Inputs are Ifta Label
 
-Shows all form inputs label is ifta label. default labels is none.
+Configures all form inputs to use ifta label.
 
 ```csharp
 c => c.FormInputsAreIftaLabel()
 ```
-
-- By default, form inputs are shown as a `IftaLabel`
-
-> [!NOTE]
->
-> Default value of `null` which is without label
 
 ## Initializer Parameters are in Page Title
 
@@ -133,6 +128,7 @@ c => c.InitializerParametersAreInPageTitle()
 ```
 
 - Adds initializer parameters as query parameters of the page
+  - Query parameters use `float:on` label by default
 - Works for types marked with `TransientAttribute`
 
 ## Labels are Frozen

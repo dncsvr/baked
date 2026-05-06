@@ -1,5 +1,16 @@
 # Unreleased
 
+## Features
+
+- `Labeler` component is introduced to standardize labeling of input components
+  - `ILabeler` schema interface is introduced to allow conventions to change 
+    label configuration at once
+  - `Select`, `SelectButton`, `InputText`, `InputNumber` now implements
+    `ILabeler`
+  - `.LabelIfta(...)`, `.LabelFloatOn(...)`, `.LabelFloatIn(...)`,
+    `LabelFloatOver(...)` and `.LabelNone()` extensions are available for any
+    component schema that implements `ILabeler`
+
 # Breaking Changes
 
 - `CodeGeneration` namespace is changed to `Builtime`, along with its layer name
@@ -29,6 +40,8 @@
     ```
 - `TabNameAttribute` is now removed, instead get `GroupAttribute` and use its
   `TabName` extension property
+- `Select`, `InputText`, `InputNumber` component schemas does not require
+  `label:` in their component builders and constructors any more
 
 ## Improvements
 
@@ -36,7 +49,6 @@
   - Add trace wasn't showing up when initial value is null, fixed
   - JSON serialization is restricted to only anonymous types to avoid
     unnecessarily long (and for some attributes failing) serializations
-
-## Features
-
-- ...
+- `GiveMe.AnEnum<T>` is now available, it returns the first element of given
+  enum
+- `FormPage` now restricts tab navigation with only its inputs via `v-focustrap`
