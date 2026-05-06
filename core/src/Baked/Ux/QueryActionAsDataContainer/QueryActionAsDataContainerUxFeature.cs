@@ -1,9 +1,9 @@
 ﻿using Baked.Architecture;
 using Baked.Business;
-using Baked.Theme;
 using Baked.Ui;
 using Humanizer;
 
+using static Baked.Ui.Constraints;
 using static Baked.Theme.Default.DomainComponents;
 using static Baked.Ui.Actions;
 using static Baked.Ui.Datas;
@@ -22,10 +22,12 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
     {
         configurator.Domain.ConfigureDomainModelBuilder(builder =>
         {
+            // Order is set to -10 to allow DataPanel override
             builder.Conventions.AddMethodComponent(
-                when: c => c.Method.Has<QueryMethodAttribute>() && !c.Method.Has<ComponentGeneratorAttribute<DataPanel>>(),
+                when: c => c.Method.Has<QueryMethodAttribute>(),
                 where: cc => cc.Path.EndsWith("Contents", "*", "*", nameof(Content.Component)),
-                component: (c, cc) => MethodDataContainer(c.Method, cc)
+                component: (c, cc) => MethodDataContainer(c.Method, cc),
+                order: -10
             );
             builder.Conventions.AddMethodComponent(
                 when: c => c.Method.Has<QueryMethodAttribute>(),
@@ -38,10 +40,22 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 {
                     foreach (var parameter in c.Method.DefaultOverload.Parameters)
                     {
-                        if (!parameter.Has<SortingAttribute>() && !parameter.Has<PagingAttribute>()) { continue; }
-
                         var input = parameter.GenerateRequiredSchema<Input>(cc.Drill(nameof(DataContainer), nameof(DataContainer.Inputs)));
                         dc.Schema.Inputs.Add(input);
+                    }
+                }
+            );
+            // Remove paramaters other than `Sort` or `Paging` when in DataPanel
+            builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
+                where: cc => cc.Path.EndsWith(nameof(DataPanel), nameof(DataPanel.Content)),
+                component: (dc, c, cc) =>
+                {
+                    foreach (var parameter in c.Method.DefaultOverload.Parameters)
+                    {
+                        if (parameter.Has<SortingAttribute>() || parameter.Has<PagingAttribute>()) { continue; }
+
+                        var input = dc.Schema.Inputs.First(i => i.Name == parameter.Name);
+                        dc.Schema.Inputs.Remove(input);
                     }
                 }
             );
@@ -62,7 +76,7 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 },
                 order: 20
             );
-
+            // Remove`Sort` or `Paging` parameters from DataPanel
             builder.Conventions.AddMethodComponentConfiguration<DataPanel>(
                 when: c => c.Method.Has<QueryMethodAttribute>(),
                 component: (dp, c, cc) =>
@@ -157,6 +171,7 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     s.Schema.Stateful = true;
                     s.Schema.NoFloatLabel = true;
                     s.Action = Publish.PageContextValue(_takeContextKey, o => o.Data = Context.Model());
+                    s.ShowWhen("isXs", Is("true"));
                 },
                 order: 20
             );

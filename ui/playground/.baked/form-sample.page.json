@@ -140,6 +140,16 @@
                           "type": "Context",
                           "key": "model"
                         }
+                      },
+                      "reactions": {
+                        "show": {
+                          "type": "When",
+                          "when": "isXs",
+                          "constraint": {
+                            "type": "Is",
+                            "is": "true"
+                          }
+                        }
                       }
                     }
                   },
