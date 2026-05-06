@@ -4,5 +4,6 @@ public enum Role
 {
     Admin,
     Moderator,
-    Writer
+    Writer,
+    Maintainer
 }

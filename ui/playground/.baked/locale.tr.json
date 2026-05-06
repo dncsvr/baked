@@ -128,6 +128,7 @@
   "RequiredWithDefaultOptions.RequiredWithDefault2": "Varsayılanlı Zorunlu 2",
   "Role": "Rol",
   "Role.Admin": "Yönetici",
+  "Role.Maintainer": "Bakımcı",
   "Role.Moderator": "Moderatör",
   "Role.Writer": "Yazar",
   "Route Parameters": "Yol Parametreleri",

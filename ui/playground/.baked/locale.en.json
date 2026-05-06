@@ -128,6 +128,7 @@
   "RequiredWithDefaultOptions.RequiredWithDefault2": "Required w/ Default 2",
   "Role": "Role",
   "Role.Admin": "Admin",
+  "Role.Maintainer": "Maintainer",
   "Role.Moderator": "Moderator",
   "Role.Writer": "Writer",
   "Route Parameters": "Route Parameters",

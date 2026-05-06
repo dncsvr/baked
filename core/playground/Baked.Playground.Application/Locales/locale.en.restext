@@ -67,6 +67,7 @@ OptionalOptions.Optional1=Optional 1
 OptionalOptions.Optional2=Optional 2
 Role.Admin=Admin
 Role.Moderator=Moderator
+Role.Maintainer=Maintainer
 Role.Writer=Writer
 Status.Active=Active
 Status.Passive=Passive

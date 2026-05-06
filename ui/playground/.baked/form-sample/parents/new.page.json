@@ -95,6 +95,10 @@
                       {
                         "label": "Role.Writer",
                         "value": "Writer"
+                      },
+                      {
+                        "label": "Role.Maintainer",
+                        "value": "Maintainer"
                       }
                     ]
                   }
