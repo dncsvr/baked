@@ -7,6 +7,10 @@
 - New UX features are introduced in `Monolith` recipe
   - `QuerActionAsDataContainerUxFeature` to configure descriptor properties of
     query methods 
+- `DataContainer` component is added to render enumerable datas with basic input
+  support
+  - `PageSize` component is added which is an override of `Select`
+  - `Paginator` component is added for paging
 
 ## Breaking Changes
 
@@ -48,8 +52,6 @@
   - Add trace wasn't showing up when initial value is null, fixed
   - JSON serialization is restricted to only anonymous types to avoid
     unnecessarily long (and for some attributes failing) serializations
-- `DataContainer` component is added to render enumerable datas with basic input
-  support
 - `Input` now supports numeric datas
 
 ## Bugfixes
