@@ -20,5 +20,8 @@ const model = defineModel({ type: null, required: true });
   .p-select {
     @apply border-none
   }
+  .p-select-label {
+    font-size: inherit;
+  }
 }
 </style>
