@@ -53,53 +53,70 @@ const variants = [
   {
     name: "InputText: No Label Mode",
     descriptor: giveMe.anInputText({
-      labelMode: null
+      labeler: giveMe.aLabeler({
+        labelMode: null
+      })
     })
   },
   {
     name: "InputText: Float:On Mode",
     descriptor: giveMe.anInputText({
-      label: "Float:On Mode"
+      labeler: giveMe.aLabeler({
+        label: "Float:On Mode"
+      })
     })
+
   },
   {
     name: "InputText: Float:In Mode",
     descriptor: giveMe.anInputText({
-      labelVariant: "in",
-      label: "Float:In Mode"
+      labeler: giveMe.aLabeler({
+        label: "Float:In Mode",
+        labelVariant: "in"
+      })
     })
   },
   {
     name: "InputText: Ifta Mode",
     descriptor: giveMe.anInputText({
-      labelMode: "ifta",
-      label: "Ifta Mode"
+      labeler: giveMe.aLabeler({
+        label: "Ifta Mode",
+        labelMode: "ifta"
+      })
     })
   },
   {
     name: "InputNumber: No Label Mode",
     descriptor: giveMe.anInputNumber({
-      labelMode: null
+      labeler: giveMe.aLabeler({
+        labelMode: null
+      })
     })
   },
   {
     name: "InputNumber: Float:On Mode",
     descriptor: giveMe.anInputNumber({
-      label: "Float:On Mode"
+      labeler: giveMe.aLabeler({
+        label: "Float:On Mode"
+      })
     })
   },
   {
     name: "InputNumber: Float:In Mode",
     descriptor: giveMe.anInputNumber({
-      labelVariant: "in",
-      label: "Float:In Mode"
+      labeler: giveMe.aLabeler({
+        label: "Float:In Mode",
+        labelVariant: "in"
+      })
     })
   },
   {
     name: "InputNumber: Ifta Mode",
     descriptor: giveMe.anInputNumber({
-      labelMode: "ifta",
-      label: "Ifta Mode"
+      labeler: giveMe.aLabeler({
+        label: "Ifta Mode",
+        labelMode: "ifta"
+      })
     })
   }
 ];

@@ -469,26 +469,26 @@ export default {
     return { name, required, default: default_, defaultSelfManaged, queryBound, component };
   },
 
-  anInputText({ label, labelMode, labelVariant, targetProp } = {}) {
+  anInputText({ label, labeler, targetProp } = {}) {
     targetProp = $(targetProp, undefined);
-    labelMode = this.aLabeler({ label, labelMode, labelVariant });
+    labeler = $(labeler, this.aLabeler({ label }));
 
     return {
       type: "InputText",
       schema: {
-        ...labelMode,
+        ...labeler,
         targetProp
       }
     };
   },
 
-  anInputNumber({ label, labelMode, labelVariant } = {}) {
-    labelMode = this.aLabeler({ label, labelMode, labelVariant });
+  anInputNumber({ label, labeler } = {}) {
+    labeler = $(labeler, this.aLabeler({ label }));
 
     return {
       type: "InputNumber",
       schema: {
-        ...labelMode
+        ...labeler
       }
     };
   },
