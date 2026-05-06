@@ -2,10 +2,6 @@
 
 ## Features
 
-- Inspection mechanism
-  - Add trace wasn't showing up when initial value is null, fixed
-  - JSON serialization is restricted to only anonymous types to avoid
-    unnecessarily long (and for some attributes failing) serializations
 - `QueryMethodCodingStyle` feature is now added which marks methods of a query
   as `QueryMethod` along with `sort`, `skip` and `take` parameters
 - New UX features are introduced in `Monolith` recipe
@@ -48,6 +44,10 @@
 
 ## Improvements
 
+- Inspection mechanism
+  - Add trace wasn't showing up when initial value is null, fixed
+  - JSON serialization is restricted to only anonymous types to avoid
+    unnecessarily long (and for some attributes failing) serializations
 - `DataContainer` component is added to render enumerable datas with basic input
   support
 - `Input` now supports numeric datas
