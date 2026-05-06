@@ -48,7 +48,6 @@ public static class CustomThemeExtensions
                 r => r.Child("/specs/number", "Number", "/specs") with { Icon = "pi pi-microchip", Description = "Shortens and renders numbers with the full value shown as tooltip", Section = "Display" },
                 r => r.Child("/specs/rate", "Rate", "/specs") with { Icon = "pi pi-microchip", Description = "Renders rate values as percentage", Section = "Display" },
                 r => r.Child("/specs/text", "Text", "/specs") with { Icon = "pi pi-microchip", Description = "Renders string values", Section = "Display" },
-                r => r.Child("/specs/labeler", "Labeler", "/specs") with { Icon = "pi pi-microchip", Description = "Showing multiple variant Inputs", Section = "Display" },
 
                 // Form
                 r => r.Child("/specs/simple-form", "Simple Form", "/specs") with { Icon = "pi pi-microchip", Description = "Showcases simple form component with inputs", Section = "Form" },
@@ -58,6 +57,7 @@ public static class CustomThemeExtensions
                 r => r.Child("/specs/input-text", "Input Text", "/specs") with { Icon = "pi pi-microchip", Description = "Allows regular text input", Section = "Input" },
                 r => r.Child("/specs/input-number", "Input Number", "/specs") with { Icon = "pi pi-microchip", Description = "Allows number input", Section = "Input" },
                 r => r.Child("/specs/language-switcher", "Language Switcher", "/specs") with { Icon = "pi pi-microchip", Description = "Allows change site language", Section = "Input" },
+                r => r.Child("/specs/labeler", "Labeler", "/specs") with { Icon = "pi pi-microchip", Description = "Showing multiple variant Inputs", Section = "Input" },
                 r => r.Child("/specs/select", "Select", "/specs") with { Icon = "pi pi-microchip", Description = "Allows select from given options using drow down", Section = "Input" },
                 r => r.Child("/specs/select-button", "Select Button", "/specs") with { Icon = "pi pi-microchip", Description = "Allows select from given options using buttons", Section = "Input" },
 

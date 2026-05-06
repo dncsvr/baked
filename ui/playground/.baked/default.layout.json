@@ -209,12 +209,6 @@
             "title": "Text",
             "parentRoute": "/specs"
           },
-          "/specs/labeler": {
-            "route": "/specs/labeler",
-            "icon": "pi pi-microchip",
-            "title": "Labeler",
-            "parentRoute": "/specs"
-          },
           "/specs/simple-form": {
             "route": "/specs/simple-form",
             "icon": "pi pi-microchip",
@@ -243,6 +237,12 @@
             "route": "/specs/language-switcher",
             "icon": "pi pi-microchip",
             "title": "Language Switcher",
+            "parentRoute": "/specs"
+          },
+          "/specs/labeler": {
+            "route": "/specs/labeler",
+            "icon": "pi pi-microchip",
+            "title": "Labeler",
             "parentRoute": "/specs"
           },
           "/specs/select": {

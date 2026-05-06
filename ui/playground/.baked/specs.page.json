@@ -285,18 +285,6 @@
                 "description": "Renders string values"
               }
             }
-          },
-          {
-            "title": "Labeler",
-            "component": {
-              "type": "CardLink",
-              "schema": {
-                "route": "/specs/labeler",
-                "icon": "pi pi-microchip",
-                "title": "Labeler",
-                "description": "Showing multiple variant Inputs"
-              }
-            }
           }
         ]
       },
@@ -365,6 +353,18 @@
                 "icon": "pi pi-microchip",
                 "title": "Language Switcher",
                 "description": "Allows change site language"
+              }
+            }
+          },
+          {
+            "title": "Labeler",
+            "component": {
+              "type": "CardLink",
+              "schema": {
+                "route": "/specs/labeler",
+                "icon": "pi pi-microchip",
+                "title": "Labeler",
+                "description": "Showing multiple variant Inputs"
               }
             }
           },
