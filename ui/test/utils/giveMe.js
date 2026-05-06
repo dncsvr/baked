@@ -735,11 +735,11 @@ export default {
     return screens.find(screen => screen.name === name) || null;
   },
 
-  aSelect({ action, data, filter, inline, label, labelMode, labelVariant, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp } = {}) {
+  aSelect({ action, data, filter, inline, label, labeler, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp } = {}) {
     data = $(data, ["Test Option 1", "Test Option 2"]);
     inline = $(inline, true);
     label = $(label, "Spec: Test");
-    labelMode = this.aLabeler({ label, labelMode, labelVariant });
+    labeler = $(labeler, this.aLabeler({ label }));
     localizeLabel = $(localizeLabel, false);
     showClear = $(showClear, false);
     stateful = $(stateful, false);
@@ -753,18 +753,18 @@ export default {
 
     return {
       type: "Select",
-      schema: { ...labelMode, filter, label, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp },
+      schema: { ...labeler, filter, localizeLabel, optionLabel, optionValue, showClear, stateful, targetProp },
       data,
       action
     };
   },
 
-  aSelectButton({ action, allowEmpty, data, inline, label, labelMode, localizeLabel, optionLabel, optionValue, stateful, targetProp } = {}) {
+  aSelectButton({ action, allowEmpty, data, inline, label, labeler, localizeLabel, optionLabel, optionValue, stateful, targetProp } = {}) {
     data = $(data, ["Test Option 1", "Test Option 2"]);
     inline = $(inline, true);
     allowEmpty = $(allowEmpty, false);
     stateful = $(stateful, false);
-    labelMode = this.aLabeler({ label, labelMode });
+    labeler = $(labeler, this.aLabeler({ label }));
     localizeLabel = $(localizeLabel, false);
     data = inline
       ? this.anInlineData(data)
@@ -776,7 +776,7 @@ export default {
 
     return {
       type: "SelectButton",
-      schema: { ...labelMode, label, localizeLabel, allowEmpty, optionLabel, optionValue, stateful, targetProp },
+      schema: { ...labeler, localizeLabel, allowEmpty, optionLabel, optionValue, stateful, targetProp },
       data,
       action
     };
