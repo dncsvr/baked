@@ -308,7 +308,6 @@
                       }
                     ],
                     "dataKey": "id",
-                    "paginator": false,
                     "rows": 5,
                     "exportOptions": {
                       "csvSeparator": ";",

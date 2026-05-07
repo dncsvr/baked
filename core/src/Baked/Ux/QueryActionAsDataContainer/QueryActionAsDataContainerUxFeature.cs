@@ -33,6 +33,15 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 component: (c, cc) => MethodDataContainer(c.Method, cc)
             );
 
+            // Add sort and paging parameters to RemoteData query
+            builder.Conventions.AddMethodSchemaConfiguration<RemoteData>(
+                when: c => c.Method.Has<QueryMethodAttribute>(),
+                where: cc => cc.Path.EndsWith(nameof(DataContainer), nameof(DataContainer.Content), "*", nameof(IComponentDescriptor.Data)),
+                schema: rd => rd.Query += Context.Parent(options: cd => cd.Prop = "sort-paging-parameters"),
+                order: 20
+            );
+
+            // Add all inputs to DataContainer
             builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
                 component: (dc, c, cc) =>
                 {
@@ -43,20 +52,8 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     }
                 }
             );
-            // Remove paramaters other than `Sort` or `Paging` when in DataPanel
-            builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
-                where: cc => cc.Path.EndsWith(nameof(DataPanel), nameof(DataPanel.Content)),
-                component: (dc, c, cc) =>
-                {
-                    foreach (var parameter in c.Method.DefaultOverload.Parameters)
-                    {
-                        if (parameter.Has<SortingAttribute>() || parameter.Has<PagingAttribute>()) { continue; }
 
-                        var input = dc.Schema.Inputs.First(i => i.Name == parameter.Name);
-                        dc.Schema.Inputs.Remove(input);
-                    }
-                }
-            );
+            // When skip parameter exists, add take data to skip component
             builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
                 when: c => c.Method.DefaultOverload.Parameters.Having<PagingAttribute>().Any(p => p.Get<PagingAttribute>().IsTake),
                 component: (dc, c, cc) =>
@@ -71,10 +68,36 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                         o.TargetProp = "take";
                     });
                     skipInput.Component.ReloadWhen(_takeContextKey);
-                },
-                order: 20
+                }
             );
-            // Remove`Sort` or `Paging` parameters from DataPanel
+
+            // Set paging inputs to be required and numeric
+            builder.Conventions.AddParameterSchemaConfiguration<Input>(
+                when: c => c.Parameter.Has<PagingAttribute>(),
+                schema: input =>
+                {
+                    input.Required = true;
+                    input.Numeric = true;
+                },
+                order: 10
+            );
+
+            // Remove inputs other than `Sort` or `Paging` when in DataPanel
+            builder.Conventions.AddMethodComponentConfiguration<DataContainer>(
+                where: cc => cc.Path.EndsWith(nameof(DataPanel), nameof(DataPanel.Content)),
+                component: (dc, c, cc) =>
+                {
+                    foreach (var parameter in c.Method.DefaultOverload.Parameters)
+                    {
+                        if (parameter.Has<SortingAttribute>() || parameter.Has<PagingAttribute>()) { continue; }
+
+                        var input = dc.Schema.Inputs.First(i => i.Name == parameter.Name);
+                        dc.Schema.Inputs.Remove(input);
+                    }
+                }
+            );
+
+            // Remove`Sort` or `Paging` inputs from DataPanel
             builder.Conventions.AddMethodComponentConfiguration<DataPanel>(
                 when: c => c.Method.Has<QueryMethodAttribute>(),
                 component: (dp, c, cc) =>
@@ -87,31 +110,22 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                         dp.Schema.Inputs.Remove(input);
                     }
                 },
-                order: 20
-            );
-            // Add sort and paging parameters data to RemoteData query
-            builder.Conventions.AddMethodSchemaConfiguration<RemoteData>(
-                when: c => c.Method.Has<QueryMethodAttribute>(),
-                schema: rd => rd.Query += Context.Parent(options: cd => cd.Prop = "sort-paging-parameters"),
-                order: 30
-            );
-            // Provide
-            builder.Conventions.AddMethodComponentConfiguration<DataTable>(
-                where: cc => cc.Path.Contains(nameof(DataContainer)),
-                component: datatable =>
-                {
-                    datatable.Schema.Paginator = false;
-                    datatable.Schema.VirtualScrollerOptions = default;
-                    datatable.Schema.DataLengthContextKey = _lengthContextKey;
-                }
+                order: 10
             );
 
-            builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                when: c => c.Parameter.Has<PagingAttribute>(),
-                schema: input =>
+            // Disable virtual scroll, configure paginator and publish 
+            // data length when skip parameter exists
+            builder.Conventions.AddMethodComponentConfiguration<DataTable>(
+                where: cc => cc.Path.Contains(nameof(DataContainer)),
+                component: (dt, c) =>
                 {
-                    input.Required = true;
-                    input.Numeric = true;
+                    dt.Schema.VirtualScrollerOptions = default;
+
+                    if (c.Method.DefaultOverload.Parameters.Any(p => p.TryGet<PagingAttribute>(out var paging) && paging.IsSkip))
+                    {
+                        dt.Schema.Paginator = default;
+                        dt.Schema.DataLengthContextKey = _lengthContextKey;
+                    }
                 },
                 order: 10
             );
@@ -135,7 +149,7 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 }
             );
 
-            //Take
+            // Take
             builder.Conventions.AddParameterComponent(
                 when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
                 component: (c, cc) =>
@@ -158,7 +172,7 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     s.Schema.Stateful = true;
                     s.Action = Publish.PageContextValue(_takeContextKey, o => o.Data = Context.Model());
                 },
-                order: 20
+                order: 10
             );
         });
     }
