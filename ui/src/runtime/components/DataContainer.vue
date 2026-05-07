@@ -1,6 +1,20 @@
 <template>
-  <div class="block border rounded bg-transparent border-[1px] border-slate-200 dark:border-slate-700">
-    <div class="p-[1.125rem] bg-transparent dark:bg-zinc-900 border-0 rounded-none flex gap-2 text-sm items-center justify-end">
+  <div
+    class="
+      block bg-transparent
+      border rounded border-[1px]
+      border-slate-200 dark:border-slate-700
+    "
+  >
+    <div
+      class="
+        p-[1.125rem]
+        bg-transparent dark:bg-zinc-900
+        border-0 rounded-none
+        text-sm
+        flex gap-2 items-center justify-end
+      "
+    >
       <Inputs
         v-if="inputs.length > 0"
         :inputs="inputs"

@@ -4,7 +4,6 @@ using Baked.Ui;
 
 using static Baked.Theme.Default.DomainComponents;
 using static Baked.Ui.Actions;
-using static Baked.Ui.Constraints;
 using static Baked.Ui.Datas;
 
 using B = Baked.Ui.Components;
@@ -88,15 +87,15 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                         dp.Schema.Inputs.Remove(input);
                     }
                 },
-                order: 100
+                order: 20
             );
-
+            // Add sort and paging parameters data to RemoteData query
             builder.Conventions.AddMethodSchemaConfiguration<RemoteData>(
                 when: c => c.Method.Has<QueryMethodAttribute>(),
                 schema: rd => rd.Query += Context.Parent(options: cd => cd.Prop = "sort-paging-parameters"),
-                order: 110
+                order: 30
             );
-
+            // Provide
             builder.Conventions.AddMethodComponentConfiguration<DataTable>(
                 where: cc => cc.Path.Contains(nameof(DataContainer)),
                 component: datatable =>
@@ -107,9 +106,8 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 }
             );
 
-            // Skip
             builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsSkip,
+                when: c => c.Parameter.Has<PagingAttribute>(),
                 schema: input =>
                 {
                     input.Required = true;
@@ -118,12 +116,12 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                 order: 10
             );
 
+            // Skip
             builder.Conventions.AddParameterComponent(
                 when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsSkip,
                 component: () => B.Paginator()
             );
             builder.Conventions.AddParameterComponentConfiguration<Paginator>(
-                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsSkip,
                 component: paginator =>
                 {
                     paginator.Data = Context.Page(o =>
@@ -138,16 +136,6 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
             );
 
             //Take
-            builder.Conventions.AddParameterSchemaConfiguration<Input>(
-                when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
-                schema: input =>
-                {
-                    input.Required = true;
-                    input.Numeric = true;
-                },
-                order: 10
-            );
-
             builder.Conventions.AddParameterComponent(
                 when: c => c.Parameter.TryGet<PagingAttribute>(out var paging) && paging.IsTake,
                 component: (c, cc) =>
@@ -169,7 +157,6 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     s.Schema.ShowClear = null;
                     s.Schema.Stateful = true;
                     s.Action = Publish.PageContextValue(_takeContextKey, o => o.Data = Context.Model());
-                    s.ShowWhen("isXs", Is("true"));
                 },
                 order: 20
             );

@@ -1,8 +1,8 @@
 <template>
   <Select
+    v-if="isXs"
     v-model="model"
-    :data
-    :schema
+    v-bind="$attrs"
     class="
       mr-2 shadow-none rounded-md
       bg-slate-100 border-slate-100
@@ -10,12 +10,11 @@
   />
 </template>
 <script setup>
+import { useBreakpoints } from "#imports";
 import { Select } from "#components";
 
-const { schema, data } = defineProps({
-  schema: { type: null, required: true },
-  data: { type: null, required: true }
-});
+const { isXs } = useBreakpoints();
+
 const model = defineModel({ type: null, required: true });
 </script>
 <style>

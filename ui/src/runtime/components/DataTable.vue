@@ -279,28 +279,12 @@ function exportFunction({ data, field }) {
 }
 </script>
 <style>
-/* If Datatable in a DataPanel, clear border and radius */
-.p-panel-content:has(.b-component--DataTable) {
-  .b-component--DataTable {
-    @apply border-none rounded-none;
-
-    .b-Header {
-      @apply rounded-none;
-    }
-    .p-datatable-table-container {
-      @apply border-none;
-    }
-  }
-}
-
-/* If Datatable in a DataPanel, clear border and radius */
+/* If Datatable in a DataPanel or DataContainer, clear border and radius */
+.p-panel-content:has(.b-component--DataTable),
 .b-component--DataContainer:has(.b-component--DataTable) {
   .b-component--DataTable {
     @apply border-none rounded-none;
 
-    .b-Header {
-      @apply rounded-none;
-    }
     .p-datatable-table-container {
       @apply border-none;
     }
@@ -316,26 +300,7 @@ function exportFunction({ data, field }) {
   ;
 
   .p-datatable-table-container {
-    @apply border-none rounded-b-[--p-border-radius-md];
-  }
-
-  &:has(.b-Header) {
-    .b-Header {
-      @apply
-        border-b dark:border-zinc-800
-        dark:bg-zinc-900 mb-0
-        rounded-t-[--p-border-radius-md]
-      ;
-    }
-    .p-datatable-table-container {
-      @apply rounded-b-[--p-border-radius-md];
-    }
-  }
-
-  &:has(:not(.b-Header)) {
-    .p-datatable-table-container {
-      @apply rounded-[--p-border-radius-md];
-    }
+    @apply border-none rounded-[--p-border-radius-md];
   }
 
   &:has(.p-datatable-paginator-bottom) {
