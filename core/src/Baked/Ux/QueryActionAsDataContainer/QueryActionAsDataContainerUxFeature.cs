@@ -91,7 +91,9 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     {
                         if (parameter.Has<SortingAttribute>() || parameter.Has<PagingAttribute>()) { continue; }
 
-                        var input = dc.Schema.Inputs.First(i => i.Name == parameter.Name);
+                        var input = dc.Schema.Inputs.FirstOrDefault(i => i.Name == parameter.Name);
+                        if (input is null) { continue; }
+
                         dc.Schema.Inputs.Remove(input);
                     }
                 }
@@ -106,7 +108,9 @@ public class QueryActionAsDataContainerUxFeature(int[] _pageSizeOptions)
                     {
                         if (!parameter.Has<SortingAttribute>() && !parameter.Has<PagingAttribute>()) { continue; }
 
-                        var input = dp.Schema.Inputs.First(i => i.Name == parameter.Name);
+                        var input = dp.Schema.Inputs.FirstOrDefault(i => i.Name == parameter.Name);
+                        if (input is null) { continue; }
+
                         dp.Schema.Inputs.Remove(input);
                     }
                 },
